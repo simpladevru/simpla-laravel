@@ -1,0 +1,21 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '../../../node_modules/bootstrap/scss/bootstrap';
+
+// Font-awesome
+@import "../../../node_modules/font-awesome/scss/font-awesome";
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.list-form th,
+.list-form td {
+    vertical-align: middle;
+    padding: 6px 12px;
+}

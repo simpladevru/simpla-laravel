@@ -1,0 +1,32 @@
+// Body
+$body-bg: #f8fafc;
+
+// Typography
+$font-family-sans-serif: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
+
+$font-size-base: 0.8125rem !default; // 13 px
+
+$h1-font-size: $font-size-base * 2 !default;
+$h2-font-size: $font-size-base * 1.75 !default;
+$h3-font-size: $font-size-base * 1.5 !default;
+$h4-font-size: $font-size-base * 1.25 !default;
+$h5-font-size: $font-size-base !default;
+$h6-font-size: $font-size-base !default;
+
+// Colors
+$blue: #3490dc;
+$indigo: #6574cd;
+$purple: #9561e2;
+$pink: #f66d9b;
+$red: #e3342f;
+$orange: #f6993f;
+$yellow: #ffed4a;
+$green: #38c172;
+$teal: #4dc0b5;
+$cyan: #6cb2eb;
+
+// Border radius
+$border-radius: .125rem !default;
+$border-radius-lg: .125rem !default;
+$border-radius-sm: .125rem !default;
+
