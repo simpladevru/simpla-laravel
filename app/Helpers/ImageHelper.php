@@ -41,11 +41,9 @@ class ImageHelper
         $newImage   = ImageFactory::make($originalImage);
         $resizeName = $newImage->filename . '.' . $width . 'x' . $height . '.' . $newImage->extension;
 
-        $newImage->resize($width, $height, function (Constraint $constraint) {
+        return $newImage->resize($width, $height, function (Constraint $constraint) {
             $constraint->aspectRatio();
         })->save($resizedPath . $resizeName);
-
-        return $newImage;
     }
 
     /**
