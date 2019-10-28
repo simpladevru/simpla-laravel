@@ -11,8 +11,14 @@
 
     <div class="input-group mt-3">
         <div class="custom-file">
-            <input @change="selectImages" type="file" class="custom-file-input" id="uploadImages" name="upload_images[]"
-                   multiple>
+            <input
+                @change="selectImages"
+                type="file"
+                class="custom-file-input"
+                id="uploadImages"
+                name="upload_images[]"
+                multiple
+            >
             <label class="custom-file-label" for="uploadImages">Choose file</label>
         </div>
     </div>
