@@ -50,18 +50,28 @@ class ImageHelper
     /**
      * @param string $disk
      * @param string $directory
-     * @param string $fileUrl
-     * @param string $handlerClass
+     * @param string $url
      * @return string
+     * @throws Exception
      */
-    public function downloadFile(string $disk, string $directory, string $fileUrl, string $handlerClass): string
+    public function storeFileByUrl(string $disk, string $directory, string $url): string
     {
-        $savePath    = Storage::disk($disk)->path($directory . '/');
-        $newFilename = $this->getPreparedFilename($fileUrl);
+        $response = (new Client)->get($url);
 
-        (new Client)->get($fileUrl, ['save_to' => $savePath]);
+        if ($response->getStatusCode() !== 200) {
+            throw new Exception('Error status');
+        }
 
-        app($handlerClass)->handle($fileUrl, $newFilename);
+        if (!$response->getHeaderLine('Content-Length')) {
+            throw new Exception('Error size');
+        }
+
+        $filename  = $this->getPreparedFilename($url);
+        $extension = $this->getExtensionByMime($response->getHeaderLine('Content-Type'));
+
+        $newFilename = $filename . '.' . $extension;
+
+        Storage::disk($disk)->put($directory . '/' . $newFilename, $response->getBody()->getContents());
 
         return $newFilename;
     }
@@ -158,13 +168,22 @@ class ImageHelper
      */
     public function getResizedFilename(string $filename, int $width = 0, int $height = 0, bool $set_watermark = false)
     {
-        $file = pathinfo($filename, PATHINFO_FILENAME);
-        $ext  = pathinfo($filename, PATHINFO_EXTENSION);
+        if ('.' != ($dirname = pathinfo($filename, PATHINFO_DIRNAME))) {
+            $file = $dirname . '/' . pathinfo($filename, PATHINFO_FILENAME);
+        } else {
+            $file = pathinfo($filename, PATHINFO_FILENAME);
+        }
+
+        $extension = pathinfo($filename, PATHINFO_EXTENSION);
 
         if ($width > 0 || $height > 0) {
-            $resizedFilename = $file . '.' . ($width > 0 ? $width : '') . 'x' . ($height > 0 ? $height : '') . ($set_watermark ? 'w' : '') . '.' . $ext;
+            $file_width     = $width > 0 ? $width : '';
+            $file_height    = $height > 0 ? $height : '';
+            $file_watermark = ($set_watermark ? 'w' : '');
+
+            $resizedFilename = $file . '.' . $file_width . 'x' . $file_height . $file_watermark . '.' . $extension;
         } else {
-            $resizedFilename = $file . '.' . ($set_watermark ? 'w.' : '') . $ext;
+            $resizedFilename = $file . '.' . ($set_watermark ? 'w.' : '') . $extension;
         }
 
         return $resizedFilename;
@@ -195,5 +214,30 @@ class ImageHelper
         File::delete(
             File::glob($path . $filename . '.*x*.' . $extension)
         );
+    }
+
+    /**
+     * @param $mime
+     * @return string
+     * @throws Exception
+     */
+    private function getExtensionByMime($mime): string
+    {
+        switch ($mime) {
+            case 'image/jpeg':
+                $ext = 'jpg';
+                break;
+            case 'image/png':
+                $ext = 'png';
+                break;
+            case 'image/gif':
+                $ext = 'gif';
+                break;
+            default:
+                throw new Exception('Undefined extension for mime: ' . $mime);
+                break;
+        }
+
+        return $ext;
     }
 }

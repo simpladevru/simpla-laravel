@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin\Shop\Catalog;
 
-use App\Entity\Shop\Product\Image\Image;
 use Throwable;
 use Exception;
 use DomainException;
