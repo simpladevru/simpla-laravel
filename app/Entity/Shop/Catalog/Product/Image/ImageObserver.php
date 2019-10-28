@@ -3,24 +3,25 @@
 namespace App\Entity\Shop\Product\Image;
 
 use Illuminate\Http\UploadedFile;
-use App\Helpers\FileHelper;
+use App\Helpers\ImageHelper;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class ImageObserver
 {
     /**
-     * @var FileHelper
+     * @var ImageHelper
      */
-    private $fileHelper;
+    private $images;
 
     /**
      * ImageObserver constructor.
-     * @param FileHelper $fileHelper
+     *
+     * @param ImageHelper $imageHelper
      */
-    public function __construct(FileHelper $fileHelper)
+    public function __construct(ImageHelper $imageHelper)
     {
-        $this->fileHelper = $fileHelper;
+        $this->images = $imageHelper;
     }
 
     /**
@@ -47,7 +48,7 @@ class ImageObserver
      */
     private function storeFile(UploadedFile $file): string
     {
-        return $this->fileHelper->storeUploadedFile('local', 'products', $file);
+        return $this->images->storeUploadedFile('local', 'products', $file);
     }
 
     /**
@@ -55,14 +56,7 @@ class ImageObserver
      */
     private function removeFile(string $file)
     {
-        Storage::disk('local')->delete('products/' . $file);
-
-        $path      = Storage::disk('public')->path('products/');
-        $filename  = pathinfo($file, PATHINFO_FILENAME);
-        $extension = pathinfo($file, PATHINFO_EXTENSION);
-
-        File::delete(
-            File::glob($path . $filename . '.*x*.' . $extension)
-        );
+        $this->images->removeOriginal('public', 'products', $file);
+        $this->images->removeResized('public', 'products', $file);
     }
 }
