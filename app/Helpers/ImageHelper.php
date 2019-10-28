@@ -141,9 +141,9 @@ class ImageHelper
         string $disk,
         string $directory,
         string $filename,
-        $width = 0,
-        $height = 0,
-        $set_watermark = false
+        int $width = 0,
+        int $height = 0,
+        bool $set_watermark = false
     ) {
         return Storage::disk($disk)->url($directory . '/')
             . $this->getResizedFilename($filename, $width, $height, $set_watermark);
@@ -156,7 +156,7 @@ class ImageHelper
      * @param bool $set_watermark
      * @return string
      */
-    public function getResizedFilename(string $filename, $width = 0, $height = 0, $set_watermark = false)
+    public function getResizedFilename(string $filename, int $width = 0, int $height = 0, bool $set_watermark = false)
     {
         $file = pathinfo($filename, PATHINFO_FILENAME);
         $ext  = pathinfo($filename, PATHINFO_EXTENSION);
