@@ -12,6 +12,7 @@
         "barryvdh/laravel-debugbar": "^3.2",
         "barryvdh/laravel-ide-helper": "^2.6",
         "fideloper/proxy": "^4.0",
+        "guzzlehttp/guzzle": "^6.4",
         "intervention/image": "^2.5",
         "laravel/framework": "^6.0",
         "laravel/tinker": "^1.0"

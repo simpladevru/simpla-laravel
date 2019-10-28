@@ -3,13 +3,14 @@
 namespace App\Helpers;
 
 use Exception;
+use GuzzleHttp\Client;
 use Illuminate\Support\Str;
 use Intervention\Image\Image;
 use Illuminate\Http\UploadedFile;
 use Intervention\Image\Constraint;
 use Illuminate\Support\Facades\File;
-use Intervention\Image\Facades\Image as ImageFactory;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image as ImageFactory;
 
 class ImageHelper
 {
@@ -47,12 +48,22 @@ class ImageHelper
     }
 
     /**
-     * @param $filename
+     * @param string $disk
+     * @param string $directory
+     * @param string $fileUrl
+     * @param string $handlerClass
      * @return string
      */
-    public function downloadFile($filename): string
+    public function downloadFile(string $disk, string $directory, string $fileUrl, string $handlerClass): string
     {
-        return '';
+        $savePath    = Storage::disk($disk)->path($directory . '/');
+        $newFilename = $this->getPreparedFilename($fileUrl);
+
+        (new Client)->get($fileUrl, ['save_to' => $savePath]);
+
+        app($handlerClass)->handle($fileUrl, $newFilename);
+
+        return $newFilename;
     }
 
     /**
@@ -105,7 +116,16 @@ class ImageHelper
      */
     public function getPreparedUploadFilename(UploadedFile $file): string
     {
-        return Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
+        return $this->getPreparedFilename($file->getClientOriginalName());
+    }
+
+    /**
+     * @param string $filename
+     * @return string
+     */
+    public function getPreparedFilename(string $filename): string
+    {
+        return Str::slug(pathinfo($filename, PATHINFO_FILENAME));
     }
 
     /**

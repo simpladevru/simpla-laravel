@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Helpers\ImageHelper;
-use App\Entity\Shop\Product\Image\Image as ProductImage;
+use App\Entity\Shop\Catalog\Product\Image\DownloadHandler as ProductDownloadHandler;
 
 class ResizeImageController extends Controller
 {
@@ -35,9 +35,7 @@ class ResizeImageController extends Controller
     private function downloadHandlers()
     {
         return [
-            self::DIRECTORY_PRODUCTS => function (string $oldFilename, string $newFilename) {
-                throw new Exception(ProductImage::class);
-            },
+            self::DIRECTORY_PRODUCTS => ProductDownloadHandler::class,
         ];
     }
 
@@ -57,7 +55,8 @@ class ResizeImageController extends Controller
         }
 
         if (substr($filename, 0, 7) == 'http://') {
-            $filename = $this->images->downloadFile($filename);
+            $handlerClass = $this->downloadHandlers()[$directory];
+            $filename     = $this->images->downloadFile('local', $directory, $filename, $handlerClass);
         }
 
         $newImage = $this->images->resize(
