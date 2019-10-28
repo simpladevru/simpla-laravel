@@ -4,10 +4,11 @@ namespace App\Helpers;
 
 use Exception;
 use Illuminate\Support\Str;
+use Intervention\Image\Image;
 use Illuminate\Http\UploadedFile;
 use Intervention\Image\Constraint;
 use Illuminate\Support\Facades\File;
-use Intervention\Image\Facades\Image;
+use Intervention\Image\Facades\Image as ImageFactory;
 use Illuminate\Support\Facades\Storage;
 
 class ImageHelper
@@ -37,7 +38,7 @@ class ImageHelper
             File::makeDirectory($resizedPath, 0755, true);
         }
 
-        $newImage   = Image::make($originalImage);
+        $newImage   = ImageFactory::make($originalImage);
         $resizeName = $newImage->filename . '.' . $width . 'x' . $height . '.' . $newImage->extension;
 
         $newImage->resize($width, $height, function (Constraint $constraint) {
