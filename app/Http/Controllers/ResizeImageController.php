@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Exception;
-use Intervention\Image\Constraint;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
+use App\Helpers\ImageHelper;
+use Intervention\Image\Image;
 
 class ResizeImageController extends Controller
 {
@@ -15,6 +13,21 @@ class ResizeImageController extends Controller
     private static $directories = [
         self::DIRECTORY_PRODUCTS,
     ];
+
+    /**
+     * @var ImageHelper
+     */
+    private $images;
+
+    /**
+     * ResizeImageController constructor.
+     *
+     * @param ImageHelper $images
+     */
+    public function __construct(ImageHelper $images)
+    {
+        $this->images = $images;
+    }
 
     /**
      * @param $directory
@@ -31,24 +44,16 @@ class ResizeImageController extends Controller
             throw new Exception('Directory not found');
         }
 
-        $originalImage = Storage::disk('local')->path('products/' . $filename . '.' . $extension);
-
-        if (!file_exists($originalImage)) {
-            throw new Exception('File not found');
-        }
-
-        $resizedPath = Storage::disk('public')->path($directory . '/');
-
-        if (!File::isDirectory($resizedPath)) {
-            File::makeDirectory($resizedPath, 0755, true);
-        }
-
-        $newImage   = Image::make($originalImage);
-        $resizeName = $newImage->filename . '.' . $width . 'x' . $height . '.' . $newImage->extension;
-
-        $newImage->resize($width, $height, function (Constraint $constraint) {
-            $constraint->aspectRatio();
-        })->save($resizedPath . $resizeName);
+        /** @var Image $newImage */
+        $newImage = $this->images->resize(
+            'local',
+            'public',
+            'products',
+            $filename,
+            $width,
+            $height,
+            $extension
+        );
 
         return $newImage->response();
     }

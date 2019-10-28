@@ -56,7 +56,7 @@ class ImageObserver
      */
     private function removeFile(string $file)
     {
-        $this->images->removeOriginal('public', 'products', $file);
+        $this->images->removeOriginal('local', 'products', $file);
         $this->images->removeResized('public', 'products', $file);
     }
 }

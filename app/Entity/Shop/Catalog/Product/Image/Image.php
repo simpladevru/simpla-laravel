@@ -2,6 +2,7 @@
 
 namespace App\Entity\Shop\Product\Image;
 
+use App\Helpers\ImageHelper;
 use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -29,31 +30,6 @@ class Image extends Model
      */
     public function getResizedFilename($width = 0, $height = 0, $set_watermark = false)
     {
-        $file = $this->getFilename();
-        $ext  = $this->getExtension();
-
-        if ($width > 0 || $height > 0) {
-            $resizedFilename = $file . '.' . ($width > 0 ? $width : '') . 'x' . ($height > 0 ? $height : '') . ($set_watermark ? 'w' : '') . '.' . $ext;
-        } else {
-            $resizedFilename = $file . '.' . ($set_watermark ? 'w.' : '') . $ext;
-        }
-
-        return $resizedFilename;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFilename(): string
-    {
-        return pathinfo($this->file, PATHINFO_FILENAME);
-    }
-
-    /**
-     * @return string
-     */
-    public function getExtension(): string
-    {
-        return pathinfo($this->file, PATHINFO_EXTENSION);
+        return app(ImageHelper::class)->getResizedFilename($this->file, $width, $height, $set_watermark);
     }
 }
