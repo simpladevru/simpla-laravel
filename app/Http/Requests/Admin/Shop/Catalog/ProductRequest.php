@@ -52,6 +52,8 @@ class ProductRequest extends FormRequest
         $data['is_active']   = $this->has('is_active');
         $data['is_featured'] = $this->has('is_featured');
 
+        $data['attributes'] = $this->get('attributes', []);
+
         $data['images']        = array_filter($this->get('images', []));
         $data['upload_images'] = $this->file('upload_images', []);
 

@@ -136,8 +136,8 @@
         });
 
         Variants.load(
-                @json(old('variants', $product->variants()->orderBy('sort')->get())),
-                @json($errors->get('variants.*'))
+            @json(old('variants', $product->variants()->orderBy('sort')->get())),
+            @json($errors->get('variants.*'))
         );
     </script>
 @endpush
