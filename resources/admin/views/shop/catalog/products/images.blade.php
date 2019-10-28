@@ -55,7 +55,7 @@
         Images.load(@json($product->images()->orderBy('sort')->get()->map(function ($image) {
             return [
                 'id'   => $image->id,
-                'file' => Storage::disk('public')->url('products/') . $image->getResizedFilename(120, 120)
+                'file' => $image->getResizedUrl(120, 120)
             ];
         })));
     </script>

@@ -129,6 +129,27 @@ class ImageHelper
     }
 
     /**
+     * @param string $disk
+     * @param string $directory
+     * @param string $filename
+     * @param int $width
+     * @param int $height
+     * @param bool $set_watermark
+     * @return string
+     */
+    public function getResizedUrl(
+        string $disk,
+        string $directory,
+        string $filename,
+        $width = 0,
+        $height = 0,
+        $set_watermark = false
+    ) {
+        return Storage::disk($disk)->url($directory . '/')
+            . $this->getResizedFilename($filename, $width, $height, $set_watermark);
+    }
+
+    /**
      * @param string $filename
      * @param int $width
      * @param int $height
