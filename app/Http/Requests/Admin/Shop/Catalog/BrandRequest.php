@@ -18,6 +18,8 @@ class BrandRequest extends FormRequest
             'meta_title'       => 'nullable|string|max:500',
             'meta_keywords'    => 'nullable|string|max:500',
             'meta_description' => 'nullable|string|max:500',
+
+            'image' => 'nullable|image|mimes:jpg,jpeg,png',
         ];
     }
 }

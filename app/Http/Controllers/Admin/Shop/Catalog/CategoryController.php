@@ -8,14 +8,14 @@ use Illuminate\View\View;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
-use App\Entity\Shop\Catalog\Category;
+use App\Entity\Shop\Catalog\Category\Category;
 use App\UseCase\Shop\Catalog\CategoryService;
 use App\Http\Requests\Admin\Shop\Catalog\CategoryRequest;
 
 class CategoryController extends Controller
 {
     const ROUTE_PATH = 'admin.shop.catalog.categories.';
-    const VIEW_PATH  = 'admin.shop.catalog.categories.';
+    const VIEW_PATH  = 'shop.catalog.categories.';
 
     /**
      * @var CategoryService

@@ -14,9 +14,9 @@
             <input
                 @change="selectImages"
                 type="file"
+                name="upload_images[]"
                 class="custom-file-input"
                 id="uploadImages"
-                name="upload_images[]"
                 multiple
             >
             <label class="custom-file-label" for="uploadImages">Choose file</label>

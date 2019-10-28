@@ -1,4 +1,4 @@
-@extends('admin.layouts.wrap')
+@extends('layouts.wrap')
 
 @section('wrap-content')
     <div class="page-header clearfix mb-3">

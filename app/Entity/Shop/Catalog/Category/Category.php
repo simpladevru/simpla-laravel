@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Entity\Shop\Catalog;
+namespace App\Entity\Shop\Catalog\Category;
 
+use App\Helpers\ImageHelper;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -39,4 +40,26 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     protected $guarded = ['id'];
+
+    /**
+     * @param int $width
+     * @param int $height
+     * @param bool $set_watermark
+     * @return string
+     */
+    public function getResizedUrl(int $width = 0, int $height = 0, bool $set_watermark = false)
+    {
+        if (!$this->image) {
+            return '';
+        }
+
+        return app(ImageHelper::class)->getResizedUrl(
+            'public',
+            'categories',
+            $this->image,
+            $width,
+            $height,
+            $set_watermark
+        );
+    }
 }

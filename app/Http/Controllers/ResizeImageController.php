@@ -7,10 +7,14 @@ use App\Helpers\ImageHelper;
 
 class ResizeImageController extends Controller
 {
-    const DIRECTORY_PRODUCTS = 'products';
+    const DIRECTORY_BRANDS     = 'brands';
+    const DIRECTORY_PRODUCTS   = 'products';
+    const DIRECTORY_CATEGORIES = 'categories';
 
     private static $directories = [
+        self::DIRECTORY_BRANDS,
         self::DIRECTORY_PRODUCTS,
+        self::DIRECTORY_CATEGORIES,
     ];
 
     /**

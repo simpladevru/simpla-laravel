@@ -1,4 +1,4 @@
-@extends('admin.layouts.wrap')
+@extends('layouts.wrap')
 
 @section('wrap-content')
     <div class="page-header clearfix mb-3">
@@ -18,6 +18,7 @@
                 ? route('admin.shop.catalog.categories.update', $category)
                 : route('admin.shop.catalog.categories.store')
         }}"
+        enctype="multipart/form-data"
     >
         @csrf
         @if($category->id)
@@ -51,17 +52,12 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="slug" class="col-md-3 col-form-label">Slug</label>
+                            <label for="image" class="col-md-3 col-form-label">Image</label>
                             <div class="col-md-9">
-                                <input
-                                    id="slug"
-                                    class="form-control{{ $errors->has('slug') ? ' is-invalid' : '' }}"
-                                    name="slug"
-                                    value="{{ old('slug', $category->slug) }}"
-                                >
-                                @if ($errors->has('slug'))
+                                @include('shop.catalog.categories.image')
+                                @if ($errors->has('image'))
                                     <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('slug') }}</strong>
+                                        <strong>{{ $errors->first('image') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -88,6 +84,23 @@
                         </div>
 
                         <div class="form-group border-top mt-4 mb-4"></div>
+
+                        <div class="form-group row">
+                            <label for="slug" class="col-md-3 col-form-label">Slug</label>
+                            <div class="col-md-9">
+                                <input
+                                        id="slug"
+                                        class="form-control{{ $errors->has('slug') ? ' is-invalid' : '' }}"
+                                        name="slug"
+                                        value="{{ old('slug', $category->slug) }}"
+                                >
+                                @if ($errors->has('slug'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('slug') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
 
                         <div class="form-group row">
                             <label for="metaTitle" class="col-md-3 col-form-label">Meta Title</label>

@@ -30,13 +30,16 @@ class BrandService
      */
     public function create(BrandRequest $request): Brand
     {
+        $data = $request->validated();
+
         $brand = Brand::create([
-            'name'             => $request['name'],
-            'slug'             => $request['slug'],
-            'description'      => $request['description'],
-            'meta_title'       => $request['meta_title'],
-            'meta_keywords'    => $request['meta_keywords'],
-            'meta_description' => $request['meta_description'],
+            'name'             => $data['name'],
+            'slug'             => $data['slug'],
+            'image'            => $data['image'],
+            'description'      => $data['description'],
+            'meta_title'       => $data['meta_title'],
+            'meta_keywords'    => $data['meta_keywords'],
+            'meta_description' => $data['meta_description'],
         ]);
 
         return $brand;
@@ -50,14 +53,16 @@ class BrandService
     public function edit(int $id, BrandRequest $request): Brand
     {
         $brand = $this->repository->getOne($id);
+        $data  = $request->validated();
 
         $brand->update([
-            'name'             => $request['name'],
-            'slug'             => $request['slug'],
-            'description'      => $request['description'],
-            'meta_title'       => $request['meta_title'],
-            'meta_keywords'    => $request['meta_keywords'],
-            'meta_description' => $request['meta_description'],
+            'name'             => $data['name'],
+            'slug'             => $data['slug'],
+            'image'            => $data['image'],
+            'description'      => $data['description'],
+            'meta_title'       => $data['meta_title'],
+            'meta_keywords'    => $data['meta_keywords'],
+            'meta_description' => $data['meta_description'],
         ]);
 
         return $brand;

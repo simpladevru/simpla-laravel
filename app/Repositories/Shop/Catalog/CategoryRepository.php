@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Shop\Catalog;
 
-use App\Entity\Shop\Catalog\Category;
+use App\Entity\Shop\Catalog\Category\Category;
 
 class CategoryRepository
 {

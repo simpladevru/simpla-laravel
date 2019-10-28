@@ -3,7 +3,7 @@
 namespace App\UseCase\Shop\Catalog;
 
 use Exception;
-use App\Entity\Shop\Catalog\Category;
+use App\Entity\Shop\Catalog\Category\Category;
 use App\Repositories\Shop\Catalog\CategoryRepository;
 use App\Http\Requests\Admin\Shop\Catalog\CategoryRequest;
 
@@ -30,13 +30,16 @@ class CategoryService
      */
     public function create(CategoryRequest $request): Category
     {
+        $data = $request->validated();
+
         $category = Category::create([
-            'name'             => $request['name'],
-            'slug'             => $request['slug'],
-            'description'      => $request['description'],
-            'meta_title'       => $request['meta_title'],
-            'meta_keywords'    => $request['meta_keywords'],
-            'meta_description' => $request['meta_description'],
+            'name'             => $data['name'],
+            'slug'             => $data['slug'],
+            'image'            => $data['image'],
+            'description'      => $data['description'],
+            'meta_title'       => $data['meta_title'],
+            'meta_keywords'    => $data['meta_keywords'],
+            'meta_description' => $data['meta_description'],
         ]);
 
         return $category;
@@ -50,14 +53,16 @@ class CategoryService
     public function edit(int $id, CategoryRequest $request): Category
     {
         $category = $this->repository->getOne($id);
+        $data     = $request->validated();
 
         $category->update([
-            'name'             => $request['name'],
-            'slug'             => $request['slug'],
-            'description'      => $request['description'],
-            'meta_title'       => $request['meta_title'],
-            'meta_keywords'    => $request['meta_keywords'],
-            'meta_description' => $request['meta_description'],
+            'name'             => $data['name'],
+            'slug'             => $data['slug'],
+            'image'            => $data['image'],
+            'description'      => $data['description'],
+            'meta_title'       => $data['meta_title'],
+            'meta_keywords'    => $data['meta_keywords'],
+            'meta_description' => $data['meta_description'],
         ]);
 
         return $category;

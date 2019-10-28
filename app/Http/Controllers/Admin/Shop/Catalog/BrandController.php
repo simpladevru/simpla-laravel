@@ -15,7 +15,7 @@ use App\Http\Requests\Admin\Shop\Catalog\BrandRequest;
 class BrandController extends Controller
 {
     const ROUTE_PATH = 'admin.shop.catalog.brands.';
-    const VIEW_PATH  = 'admin.shop.catalog.brands.';
+    const VIEW_PATH  = 'shop.catalog.brands.';
 
     /**
      * @var BrandService
