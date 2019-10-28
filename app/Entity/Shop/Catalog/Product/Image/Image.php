@@ -30,7 +30,7 @@ class Image extends Model
      * @param bool $set_watermark
      * @return string
      */
-    public function getResizedUrl($width = 0, $height = 0, $set_watermark = false)
+    public function getResizedUrl(int $width = 0, int $height = 0, bool $set_watermark = false)
     {
         return app(ImageHelper::class)->getResizedUrl(
             'public',
