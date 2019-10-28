@@ -47,6 +47,15 @@ class ImageHelper
     }
 
     /**
+     * @param $filename
+     * @return string
+     */
+    public function downloadFile($filename): string
+    {
+        return '';
+    }
+
+    /**
      * @param string $disk
      * @param string $directory
      * @param UploadedFile $file
