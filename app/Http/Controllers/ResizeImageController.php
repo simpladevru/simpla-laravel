@@ -44,7 +44,6 @@ class ResizeImageController extends Controller
             throw new Exception('Directory not found');
         }
 
-        /** @var Image $newImage */
         $newImage = $this->images->resize(
             'local',
             'public',
