@@ -54,7 +54,7 @@ class ImageHelper
      */
     public function storeUploadedFile(string $disk, string $directory, UploadedFile $file): string
     {
-        $name      = $this->getPrepareUploadedFilename($file);
+        $name      = $this->getPreparedUploadFilename($file);
         $extension = $file->getClientOriginalExtension();
 
         $filename = $this->getUniqueFilename($disk, $directory, $name, $extension);
@@ -94,7 +94,7 @@ class ImageHelper
      * @param UploadedFile $file
      * @return string
      */
-    public function getPrepareUploadedFilename(UploadedFile $file): string
+    public function getPreparedUploadFilename(UploadedFile $file): string
     {
         return Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
     }
