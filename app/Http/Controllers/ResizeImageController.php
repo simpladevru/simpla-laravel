@@ -47,7 +47,7 @@ class ResizeImageController extends Controller
         $newImage = $this->images->resize(
             'local',
             'public',
-            'products',
+            $directory,
             $filename,
             $width,
             $height,
