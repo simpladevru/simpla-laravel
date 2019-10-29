@@ -43,6 +43,10 @@ class Image extends Model
      */
     public function getResizedUrl(int $width = 0, int $height = 0, bool $set_watermark = false)
     {
+        if (!$this->file) {
+            return '';
+        }
+
         return app(ImageHelper::class)->getResizedUrl(
             'public',
             'products',

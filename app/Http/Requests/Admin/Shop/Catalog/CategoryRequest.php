@@ -35,7 +35,7 @@ class CategoryRequest extends FormRequest
         $data = parent::validated();
 
         $data['is_active'] = $this->has('is_active');
-        $data['image']     = $this->get('image', null);
+        $data['image']     = $this->file('image', null);
 
         return $data;
     }

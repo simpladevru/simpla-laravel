@@ -37,7 +37,7 @@
                             <td>{{ $product->id }}</td>
                             <td>
                                 <img
-                                    src="{{ $product->image->getResizedUrl(80, 80) }}"
+                                    src="{{ $product->image ? $product->image->getResizedUrl(80, 80) : '' }}"
                                     alt=""
                                     class="img-thumbnail"
                                     style="max-width: 80px; max-height: 80px"

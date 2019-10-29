@@ -22,4 +22,16 @@ class BrandRequest extends FormRequest
             'image' => 'nullable|image|mimes:jpg,jpeg,png',
         ];
     }
+
+    /**
+     * @return array|void
+     */
+    public function validated(): array
+    {
+        $data = parent::validated();
+
+        $data['image'] = $this->file('image', null);
+
+        return $data;
+    }
 }
