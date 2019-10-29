@@ -2,7 +2,10 @@
 
 @section('wrap-content')
     <div class="page-header clearfix mb-3">
-        <h1 class="page-title pull-left">Categories</h1>
+        <h1 class="page-title pull-left">
+            <a href="{{ route('admin.shop.catalog.categories.index') }}">{{ trans('titles.categories') }}</a>
+            / {{ $category->name }}
+        </h1>
     </div>
 
     @if (session()->has('success'))
@@ -27,8 +30,9 @@
 
         <div class="card">
             <h4 class="card-header">
-                {{ $category->id ? 'Edit' : 'Create' }} brand
-                <a href="{{ route('admin.shop.catalog.categories.index') }}" class="btn btn-link">Back</a>
+                {{ $category->id ? trans('actions.edit') : trans('actions.add') }}
+                {{ Str::lower(trans('titles.categories.editor')) }}
+                <a href="{{ route('admin.shop.catalog.categories.index') }}" class="btn btn-link">{{ trans('actions.back') }}</a>
             </h4>
             <div class="card-body p-3">
                 <div class="row">
@@ -208,7 +212,8 @@
             </div>
 
             <div class="card-footer text-center">
-                <button type="submit" class="btn btn-primary">{{ $category->id ? 'Save' : 'Add'}}</button>
+                <button type="submit" class="btn btn-outline-primary mr-2" name="submit-save" value="1">{{ trans('actions.save') }}</button>
+                <button type="submit" class="btn btn-outline-dark" name="submit-apply" value="1">{{ trans('actions.apply') }}</button>
             </div>
         </div>
     </form>

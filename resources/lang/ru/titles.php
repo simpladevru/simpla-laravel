@@ -16,4 +16,5 @@ return [
     'categories'        => 'Категрии',
     'categories.plural' => 'Категория|Категории|Категорий',
     'categories.all'    => 'Все категрии',
+    'categories.editor' => 'Категорию',
 ];

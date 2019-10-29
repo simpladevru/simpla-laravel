@@ -62,20 +62,20 @@
                 @csrf
                 <table class="table table-hover table-striped mb-0">
                     <tr>
-                        <th>Id</th>
-                        <th>Image</th>
+                        <th class="w-1 text-center">Id</th>
+                        <th class="w-5 text-center">Image</th>
                         <th class="w-50">Name</th>
                         <th class="w-25">Edit</th>
                     </tr>
                     @foreach($categories as $category)
                         <tr>
-                            <td>{{ $category->id }}</td>
-                            <td>
+                            <td class="text-center">{{ $category->id }}</td>
+                            <td class="text-center">
                                 <img
-                                    src="{{ $category->getResizedUrl(80, 80) }}"
+                                    src="{{ $category->getResizedUrl(60, 60) }}"
                                     alt=""
                                     class="img-thumbnail"
-                                    style="max-width: 80px; max-height: 80px"
+                                    style="max-width: 60px; max-height: 60px"
                                 >
                             </td>
                             <td>
