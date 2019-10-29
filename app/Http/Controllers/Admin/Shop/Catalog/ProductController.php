@@ -47,7 +47,7 @@ class ProductController extends Controller
      */
     public function index(): View
     {
-        $query = Product::with('variants')
+        $query = Product::with(['variants', 'image'])
             ->orderByDesc('id');
 
         $products = $query->paginate(20);

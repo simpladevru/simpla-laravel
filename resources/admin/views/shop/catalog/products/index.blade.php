@@ -27,6 +27,7 @@
                 <table class="table table-hover table-striped mb-0">
                     <tr>
                         <th>Id</th>
+                        <th>image</th>
                         <th class="w-50">Name</th>
                         <th class="w-25">Variants</th>
                         <th></th>
@@ -34,6 +35,14 @@
                     @foreach($products as $product)
                         <tr>
                             <td>{{ $product->id }}</td>
+                            <td>
+                                <img
+                                    src="{{ $product->image->getResizedUrl(80, 80) }}"
+                                    alt=""
+                                    class="img-thumbnail"
+                                    style="max-width: 80px; max-height: 80px"
+                                >
+                            </td>
                             <td>{{ $product->name }}</td>
                             <td>
                                 @foreach($product->variants as $variant)

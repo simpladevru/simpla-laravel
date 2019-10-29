@@ -6,6 +6,7 @@ use App\Entity\Shop\Product\Image\Image;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * App\Entity\Shop\Product\Product
@@ -53,7 +54,7 @@ class Product extends Model
      */
     public function variants(): HasMany
     {
-        return $this->hasMany(Variant::class, 'product_id', 'id');
+        return $this->hasMany(Variant::class, 'product_id', 'id')->orderBy('sort');
     }
 
     /**
@@ -69,6 +70,14 @@ class Product extends Model
      */
     public function images(): HasMany
     {
-        return $this->hasMany(Image::class, 'product_id', 'id');
+        return $this->hasMany(Image::class, 'product_id', 'id')->orderBy('sort');
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function image(): HasOne
+    {
+        return $this->hasOne(Image::class, 'product_id', 'id')->orderBy('sort');
     }
 }

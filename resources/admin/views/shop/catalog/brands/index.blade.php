@@ -28,12 +28,21 @@
                 <table class="table table-hover table-striped mb-0">
                     <tr>
                         <th>Id</th>
-                        <th>Name</th>
-                        <th>Edit</th>
+                        <th>Image</th>
+                        <th class="w-50">Name</th>
+                        <th class="w-25">Edit</th>
                     </tr>
                     @foreach($brands as $brand)
                         <tr>
                             <td>{{ $brand->id }}</td>
+                            <td>
+                                <img
+                                    src="{{ $brand->getResizedUrl(80, 80) }}"
+                                    alt=""
+                                    class="img-thumbnail"
+                                    style="max-width: 80px; max-height: 80px"
+                                >
+                            </td>
                             <td>{{ $brand->name }}</td>
                             <td>
                                 <div class="float-right">
