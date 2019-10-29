@@ -55,20 +55,20 @@
                             <div class="col-md-9">
                                 <select
                                     id="parentId"
+                                    data-style="border"
                                     class="form-control{{ $errors->has('parent_id') ? ' is-invalid' : '' }}"
                                     name="parent_id"
                                 >
                                     <option value="">Root</option>
                                     @foreach ($categories as $parent)
-                                        @if($parent->id != $category->id)
-                                            <option
-                                                value="{{ $parent->id }}"
-                                                {{ $parent->id == old('parent', $category->parent_id) ? ' selected' : '' }}
-                                            >
-                                                @for ($i = 0; $i < $parent->depth; $i++) &mdash; @endfor
-                                                {{ $parent->name }}
-                                            </option>
-                                        @endif
+                                        <option
+                                            value="{{ $parent->id }}"
+                                            {{ $parent->id == old('parent', $category->parent_id) ? 'selected' : '' }}
+                                            {{ $parent->isSelfOrDescendantOf($category) ? 'disabled' : '' }}
+                                        >
+                                            @for ($i = 0; $i < $parent->depth; $i++) &mdash; @endfor
+                                            {{ $parent->name }}
+                                        </option>
                                     @endforeach;
                                 </select>
                                 @if ($errors->has('parent_id'))
@@ -213,3 +213,4 @@
         </div>
     </form>
 @endsection
+
