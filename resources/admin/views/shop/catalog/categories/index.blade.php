@@ -1,9 +1,20 @@
 @extends('layouts.wrap')
 
+@section('breadcrumb')
+    @include('parts.breadcrumb', ['items' => array_merge(
+        [['name'  => trans('titles.categories.all'), 'route' => route('admin.shop.catalog.categories.index')]],
+        $category ? $category->getAncestorsAndSelf()->map(function ($ancestor) {
+            return ['name' => $ancestor->name, 'route' => route('admin.shop.catalog.categories.children', $ancestor)];
+        })->toArray() : []
+    )])
+@endsection
+
 @section('wrap-content')
-    <div class="page-header clearfix mb-3">
-        <h1 class="page-title pull-left">Categories</h1>
+    <div class="page-header clearfix">
+        <h1 class="page-title pull-left">{{ trans('titles.categories') }}</h1>
     </div>
+
+    @yield('breadcrumb')
 
     @if (session()->has('success'))
         <div class="alert alert-success" role="alert">{{ session()->get('success') }}</div>
@@ -18,9 +29,33 @@
                 {{ $categories->total() }}
             </div>
 
-            <a href="{{ route('admin.shop.catalog.categories.create') }}" class="btn btn-primary float-right">
-                <i class="fa fa-plus-circle"></i> Add
-            </a>
+            <div class="float-right">
+                <div class="btn-group" role="group">
+                    <button class="btn btn-outline-secondary" data-toggle="collapse" href="#collapseFilter" role="button" aria-expanded="false" aria-controls="collapseFilter">
+                        <i class="fa fa-filter"></i> {{ trans('actions.filter') }}
+                    </button>
+                    @if( request()->has('keyword') )
+                        <a href="{{ request()->url() }}" class="btn btn-outline-secondary">
+                            <i class="fa fa-times"></i> {{ trans('actions.reset') }}
+                        </a>
+                    @endif
+                </div>
+                <a href="{{ route('admin.shop.catalog.categories.create') }}" class="btn btn-primary">
+                    <i class="fa fa-plus-circle"></i> {{ trans('actions.add') }}
+                </a>
+            </div>
+        </div>
+        <div class="collapse p-3 @if( request()->has('keyword') ) show @endif bg-light" id="collapseFilter">
+            <form method="get">
+                <div class="input-group">
+                    <input name="keyword" type="text" class="form-control" placeholder="{{ __('actions.searching') }}" value="{{ request()->get('keyword') }}">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
         <div class="card-body p-0">
             <form action="" method="post" class="list-form">
@@ -44,12 +79,18 @@
                                 >
                             </td>
                             <td>
-                                @if($category->children_count)
-                                    <a
-                                        href="{{ route('admin.shop.catalog.categories.children', $category->id) }}"
-                                    >{{ $category->name }}</a>
-                                @else
+                                @if(request()->has('keyword') && $category->ancestors->count() > 0)
+                                    <small class="text-secondary">{{ implode(' / ', $category->ancestors->pluck('name')->toArray()) }}</small><br>
+                                @endif
+                                @if( $category->descendants_count == 0 )
                                     {{ $category->name }}
+                                @else
+                                    <a href="{{ route('admin.shop.catalog.categories.children', $category->id) }}">
+                                        {{ $category->name }}
+                                    </a>
+                                    <small class="text-secondary">
+                                        ({{ $category->descendants_count }} {{ Str::lower(trans_choice('titles.categories.plural', $category->descendants_count)) }})
+                                    </small>
                                 @endif
                             </td>
                             <td>

@@ -3,6 +3,7 @@
 namespace App\Entity\Shop\Catalog\Category;
 
 use App\Helpers\ImageHelper;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Kalnoy\Nestedset\NodeTrait;
 
@@ -51,6 +52,7 @@ use Kalnoy\Nestedset\NodeTrait;
 class Category extends Model
 {
     use NodeTrait;
+    use Scopes;
 
     protected $guarded = ['id'];
 
@@ -74,5 +76,21 @@ class Category extends Model
             $height,
             $set_watermark
         );
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getAncestorsAndSelf()
+    {
+        return $this->getAncestors()->add($this);
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getDescendantsAndSelf()
+    {
+        return $this->getDescendants()->add($this);
     }
 }

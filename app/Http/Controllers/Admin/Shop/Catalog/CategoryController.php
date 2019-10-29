@@ -33,14 +33,21 @@ class CategoryController extends Controller
     }
 
     /**
+     * @param Category|null $category
      * @return View
      */
     public function index(Category $category = null): View
     {
-        $query = Category::defaultOrder()->withCount('children');
+        $filter = request()->all([
+            'keyword',
+        ]);
+
+        $query = Category::defaultOrder()->withCount('descendants');
 
         if ($category) {
             $query->descendantsOf($category->id);
+        } elseif ($filter['keyword']) {
+            $query = $query->whereNameLike($filter['keyword'])->with('ancestors');
         } else {
             $query->whereIsRoot();
         }
@@ -48,6 +55,7 @@ class CategoryController extends Controller
         $categories = $query->paginate(20);
 
         return view(static::VIEW_PATH . 'index', [
+            'category'   => $category,
             'categories' => $categories,
         ]);
     }
