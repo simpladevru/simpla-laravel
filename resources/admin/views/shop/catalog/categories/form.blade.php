@@ -60,13 +60,15 @@
                                 >
                                     <option value="">Root</option>
                                     @foreach ($categories as $parent)
-                                        <option
-                                            value="{{ $parent->id }}"
-                                            {{ $parent->id == old('parent', $category->parent_id) ? ' selected' : '' }}
-                                        >
-                                            @for ($i = 0; $i < $parent->depth; $i++) &mdash; @endfor
-                                            {{ $parent->name }}
-                                        </option>
+                                        @if($parent->id != $category->id)
+                                            <option
+                                                value="{{ $parent->id }}"
+                                                {{ $parent->id == old('parent', $category->parent_id) ? ' selected' : '' }}
+                                            >
+                                                @for ($i = 0; $i < $parent->depth; $i++) &mdash; @endfor
+                                                {{ $parent->name }}
+                                            </option>
+                                        @endif
                                     @endforeach;
                                 </select>
                                 @if ($errors->has('parent_id'))

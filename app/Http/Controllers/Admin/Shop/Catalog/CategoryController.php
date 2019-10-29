@@ -66,7 +66,7 @@ class CategoryController extends Controller
      */
     public function create(): View
     {
-        $categories = Category::defaultOrder()->withDepth()->get()->toTree();
+        $categories = Category::defaultOrder()->withDepth()->get();
 
         return view(static::VIEW_PATH . 'form', [
             'category'   => new Category(),
@@ -95,7 +95,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category): View
     {
-        $categories = Category::defaultOrder()->withDepth()->get()->toTree();
+        $categories = Category::defaultOrder()->withDepth()->get();
 
         return view(static::VIEW_PATH . 'form', [
             'category'   => $category,
