@@ -15,6 +15,17 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Product\Image newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Product\Image query()
  * @mixin Eloquent
+ * @property int $id
+ * @property int $product_id
+ * @property int $sort
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Product\Image\Image whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Product\Image\Image whereFile($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Product\Image\Image whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Product\Image\Image whereProductId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Product\Image\Image whereSort($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Product\Image\Image whereUpdatedAt($value)
  */
 class Image extends Model
 {

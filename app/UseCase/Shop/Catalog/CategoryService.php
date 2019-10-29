@@ -40,6 +40,7 @@ class CategoryService
             'meta_title'       => $data['meta_title'],
             'meta_keywords'    => $data['meta_keywords'],
             'meta_description' => $data['meta_description'],
+            'parent_id'        => $data['parent_id'],
         ]);
 
         return $category;
@@ -63,6 +64,7 @@ class CategoryService
             'meta_title'       => $data['meta_title'],
             'meta_keywords'    => $data['meta_keywords'],
             'meta_description' => $data['meta_description'],
+            'parent_id'        => $data['parent_id'],
         ]);
 
         return $category;

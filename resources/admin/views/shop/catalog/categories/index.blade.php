@@ -43,7 +43,15 @@
                                     style="max-width: 80px; max-height: 80px"
                                 >
                             </td>
-                            <td>{{ $category->name }}</td>
+                            <td>
+                                @if($category->children_count)
+                                    <a
+                                        href="{{ route('admin.shop.catalog.categories.children', $category->id) }}"
+                                    >{{ $category->name }}</a>
+                                @else
+                                    {{ $category->name }}
+                                @endif
+                            </td>
                             <td>
                                 <div class="float-right">
                                     <a

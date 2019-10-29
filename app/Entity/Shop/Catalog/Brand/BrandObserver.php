@@ -46,7 +46,9 @@ class BrandObserver
      */
     public function deleted(Brand $brand)
     {
-        $this->removeFile($brand->image);
+        if ($brand->image) {
+            $this->removeFile($brand->image);
+        }
     }
 
     /**

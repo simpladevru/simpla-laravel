@@ -35,9 +35,16 @@ class CategoryController extends Controller
     /**
      * @return View
      */
-    public function index(): View
+    public function index(Category $category = null): View
     {
-        $query      = Category::orderByDesc('id');
+        $query = Category::defaultOrder()->withCount('children');
+
+        if ($category) {
+            $query->descendantsOf($category->id);
+        } else {
+            $query->whereIsRoot();
+        }
+
         $categories = $query->paginate(20);
 
         return view(static::VIEW_PATH . 'index', [
@@ -59,8 +66,11 @@ class CategoryController extends Controller
      */
     public function create(): View
     {
+        $categories = Category::defaultOrder()->withDepth()->get()->toTree();
+
         return view(static::VIEW_PATH . 'form', [
-            'category' => new Category(),
+            'category'   => new Category(),
+            'categories' => $categories,
         ]);
     }
 
@@ -85,8 +95,11 @@ class CategoryController extends Controller
      */
     public function edit(Category $category): View
     {
+        $categories = Category::defaultOrder()->withDepth()->get()->toTree();
+
         return view(static::VIEW_PATH . 'form', [
-            'category' => $category,
+            'category'   => $category,
+            'categories' => $categories,
         ]);
     }
 

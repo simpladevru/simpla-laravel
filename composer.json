@@ -14,6 +14,7 @@
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "^6.4",
         "intervention/image": "^2.5",
+        "kalnoy/nestedset": "^5.0",
         "laravel/framework": "^6.0",
         "laravel/tinker": "^1.0"
     },

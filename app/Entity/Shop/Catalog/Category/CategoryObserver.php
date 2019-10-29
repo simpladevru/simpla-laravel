@@ -45,7 +45,9 @@ class CategoryObserver
      */
     public function deleted(Category $category)
     {
-        $this->removeFile($category->image);
+        if ($category->image) {
+            $this->removeFile($category->image);
+        }
     }
 
     /**

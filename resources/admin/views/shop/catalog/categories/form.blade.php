@@ -50,6 +50,32 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="parentId" class="col-md-3 col-form-label">Parent</label>
+                            <div class="col-md-9">
+                                <select
+                                    id="parentId"
+                                    class="form-control{{ $errors->has('parent_id') ? ' is-invalid' : '' }}"
+                                    name="parent_id"
+                                >
+                                    <option value="">Root</option>
+                                    @foreach ($categories as $parent)
+                                        <option
+                                            value="{{ $parent->id }}"
+                                            {{ $parent->id == old('parent', $category->parent_id) ? ' selected' : '' }}
+                                        >
+                                            @for ($i = 0; $i < $parent->depth; $i++) &mdash; @endfor
+                                            {{ $parent->name }}
+                                        </option>
+                                    @endforeach;
+                                </select>
+                                @if ($errors->has('parent_id'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('parent_id') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
 
                         <div class="form-group row">
                             <label for="image" class="col-md-3 col-form-label">Image</label>
@@ -89,10 +115,10 @@
                             <label for="slug" class="col-md-3 col-form-label">Slug</label>
                             <div class="col-md-9">
                                 <input
-                                        id="slug"
-                                        class="form-control{{ $errors->has('slug') ? ' is-invalid' : '' }}"
-                                        name="slug"
-                                        value="{{ old('slug', $category->slug) }}"
+                                    id="slug"
+                                    class="form-control{{ $errors->has('slug') ? ' is-invalid' : '' }}"
+                                    name="slug"
+                                    value="{{ old('slug', $category->slug) }}"
                                 >
                                 @if ($errors->has('slug'))
                                     <span class="invalid-feedback">
