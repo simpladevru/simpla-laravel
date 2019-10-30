@@ -8,7 +8,7 @@ INSTALL
 - ssh vagrant
 - cd project directory
 - clone project https://github.com/simpladevru/simpla-laravel
-- cp .env.example .example
+- cp .env.example .env
 - composer install
 - php artisan key:generate
 - php artisan migrate
