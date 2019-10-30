@@ -2,8 +2,12 @@
 
 namespace App\Http\Requests\Admin\Shop\Catalog;
 
+use App\Entity\Shop\Catalog\Brand;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * @property Brand $brand
+ */
 class BrandRequest extends FormRequest
 {
     /**
@@ -13,19 +17,18 @@ class BrandRequest extends FormRequest
     {
         return [
             'name'             => 'required|string|max:255',
-            'slug'             => 'nullable|string|max:500',
+            'slug'             => 'required|string|max:500|unique:brands,slug' . ($this->brand ? ',' . $this->brand->id : null),
             'description'      => 'nullable|string',
             'meta_title'       => 'nullable|string|max:500',
             'meta_keywords'    => 'nullable|string|max:500',
             'meta_description' => 'nullable|string|max:500',
-
-            'image'        => 'nullable|string',
-            'upload_image' => 'nullable|image|mimes:jpg,jpeg,png',
+            'image'            => 'nullable|string',
+            'upload_image'     => 'nullable|image|mimes:jpg,jpeg,png',
         ];
     }
 
     /**
-     * @return array|void
+     * @return array
      */
     public function validated(): array
     {

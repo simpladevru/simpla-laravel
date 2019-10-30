@@ -44,10 +44,14 @@ class CategoryObserver
     /**
      * @param Category $category
      */
-    public function deleted(Category $category)
+    public function deleting(Category $category)
     {
         if ($category->image) {
             $this->removeFile($category->image);
+        }
+
+        foreach ($category->getDescendants() as $descendant) {
+            $descendant->delete();
         }
     }
 

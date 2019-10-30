@@ -3,7 +3,11 @@
 namespace App\Http\Requests\Admin\Shop\Catalog;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Entity\Shop\Catalog\Category\Category;
 
+/**
+ * @property Category $category
+ */
 class CategoryRequest extends FormRequest
 {
     /**
@@ -12,24 +16,20 @@ class CategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'slug' => 'nullable|string|max:500',
-
-            'description' => 'nullable|string',
-
+            'name'             => 'required|string|max:255',
+            'slug'             => 'required|string|max:500|unique:categories,slug' . ($this->category ? ',' . $this->category->id : null),
+            'description'      => 'nullable|string',
             'meta_title'       => 'nullable|string|max:500',
             'meta_keywords'    => 'nullable|string|max:500',
             'meta_description' => 'nullable|string|max:500',
-
-            'parent_id' => 'nullable|int',
-
-            'image'        => 'nullable|string',
-            'upload_image' => 'nullable|image|mimes:jpg,jpeg,png',
+            'parent_id'        => 'nullable|integer|exists:categories,id',
+            'image'            => 'nullable|string',
+            'upload_image'     => 'nullable|image|mimes:jpg,jpeg,png',
         ];
     }
 
     /**
-     * @return array|void
+     * @return array
      */
     public function validated(): array
     {

@@ -37,7 +37,7 @@ class ImageObserver
     /**
      * @param Image $image
      */
-    public function deleted(Image $image)
+    public function deleting(Image $image)
     {
         $this->removeFile($image->file);
     }

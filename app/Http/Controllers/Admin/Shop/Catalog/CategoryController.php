@@ -45,7 +45,7 @@ class CategoryController extends Controller
         $query = Category::defaultOrder()->withCount('descendants');
 
         if ($category) {
-            $query->descendantsOf($category->id);
+            $query->whereParentId($category->id);
         } elseif ($filter['keyword']) {
             $query = $query->whereNameLike($filter['keyword'])->with('ancestors');
         } else {
