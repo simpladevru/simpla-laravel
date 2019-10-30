@@ -120,12 +120,19 @@
                         <div class="form-group row">
                             <label for="slug" class="col-md-3 col-form-label">Slug</label>
                             <div class="col-md-9">
-                                <input
-                                    id="slug"
-                                    class="form-control{{ $errors->has('slug') ? ' is-invalid' : '' }}"
-                                    name="slug"
-                                    value="{{ old('slug', $category->slug) }}"
-                                >
+                                <div class="input-group">
+                                    <input
+                                        id="slug"
+                                        class="form-control{{ $errors->has('slug') ? ' is-invalid' : '' }}"
+                                        name="slug"
+                                        value="{{ old('slug', $category->slug) }}"
+                                    >
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary translit-slug-button" type="button" data-name="name" data-slug="slug">
+                                            <i class="fa fa-refresh"></i>
+                                        </button>
+                                    </div>
+                                </div>
                                 @if ($errors->has('slug'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('slug') }}</strong>

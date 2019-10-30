@@ -50,9 +50,9 @@ class CategoryObserver
             $this->removeFile($category->image);
         }
 
-        foreach ($category->getDescendants() as $descendant) {
+        $category->getDescendants()->map(function (Category $descendant) {
             $descendant->delete();
-        }
+        });
     }
 
     /**

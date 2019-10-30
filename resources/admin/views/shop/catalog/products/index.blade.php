@@ -37,10 +37,10 @@
                             <td>{{ $product->id }}</td>
                             <td>
                                 <img
-                                    src="{{ $product->image ? $product->image->getResizedUrl(80, 80) : '' }}"
+                                    src="{{ $product->image ? $product->image->getResizedUrl(45, 45) : '' }}"
                                     alt=""
                                     class="img-thumbnail"
-                                    style="max-width: 80px; max-height: 80px"
+                                    style="max-width: 45px; max-height: 45px"
                                 >
                             </td>
                             <td>{{ $product->name }}</td>
