@@ -3,9 +3,9 @@
 namespace App\Entity\Shop\Catalog\Category;
 
 use App\Helpers\ImageHelper;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Kalnoy\Nestedset\NodeTrait;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * App\Entity\Shop\Catalog\Category\Category

@@ -72,10 +72,10 @@
                             <td class="text-center">{{ $category->id }}</td>
                             <td class="text-center">
                                 <img
-                                    src="{{ $category->getResizedUrl(60, 60) }}"
+                                    src="{{ $category->getResizedUrl(45, 45) }}"
                                     alt=""
                                     class="img-thumbnail"
-                                    style="max-width: 60px; max-height: 60px"
+                                    style="max-width: 45px; max-height: 45px"
                                 >
                             </td>
                             <td>

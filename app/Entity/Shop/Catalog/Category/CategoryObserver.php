@@ -28,10 +28,11 @@ class CategoryObserver
      */
     public function saving(Category $category)
     {
+        if (($oldImage = $category->getOriginal('image')) && $oldImage !== $category->image) {
+            $this->removeFile($oldImage);
+        }
+
         if ($category->image instanceof UploadedFile) {
-            if ($oldImage = $category->getOriginal('image')) {
-                $this->removeFile($oldImage);
-            }
             $category->image = $this->storeFile($category->image);
         }
 
@@ -45,9 +46,7 @@ class CategoryObserver
      */
     public function deleted(Category $category)
     {
-        if ($category->image) {
-            $this->removeFile($category->image);
-        }
+        $this->removeFile($category->image);
     }
 
     /**

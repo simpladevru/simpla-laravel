@@ -23,7 +23,8 @@ class CategoryRequest extends FormRequest
 
             'parent_id' => 'nullable|int',
 
-            'image' => 'nullable|image|mimes:jpg,jpeg,png',
+            'image'        => 'nullable|string',
+            'upload_image' => 'nullable|image|mimes:jpg,jpeg,png',
         ];
     }
 
@@ -35,7 +36,7 @@ class CategoryRequest extends FormRequest
         $data = parent::validated();
 
         $data['is_active'] = $this->has('is_active');
-        $data['image']     = $this->file('image', null);
+        $data['image']     = $this->file('upload_image', $this->get('image'));
 
         return $data;
     }
