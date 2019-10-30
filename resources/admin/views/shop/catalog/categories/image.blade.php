@@ -1,12 +1,7 @@
 <div id="categoryImageBlock" class="mb-3">
     <input type="hidden" name="image" :value="original">
     <div v-if="resize">
-        <img
-            :src="resize"
-            alt=""
-            class="img-thumbnail d-block"
-            style="max-width: 200px; max-height: 200px"
-        >
+        <img :src="resize" alt="" class="img-thumbnail d-block" style="max-width: 200px; max-height: 200px">
         <button class="btn btn-danger d-block mt-2" @click="removeImage" type="button">
             {{ trans('actions.delete') }}
         </button>

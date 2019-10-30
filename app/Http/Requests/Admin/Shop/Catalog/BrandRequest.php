@@ -19,7 +19,8 @@ class BrandRequest extends FormRequest
             'meta_keywords'    => 'nullable|string|max:500',
             'meta_description' => 'nullable|string|max:500',
 
-            'image' => 'nullable|image|mimes:jpg,jpeg,png',
+            'image'        => 'nullable|string',
+            'upload_image' => 'nullable|image|mimes:jpg,jpeg,png',
         ];
     }
 
@@ -30,7 +31,7 @@ class BrandRequest extends FormRequest
     {
         $data = parent::validated();
 
-        $data['image'] = $this->file('image', null);
+        $data['image'] = $this->file('upload_image', $this->get('image'));
 
         return $data;
     }

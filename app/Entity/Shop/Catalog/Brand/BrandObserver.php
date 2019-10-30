@@ -29,10 +29,11 @@ class BrandObserver
      */
     public function saving(Brand $brand)
     {
+        if (($oldImage = $brand->getOriginal('image')) && $oldImage !== $brand->image) {
+            $this->removeFile($oldImage);
+        }
+
         if ($brand->image instanceof UploadedFile) {
-            if ($oldImage = $brand->getOriginal('image')) {
-                $this->removeFile($oldImage);
-            }
             $brand->image = $this->storeFile($brand->image);
         }
 
