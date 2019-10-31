@@ -3,6 +3,7 @@
 namespace App\Repositories\Shop\Catalog;
 
 use Exception;
+use RuntimeException;
 use App\Entity\Shop\Catalog\Brand;
 
 class BrandRepository
@@ -27,20 +28,22 @@ class BrandRepository
 
     /**
      * @param Brand $brand
-     * @return bool
      */
-    public function save(Brand $brand): bool
+    public function save(Brand $brand): void
     {
-        return $brand->save();
+        if (!$brand->save()) {
+            throw new RuntimeException('Saving error.');
+        }
     }
 
     /**
      * @param Brand $brand
-     * @return bool|null
      * @throws Exception
      */
-    public function remove(Brand $brand): bool
+    public function remove(Brand $brand): void
     {
-        return $brand->delete();
+        if (!$brand->delete()) {
+            throw new RuntimeException('Removing error.');
+        }
     }
 }

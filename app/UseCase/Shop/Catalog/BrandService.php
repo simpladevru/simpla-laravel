@@ -53,13 +53,7 @@ class BrandService
      */
     public function fillAndSave(Brand $brand, BrandDto $dto): Brand
     {
-        $result = $this->brands->save(
-            $this->fill($brand, $dto)
-        );
-
-        if (!$result) {
-            throw new Exception('error');
-        }
+        $this->brands->save($this->fill($brand, $dto));
 
         return $brand;
     }
@@ -84,12 +78,11 @@ class BrandService
 
     /**
      * @param int $id
-     * @return bool
      * @throws Exception
      */
-    public function remove(int $id): bool
+    public function remove(int $id): void
     {
-        return $this->brands->remove(
+        $this->brands->remove(
             $this->brands->getOne($id)
         );
     }
