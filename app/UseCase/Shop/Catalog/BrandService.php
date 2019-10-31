@@ -30,9 +30,7 @@ class BrandService
      */
     public function create(BrandDto $dto): Brand
     {
-        return $this->brands->save(
-           $this->fill( new Brand, $dto)
-        );
+        return $this->fillAndSave(new Brand(), $dto);
     }
 
     /**
@@ -42,8 +40,18 @@ class BrandService
      */
     public function edit(int $id, BrandDto $dto): Brand
     {
+        return $this->fillAndSave($this->brands->getOne($id), $dto);
+    }
+
+    /**
+     * @param Brand $brand
+     * @param BrandDto $dto
+     * @return Brand
+     */
+    public function fillAndSave(Brand $brand, BrandDto $dto)
+    {
         return $this->brands->save(
-            $this->fill($this->brands->getOne($id), $dto)
+            $this->fill($brand, $dto)
         );
     }
 
