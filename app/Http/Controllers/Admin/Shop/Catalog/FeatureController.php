@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\Shop\Catalog;
 use Exception;
 use DomainException;
 use Illuminate\View\View;
-use App\Entity\Shop\Feature;
+use App\Entity\Shop\Feature\Feature;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
@@ -71,7 +71,7 @@ class FeatureController extends Controller
     public function store(FeatureRequest $request): RedirectResponse
     {
         try {
-            $feature = $this->service->create($request->toArray());
+            $feature = $this->service->create($request);
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -98,7 +98,7 @@ class FeatureController extends Controller
     public function update(FeatureRequest $request, Feature $feature): RedirectResponse
     {
         try {
-            $this->service->edit($feature->id, $request->toArray());
+            $this->service->edit($feature->id, $request);
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }

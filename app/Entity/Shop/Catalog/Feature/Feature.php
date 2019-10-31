@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\Shop;
+namespace App\Entity\Shop\Feature;
 
 use Illuminate\Database\Eloquent\Model;
 
