@@ -17,7 +17,7 @@ class BrandService
     /**
      * @var BrandRepository
      */
-    private $repository;
+    private $brands;
 
     /**
      * BrandService constructor.
@@ -26,34 +26,31 @@ class BrandService
      */
     public function __construct(BrandRepository $repository)
     {
-        $this->repository = $repository;
+        $this->brands = $repository;
     }
 
     /**
-     * @param BrandRequest $request
+     * @param BrandDto $dto
      * @return Brand
-     * @throws ReflectionException
      */
-    public function create(BrandRequest $request): Brand
+    public function create(BrandDto $dto): Brand
     {
-        $brand = new Brand();
-        $dto   = DtoHelper::arrayToDto($request->validated(), BrandDto::class);
+        $brand = $this->fill(new Brand(), $dto);
 
-        return $this->fillAndSave($brand, $dto);
+        return $this->brands->save($brand);
     }
 
     /**
      * @param int $id
-     * @param BrandRequest $request
+     * @param BrandDto $dto
      * @return Brand
-     * @throws ReflectionException
      */
-    public function edit(int $id, BrandRequest $request): Brand
+    public function edit(int $id, BrandDto $dto): Brand
     {
-        $brand = $this->repository->getOne($id);
-        $dto   = DtoHelper::arrayToDto($request->validated(), BrandDto::class);
+        $oldBrand = $this->brands->getOne($id);
+        $newBrand = $this->fill($oldBrand, $dto);
 
-        return $this->fillAndSave($brand, $dto);
+        return $this->brands->save($newBrand);
     }
 
     /**
@@ -61,9 +58,9 @@ class BrandService
      * @param BrandDto $dto
      * @return Brand
      */
-    public function fillAndSave(Brand $brand, BrandDto $dto): Brand
+    private function fill(Brand $brand, BrandDto $dto): Brand
     {
-        $brand->fill([
+        return $brand->fill([
             'name'             => $dto->name,
             'slug'             => $dto->slug,
             'image'            => $dto->image,
@@ -71,17 +68,15 @@ class BrandService
             'meta_title'       => $dto->meta_title,
             'meta_keywords'    => $dto->meta_keywords,
             'meta_description' => $dto->meta_description,
-        ])->save();
-
-        return $brand;
+        ]);
     }
 
     /**
      * @param int $id
      * @throws Exception
      */
-    public function remove(int $id)
+    public function remove(int $id): void
     {
-        $this->repository->getOne($id)->delete();
+        $this->brands->remove($id);
     }
 }

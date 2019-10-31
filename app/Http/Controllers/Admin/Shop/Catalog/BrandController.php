@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin\Shop\Catalog;
 
+use App\Entity\Shop\Catalog\Brand\BrandDto;
+use App\Helpers\DtoHelper;
 use Exception;
 use DomainException;
 use Illuminate\View\View;
@@ -73,7 +75,8 @@ class BrandController extends Controller
     public function store(BrandRequest $request): RedirectResponse
     {
         try {
-            $brand = $this->service->create($request);
+            $dto   = DtoHelper::arrayToDto($request->validated(), BrandDto::class);
+            $brand = $this->service->create($dto);
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -101,7 +104,8 @@ class BrandController extends Controller
     public function update(BrandRequest $request, Brand $brand): RedirectResponse
     {
         try {
-            $this->service->edit($brand->id, $request);
+            $dto   = DtoHelper::arrayToDto($request->validated(), BrandDto::class);
+            $this->service->edit($brand->id, $dto);
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
