@@ -4,15 +4,12 @@ namespace App\Http\Controllers\Admin\Shop\Catalog;
 
 use Exception;
 use DomainException;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
-use App\Entity\Shop\Catalog\Category\Category;
 use App\UseCase\Admin\CategoryService;
+use App\Entity\Shop\Catalog\Category\Category;
 use App\Http\Requests\Admin\Shop\Catalog\CategoryRequest;
 
 class CategoryController extends Controller

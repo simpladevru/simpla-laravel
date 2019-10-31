@@ -5,7 +5,6 @@ namespace App\UseCase\Admin;
 use Exception;
 use App\Entity\Shop\Catalog\Category\Category;
 use App\Repositories\Shop\Catalog\CategoryRepository;
-use App\Http\Requests\Admin\Shop\Catalog\CategoryRequest;
 
 class CategoryService
 {
