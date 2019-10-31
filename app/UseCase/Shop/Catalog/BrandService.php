@@ -2,15 +2,10 @@
 
 namespace App\UseCase\Shop\Catalog;
 
-use App\Entity\Shop\Catalog\Brand\BrandDto;
-use App\Entity\Shop\Catalog\Feature\FeatureDto;
-use App\Entity\Shop\Feature\Feature;
-use App\Helpers\DtoHelper;
 use Exception;
 use App\Entity\Shop\Catalog\Brand;
+use App\Entity\Shop\Catalog\Brand\BrandDto;
 use App\Repositories\Shop\Catalog\BrandRepository;
-use App\Http\Requests\Admin\Shop\Catalog\BrandRequest;
-use ReflectionException;
 
 class BrandService
 {
@@ -35,9 +30,9 @@ class BrandService
      */
     public function create(BrandDto $dto): Brand
     {
-        $brand = $this->fill(new Brand(), $dto);
-
-        return $this->brands->save($brand);
+        return $this->brands->save(
+           $this->fill( new Brand, $dto)
+        );
     }
 
     /**
@@ -47,10 +42,9 @@ class BrandService
      */
     public function edit(int $id, BrandDto $dto): Brand
     {
-        $oldBrand = $this->brands->getOne($id);
-        $newBrand = $this->fill($oldBrand, $dto);
-
-        return $this->brands->save($newBrand);
+        return $this->brands->save(
+            $this->fill($this->brands->getOne($id), $dto)
+        );
     }
 
     /**

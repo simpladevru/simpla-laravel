@@ -75,8 +75,9 @@ class BrandController extends Controller
     public function store(BrandRequest $request): RedirectResponse
     {
         try {
-            $dto   = DtoHelper::arrayToDto($request->validated(), BrandDto::class);
-            $brand = $this->service->create($dto);
+            $brand = $this->service->create(
+                DtoHelper::arrayToDto($request->validated(), BrandDto::class)
+            );
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -104,8 +105,10 @@ class BrandController extends Controller
     public function update(BrandRequest $request, Brand $brand): RedirectResponse
     {
         try {
-            $dto   = DtoHelper::arrayToDto($request->validated(), BrandDto::class);
-            $this->service->edit($brand->id, $dto);
+            $this->service->edit(
+                $brand->id,
+                DtoHelper::arrayToDto($request->validated(), BrandDto::class)
+            );
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }

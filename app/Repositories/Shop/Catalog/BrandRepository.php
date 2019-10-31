@@ -24,6 +24,10 @@ class BrandRepository
         return Brand::find($id);
     }
 
+    /**
+     * @param Brand $brand
+     * @return Brand
+     */
     public function save(Brand $brand): Brand
     {
         return $brand->save();
