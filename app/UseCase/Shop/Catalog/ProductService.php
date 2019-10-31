@@ -2,6 +2,7 @@
 
 namespace App\UseCase\Shop\Catalog;
 
+use App\UseCase\Admin\VariantService;
 use Throwable;
 use Exception;
 use Illuminate\Support\Arr;

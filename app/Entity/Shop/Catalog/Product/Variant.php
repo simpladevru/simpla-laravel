@@ -35,4 +35,13 @@ use Illuminate\Database\Eloquent\Model;
 class Variant extends Model
 {
     protected $guarded = ['id'];
+
+    protected $fillable = [
+        'name',
+        'sku',
+        'stock',
+        'price',
+        'compare_price',
+        'sort',
+    ];
 }
