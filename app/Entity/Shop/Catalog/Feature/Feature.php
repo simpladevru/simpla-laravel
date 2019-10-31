@@ -2,7 +2,6 @@
 
 namespace App\Entity\Shop\Feature;
 
-use DomainException;
 use Illuminate\Database\Eloquent\Model;
 use App\Entity\Shop\Catalog\Category\Category;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -27,7 +26,7 @@ class Feature extends Model
 {
     protected $guarded = ['id'];
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'in_filter', 'sort'];
 
     /**
      * @return BelongsToMany

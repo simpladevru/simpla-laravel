@@ -49,6 +49,22 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="inFilter" class="col-md-3 col-form-label">In filter</label>
+                            <div class="col-md-9">
+                                <div class="custom-control custom-switch d-inline-block mr-4">
+                                    <input
+                                        type="checkbox"
+                                        class="custom-control-input"
+                                        id="inFilter"
+                                        name="in_filter"
+                                        value="1"
+                                        {{ old('in_filter', $feature->in_filter) ? 'checked' : '' }}
+                                    >
+                                    <label class="custom-control-label" for="inFilter"></label>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="form-group row">
                             <label for="categoryIds" class="col-md-3 col-form-label">Use in categories</label>
@@ -82,6 +98,24 @@
                         </div>
 
                         <div class="form-group border-top mt-4 mb-4"></div>
+
+                        <div class="form-group row">
+                            <label for="sort" class="col-md-3 col-form-label">Sort</label>
+                            <div class="col-md-9">
+                                <input
+                                    id="sort"
+                                    class="form-control{{ $errors->has('sort') ? ' is-invalid' : '' }}"
+                                    name="sort"
+                                    value="{{ old('sort', $feature->sort) }}"
+                                    required
+                                >
+                                @if ($errors->has('sort'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('sort') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
 
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label">Created</label>

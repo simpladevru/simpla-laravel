@@ -16,6 +16,8 @@ class CreateFeaturesTable extends Migration
         Schema::create('features', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->boolean('in_filter');
+            $table->integer('sort')->unsigned();
             $table->timestamps();
         });
     }

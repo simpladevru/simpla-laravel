@@ -12,7 +12,9 @@ class FeatureRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
+            'name'      => 'required|string|max:255',
+            'is_active' => 'boolean',
+            'sort'      => 'required|integer',
 
             'category_ids.*' => 'nullable|integer',
         ];
@@ -25,6 +27,7 @@ class FeatureRequest extends FormRequest
     {
         $data = parent::validated();
 
+        $data['in_filter']    = $this->has('in_filter');
         $data['category_ids'] = $this->get('category_ids', []);
 
         return $data;

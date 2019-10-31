@@ -45,7 +45,7 @@ class FeatureController extends Controller
      */
     public function index(): View
     {
-        $query    = Feature::orderByDesc('id');
+        $query    = Feature::orderByDesc('id')->with(['categories']);
         $features = $query->paginate(20);
 
         return view(static::VIEW_PATH . 'index', [
@@ -70,8 +70,9 @@ class FeatureController extends Controller
         $categories = $this->categoryRepository->getAllWithDepth();
 
         return view(static::VIEW_PATH . 'form', [
-            'feature'    => new Feature(),
-            'categories' => $categories,
+            'feature'       => new Feature(),
+            'categories'    => $categories,
+            'categoriesIds' => [],
         ]);
     }
 

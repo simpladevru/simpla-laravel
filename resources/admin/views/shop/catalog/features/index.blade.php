@@ -27,14 +27,20 @@
                 @csrf
                 <table class="table table-hover table-striped mb-0">
                     <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Edit</th>
+                        <th class="w-1 text-center">Id</th>
+                        <th class="w-40">Name</th>
+                        <th>Categories</th>
+                        <th class="w-10 text-right">Edit</th>
                     </tr>
                     @foreach($features as $feature)
                         <tr>
-                            <td>{{ $feature->id }}</td>
+                            <td class="text-center">{{ $feature->id }}</td>
                             <td>{{ $feature->name }}</td>
+                            <td>
+                                @foreach($feature->categories as $category)
+                                    <span class="badge badge-info">{{ $category->name }}</span>
+                                @endforeach
+                            </td>
                             <td>
                                 <div class="float-right">
                                     <a
