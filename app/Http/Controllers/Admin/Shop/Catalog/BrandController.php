@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use App\UseCase\Shop\Catalog\BrandService;
 use App\Http\Requests\Admin\Shop\Catalog\BrandRequest;
+use ReflectionException;
 
 class BrandController extends Controller
 {
@@ -67,6 +68,7 @@ class BrandController extends Controller
     /**
      * @param BrandRequest $request
      * @return RedirectResponse
+     * @throws ReflectionException
      */
     public function store(BrandRequest $request): RedirectResponse
     {
@@ -94,6 +96,7 @@ class BrandController extends Controller
      * @param BrandRequest $request
      * @param Brand $brand
      * @return RedirectResponse
+     * @throws ReflectionException
      */
     public function update(BrandRequest $request, Brand $brand): RedirectResponse
     {
