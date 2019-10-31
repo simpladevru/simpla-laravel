@@ -26,9 +26,9 @@ class CategoryRepository
     }
 
     /**
-     * @return mixed
+     * @return Collection|null
      */
-    public function getWithDepth(): ?Collection
+    public function getAllWithDepth(): ?Collection
     {
         return Category::defaultOrder()->withDepth()->get();
     }

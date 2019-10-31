@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers\Admin\Shop\Catalog;
 
-use App\Repositories\Shop\Catalog\CategoryRepository;
 use Exception;
 use DomainException;
 use Illuminate\View\View;
-use App\Entity\Shop\Feature\Feature;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
+use App\Entity\Shop\Feature\Feature;
 use Illuminate\Http\RedirectResponse;
-use App\UseCase\Shop\Catalog\FeatureService;
+use App\UseCase\Admin\FeatureService;
+use App\Repositories\Shop\Catalog\CategoryRepository;
 use App\Http\Requests\Admin\Shop\Catalog\FeatureRequest;
-use ReflectionException;
 
 class FeatureController extends Controller
 {
@@ -67,7 +66,7 @@ class FeatureController extends Controller
      */
     public function create(): View
     {
-        $categories = $this->categoryRepository->getWithDepth();
+        $categories = $this->categoryRepository->getAllWithDepth();
 
         return view(static::VIEW_PATH . 'form', [
             'feature'    => new Feature(),
@@ -78,12 +77,11 @@ class FeatureController extends Controller
     /**
      * @param FeatureRequest $request
      * @return RedirectResponse
-     * @throws ReflectionException
      */
     public function store(FeatureRequest $request): RedirectResponse
     {
         try {
-            $feature = $this->service->create($request);
+            $feature = $this->service->create($request->validated());
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -97,7 +95,7 @@ class FeatureController extends Controller
      */
     public function edit(Feature $feature): View
     {
-        $categories = $this->categoryRepository->getWithDepth();
+        $categories = $this->categoryRepository->getAllWithDepth();
 
         return view(static::VIEW_PATH . 'form', [
             'feature'    => $feature,
@@ -109,12 +107,11 @@ class FeatureController extends Controller
      * @param FeatureRequest $request
      * @param Feature $feature
      * @return RedirectResponse
-     * @throws ReflectionException
      */
     public function update(FeatureRequest $request, Feature $feature): RedirectResponse
     {
         try {
-            $this->service->edit($feature->id, $request);
+            $this->service->update($feature->id, $request->validated());
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }

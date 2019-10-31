@@ -1,6 +1,6 @@
 <?php
 
-namespace App\UseCase\Shop\Catalog;
+namespace App\UseCase\Admin;
 
 use Exception;
 use ReflectionException;
@@ -19,7 +19,6 @@ class FeatureService
 
     /**
      * FeatureService constructor.
-     *
      * @param FeatureRepository $repository
      */
     public function __construct(FeatureRepository $repository)
@@ -28,38 +27,23 @@ class FeatureService
     }
 
     /**
-     * @param FeatureRequest $request
+     * @param array $attributes
      * @return Feature
-     * @throws ReflectionException
      */
-    public function create(FeatureRequest $request): Feature
+    public function create(array $attributes): Feature
     {
-        $dto = Dto::make($request->validated(), FeatureDto::class);
-        return $this->fillAndSave(new Feature(), $dto);
+        return Feature::create($attributes);
     }
 
     /**
      * @param int $id
-     * @param FeatureRequest $request
-     * @return Feature
-     * @throws ReflectionException
-     */
-    public function edit(int $id, FeatureRequest $request): Feature
-    {
-        $dto = Dto::make($request->validated(), FeatureDto::class);
-        return $this->fillAndSave($this->repository->getOne($id), $dto);
-    }
-
-    /**
-     * @param Feature $feature
-     * @param FeatureDto $dto
+     * @param array $attributes
      * @return Feature
      */
-    public function fillAndSave(Feature $feature, FeatureDto $dto): Feature
+    public function update(int $id, array $attributes): Feature
     {
-        $feature->fill([
-            'name' => $dto->name
-        ])->save();
+        $feature = $this->repository->getOne($id);
+        $feature->update($attributes);
 
         return $feature;
     }

@@ -15,7 +15,6 @@ class BrandService
 
     /**
      * BrandService constructor.
-     *
      * @param BrandRepository $repository
      */
     public function __construct(BrandRepository $repository)

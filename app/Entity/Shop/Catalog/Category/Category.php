@@ -56,6 +56,17 @@ class Category extends Model
 
     protected $guarded = [];
 
+    protected $fillable = [
+        'name',
+        'slug',
+        'image',
+        's_visible',
+        'description',
+        'meta_title',
+        'meta_keywords',
+        'meta_description',
+    ];
+
     /**
      * @param int $width
      * @param int $height

@@ -12,7 +12,7 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use App\Entity\Shop\Catalog\Category\Category;
-use App\UseCase\Shop\Catalog\CategoryService;
+use App\UseCase\Admin\CategoryService;
 use App\Http\Requests\Admin\Shop\Catalog\CategoryRequest;
 
 class CategoryController extends Controller
@@ -92,7 +92,7 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request): RedirectResponse
     {
         try {
-            $category = $this->service->create($request);
+            $category = $this->service->create($request->validated());
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -126,7 +126,7 @@ class CategoryController extends Controller
     public function update(CategoryRequest $request, Category $category): RedirectResponse
     {
         try {
-            $this->service->edit($category->id, $request);
+            $this->service->update($category->id, $request->validated());
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
