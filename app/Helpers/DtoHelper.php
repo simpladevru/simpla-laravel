@@ -2,7 +2,9 @@
 
 namespace App\Helpers;
 
+use Exception;
 use ReflectionClass;
+use ReflectionProperty;
 use ReflectionException;
 
 class DtoHelper
@@ -11,6 +13,7 @@ class DtoHelper
      * @param array $data
      * @param string $class
      * @return mixed
+     * @throws Exception
      * @throws ReflectionException
      */
     public static function arrayToDto(array $data, string $class)
@@ -18,6 +21,10 @@ class DtoHelper
         $instance = new $class;
 
         foreach (self::getDtoAttributes($instance) as $key => $value) {
+            if ($value === null && empty($data[$key])) {
+                throw new Exception('Wrong data');
+            }
+
             $instance->{$key} = $data[$key];
         }
 
@@ -40,7 +47,7 @@ class DtoHelper
         }
 
         $class  = new ReflectionClass($instance);
-        $values = $class->getProperties(\ReflectionProperty::IS_PUBLIC);
+        $values = $class->getProperties(ReflectionProperty::IS_PUBLIC);
 
         foreach ($values as $property) {
             if (!$property->isStatic()) {
