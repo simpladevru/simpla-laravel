@@ -35,7 +35,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Brand extends Model
 {
-    protected $guarded = ['id'];
+    protected $guarded  = ['id'];
+    protected $fillable = ['name', 'image', 'meta_title', 'meta_description', 'meta_keywords', 'sort'];
 
     /**
      * @param int $width
