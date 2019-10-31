@@ -69,7 +69,7 @@ class BrandService
      * @param BrandDto $dto
      * @return Brand
      */
-    private function fill(Brand $brand, BrandDto $dto): Brand
+    public function fill(Brand $brand, BrandDto $dto): Brand
     {
         return $brand->fill([
             'name'             => $dto->name,
