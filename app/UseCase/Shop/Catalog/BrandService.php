@@ -27,6 +27,7 @@ class BrandService
     /**
      * @param BrandDto $dto
      * @return Brand
+     * @throws Exception
      */
     public function create(BrandDto $dto): Brand
     {
@@ -37,6 +38,7 @@ class BrandService
      * @param int $id
      * @param BrandDto $dto
      * @return Brand
+     * @throws Exception
      */
     public function edit(int $id, BrandDto $dto): Brand
     {
@@ -47,12 +49,17 @@ class BrandService
      * @param Brand $brand
      * @param BrandDto $dto
      * @return Brand
+     * @throws Exception
      */
-    public function fillAndSave(Brand $brand, BrandDto $dto)
+    public function fillAndSave(Brand $brand, BrandDto $dto): Brand
     {
-        return $this->brands->save(
-            $this->fill($brand, $dto)
-        );
+        $result = $this->brands->save($this->fill($brand, $dto));
+
+        if (!$result) {
+            throw new Exception('error');
+        }
+
+        return $brand;
     }
 
     /**
@@ -75,10 +82,13 @@ class BrandService
 
     /**
      * @param int $id
+     * @return bool
      * @throws Exception
      */
-    public function remove(int $id): void
+    public function remove(int $id): bool
     {
-        $this->brands->remove($id);
+        return $this->brands->remove(
+            $this->brands->getOne($id)
+        );
     }
 }

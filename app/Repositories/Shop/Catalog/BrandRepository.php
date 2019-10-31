@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Shop\Catalog;
 
+use Exception;
 use App\Entity\Shop\Catalog\Brand;
 
 class BrandRepository
@@ -26,16 +27,20 @@ class BrandRepository
 
     /**
      * @param Brand $brand
-     * @return Brand
+     * @return bool
      */
-    public function save(Brand $brand): Brand
+    public function save(Brand $brand): bool
     {
         return $brand->save();
     }
 
-    public function remove($id): void
+    /**
+     * @param Brand $brand
+     * @return bool|null
+     * @throws Exception
+     */
+    public function remove(Brand $brand): bool
     {
-        $brand = Brand::findOrFail($id);
-        $brand->delete();
+        return $brand->delete();
     }
 }
