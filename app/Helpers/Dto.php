@@ -2,37 +2,48 @@
 
 namespace App\Helpers;
 
-use Exception;
 use ReflectionClass;
 use ReflectionProperty;
 use ReflectionException;
+use InvalidArgumentException;
 
-class DtoHelper
+class Dto
 {
     /**
-     * @param array $data
      * @param string $class
+     * @param array $attributes
      * @return mixed
-     * @throws Exception
      * @throws ReflectionException
      */
-    public static function arrayToDto(array $data, string $class)
+    public static function make(string $class, array $attributes = [])
     {
         if (!class_exists($class)) {
-            throw new \InvalidArgumentException('Class for create DTO not found: ' . $class);
+            throw new InvalidArgumentException('Class for create DTO not found: ' . $class);
         }
 
         $instance = new $class;
 
-        foreach (self::getDtoAttributes($instance) as $key => $value) {
-            if ($value === null && !array_key_exists($key, $data)) {
-                throw new Exception('Wrong data');
-            }
-
-            $instance->{$key} = $data[$key];
+        if (is_array($attributes)) {
+            self::loadAttributes($instance, $attributes);
         }
 
         return $instance;
+    }
+
+    /**
+     * @param $instance
+     * @param array $attributes
+     * @throws ReflectionException
+     */
+    private static function loadAttributes($instance, array $attributes)
+    {
+        foreach (self::getDtoAttributes($instance) as $key => $value) {
+            if ($value === null && !array_key_exists($key, $attributes)) {
+                throw new InvalidArgumentException('Wrong data');
+            }
+
+            $instance->{$key} = $attributes[$key];
+        }
     }
 
     /**

@@ -4,7 +4,7 @@ namespace App\UseCase\Shop\Catalog;
 
 use Exception;
 use ReflectionException;
-use App\Helpers\DtoHelper;
+use App\Helpers\Dto;
 use App\Entity\Shop\Feature\Feature;
 use App\Entity\Shop\Catalog\Feature\FeatureDto;
 use App\Repositories\Shop\Catalog\FeatureRepository;
@@ -34,7 +34,7 @@ class FeatureService
      */
     public function create(FeatureRequest $request): Feature
     {
-        $dto = DtoHelper::arrayToDto($request->validated(), FeatureDto::class);
+        $dto = Dto::make($request->validated(), FeatureDto::class);
         return $this->fillAndSave(new Feature(), $dto);
     }
 
@@ -46,7 +46,7 @@ class FeatureService
      */
     public function edit(int $id, FeatureRequest $request): Feature
     {
-        $dto = DtoHelper::arrayToDto($request->validated(), FeatureDto::class);
+        $dto = Dto::make($request->validated(), FeatureDto::class);
         return $this->fillAndSave($this->repository->getOne($id), $dto);
     }
 
