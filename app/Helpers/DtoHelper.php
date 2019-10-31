@@ -18,6 +18,10 @@ class DtoHelper
      */
     public static function arrayToDto(array $data, string $class)
     {
+        if (!class_exists($class)) {
+            throw new \InvalidArgumentException('Class for create DTO not found: ' . $class);
+        }
+
         $instance = new $class;
 
         foreach (self::getDtoAttributes($instance) as $key => $value) {
