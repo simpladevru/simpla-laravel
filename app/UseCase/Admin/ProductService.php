@@ -57,6 +57,14 @@ class ProductService
     }
 
     /**
+     * @param int $id
+     */
+    public function clone(int $id)
+    {
+        $product = $this->repository->getOne($id);
+    }
+
+    /**
      * @param array $attributes
      * @return Product
      * @throws Throwable
@@ -90,11 +98,13 @@ class ProductService
      * @param array $data
      * @throws Throwable
      */
-    private function updateRelations(Product $product, array $data = []): void
+    public function updateRelations(Product $product, array $data = []): void
     {
-        $this->updateVariants($product, $data['variants']);
-        $this->updateAttributes($product, $data['attributes']);
-        $this->updateImages($product, $data['images'], $data['upload_images']);
+        DB::transaction(function () use ($product, $data) {
+            $this->updateVariants($product, $data['variants']);
+            $this->updateAttributes($product, $data['attributes']);
+            $this->updateImages($product, $data['images'], $data['upload_images']);
+        });
     }
 
     /**
@@ -102,7 +112,7 @@ class ProductService
      * @param array $variants
      * @throws Throwable
      */
-    private function updateVariants(Product $product, array $variants = []): void
+    public function updateVariants(Product $product, array $variants = []): void
     {
         $variantsRelation   = $product->variants();
         $variantsCollection = $variantsRelation->get()->keyBy('id');
@@ -127,7 +137,7 @@ class ProductService
      * @param Product $product
      * @param array $attributes
      */
-    private function updateAttributes(Product $product, array $attributes = []): void
+    public function updateAttributes(Product $product, array $attributes = []): void
     {
         $attributesRelation   = $product->attributes();
         $attributesCollection = $attributesRelation->get()->keyBy('id');
@@ -160,7 +170,7 @@ class ProductService
      * @param array $uploads
      * @param array $downloads
      */
-    private function updateImages(Product $product, array $images = [], array $uploads = [], array $downloads = [])
+    public function updateImages(Product $product, array $images = [], array $uploads = [], array $downloads = [])
     {
         $imagesCollection = $product->images()->get()->keyBy('id');
 

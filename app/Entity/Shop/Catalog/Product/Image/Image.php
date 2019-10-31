@@ -31,7 +31,7 @@ class Image extends Model
 {
     const FILE_PATH = 'products';
 
-    protected $table    = 'product_images';
+    protected $table = 'product_images';
 
     protected $fillable = ['file', 'sort'];
 
