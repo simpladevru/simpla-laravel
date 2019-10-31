@@ -16,7 +16,7 @@ class ImageHelper
 {
     /**
      * @param $originalDisk
-     * @param $resizedDisk
+     * @param $resizeDisk
      * @param $directory
      * @param $filename
      * @param $width
@@ -25,18 +25,20 @@ class ImageHelper
      * @return Image
      * @throws Exception
      */
-    public function resize($originalDisk, $resizedDisk, $directory, $filename, $width, $height, $extension): Image
+    public function resize($originalDisk, $resizeDisk, $directory, $filename, $width, $height, $extension): Image
     {
-        $originalImage = Storage::disk($originalDisk)->path($directory . '/' . $filename . '.' . $extension);
+        $originalStorage = Storage::disk($originalDisk);
+        $originalImage   = $originalStorage->path($directory . '/' . $filename . '.' . $extension);
 
-        if (!file_exists($originalImage)) {
+        if ($originalStorage->exists($originalImage)) {
             throw new Exception('File not found');
         }
 
-        $resizedPath = Storage::disk($resizedDisk)->path($directory . '/');
+        $resizeStorage = Storage::disk($resizeDisk);
+        $resizePath    = $resizeStorage->path($directory . '/');
 
-        if (!File::isDirectory($resizedPath)) {
-            File::makeDirectory($resizedPath, 0755, true);
+        if (!$resizeStorage->exists($resizePath)) {
+            $resizeStorage->makeDirectory($resizePath);
         }
 
         $newImage   = ImageFactory::make($originalImage);
@@ -44,7 +46,7 @@ class ImageHelper
 
         return $newImage->resize($width, $height, function (Constraint $constraint) {
             $constraint->aspectRatio();
-        })->save($resizedPath . $resizeName);
+        })->save($resizePath . $resizeName);
     }
 
     /**
