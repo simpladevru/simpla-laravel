@@ -21,7 +21,7 @@ class DtoHelper
         $instance = new $class;
 
         foreach (self::getDtoAttributes($instance) as $key => $value) {
-            if ($value === null && empty($data[$key])) {
+            if ($value === null && !array_key_exists($key, $data)) {
                 throw new Exception('Wrong data');
             }
 
