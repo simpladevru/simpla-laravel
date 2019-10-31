@@ -58,6 +58,20 @@ class Product extends Model
 {
     protected $guarded = ['id'];
 
+    protected $fillable = [
+        'name',
+        'slug',
+        'brand_id',
+        'is_active',
+        'is_featured',
+        'annotation',
+        'description',
+        'meta_title',
+        'meta_keywords',
+        'meta_description',
+        'sort',
+    ];
+
     /**
      * @return HasMany
      */

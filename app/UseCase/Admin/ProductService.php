@@ -1,18 +1,15 @@
 <?php
 
-namespace App\UseCase\Shop\Catalog;
+namespace App\UseCase\Admin;
 
-use App\UseCase\Admin\VariantService;
 use Throwable;
 use Exception;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use App\Entity\Shop\Product\Product;
 use App\Entity\Shop\Product\Variant;
 use App\Entity\Shop\Product\Attribute;
 use App\Entity\Shop\Product\Image\Image;
 use App\Repositories\Shop\Catalog\ProductRepository;
-use App\Http\Requests\Admin\Shop\Catalog\ProductRequest;
 
 class ProductService
 {
@@ -28,7 +25,6 @@ class ProductService
 
     /**
      * ProductService constructor.
-     *
      * @param ProductRepository $repository
      * @param VariantService $variantService
      */
@@ -39,51 +35,52 @@ class ProductService
     }
 
     /**
-     * @param ProductRequest $request
+     * @param array $attributes
      * @return Product
-     * @throws Throwable
      */
-    public function createByRequest(ProductRequest $request): Product
+    public function create(array $attributes): Product
     {
-        return $this->fillAndSave(new Product(), $request->validated());
+        return Product::create($attributes);
     }
 
     /**
      * @param int $id
-     * @param ProductRequest $request
+     * @param array $attributes
      * @return Product
-     * @throws Throwable
      */
-    public function editByRequest(int $id, ProductRequest $request): Product
+    public function update(int $id, array $attributes): Product
     {
-        return $this->fillAndSave($this->repository->getOne($id), $request->validated());
+        $product = $this->repository->getOne($id);
+        $product->update($attributes);
+
+        return $product;
     }
 
     /**
-     * @param Product $product
-     * @param array $data
+     * @param array $attributes
      * @return Product
      * @throws Throwable
      */
-    private function fillAndSave(Product $product, array $data): Product
+    public function createWithRelations(array $attributes): Product
     {
-        return DB::transaction(function () use ($product, $data) {
-            $product->fill(Arr::only($data, [
-                'name',
-                'slug',
-                'brand_id',
-                'is_active',
-                'is_featured',
-                'annotation',
-                'description',
-                'meta_title',
-                'meta_keywords',
-                'meta_description',
-                'sort',
-            ]))->saveOrFail();
+        return DB::transaction(function () use ($attributes) {
+            $product = $this->create($attributes);
+            $this->updateRelations($product, $attributes);
+            return $product;
+        });
+    }
 
-            $this->updateParts($product, $data);
-
+    /**
+     * @param int $id
+     * @param array $attributes
+     * @return Product
+     * @throws Throwable
+     */
+    public function updateWithRelations(int $id, array $attributes): Product
+    {
+        return DB::transaction(function () use ($id, $attributes) {
+            $product = $this->update($id, $attributes);
+            $this->updateRelations($product, $attributes);
             return $product;
         });
     }
@@ -93,7 +90,7 @@ class ProductService
      * @param array $data
      * @throws Throwable
      */
-    private function updateParts(Product $product, array $data = []): void
+    private function updateRelations(Product $product, array $data = []): void
     {
         $this->updateVariants($product, $data['variants']);
         $this->updateAttributes($product, $data['attributes']);
@@ -176,10 +173,23 @@ class ProductService
         });
 
         if (!empty($uploads)) {
-            $sort = $sort ?? 0;
-            foreach ($uploads as $index => $file) {
-                $product->images()->create(['file' => $file, 'sort' => $sort + $index]);
-            }
+            $this->addImages($product, $uploads, $sort ?? 0);
+        }
+
+        if (!empty($downloads)) {
+            $this->addImages($product, $downloads, $sort ?? 0);
+        }
+    }
+
+    /**
+     * @param Product $product
+     * @param array $images
+     * @param int $sort
+     */
+    public function addImages(Product $product, array $images, $sort = 0)
+    {
+        foreach ($images as $index => $file) {
+            $product->images()->create(['file' => $file, 'sort' => $sort + $index]);
         }
     }
 

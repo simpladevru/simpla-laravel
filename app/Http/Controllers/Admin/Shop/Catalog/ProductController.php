@@ -11,7 +11,7 @@ use App\Entity\Shop\Product\Product;
 use App\Entity\Shop\Product\Variant;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
-use App\UseCase\Shop\Catalog\ProductService;
+use App\UseCase\Admin\ProductService;
 use App\Repositories\Shop\Catalog\FeatureRepository;
 use App\Http\Requests\Admin\Shop\Catalog\ProductRequest;
 
@@ -89,7 +89,7 @@ class ProductController extends Controller
     public function store(ProductRequest $request): RedirectResponse
     {
         try {
-            $product = $this->service->createByRequest($request);
+            $product = $this->service->createWithRelations($request->validated());
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -121,7 +121,7 @@ class ProductController extends Controller
     public function update(ProductRequest $request, Product $product): RedirectResponse
     {
         try {
-            $this->service->editByRequest($product->id, $request);
+            $this->service->updateWithRelations($product->id, $request->validated());
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
