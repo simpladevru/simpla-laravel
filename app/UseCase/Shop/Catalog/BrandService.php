@@ -53,7 +53,9 @@ class BrandService
      */
     public function fillAndSave(Brand $brand, BrandDto $dto): Brand
     {
-        $result = $this->brands->save($this->fill($brand, $dto));
+        $result = $this->brands->save(
+            $this->fill($brand, $dto)
+        );
 
         if (!$result) {
             throw new Exception('error');

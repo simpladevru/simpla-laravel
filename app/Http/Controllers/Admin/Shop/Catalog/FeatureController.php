@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use App\UseCase\Shop\Catalog\FeatureService;
 use App\Http\Requests\Admin\Shop\Catalog\FeatureRequest;
+use ReflectionException;
 
 class FeatureController extends Controller
 {
@@ -67,6 +68,7 @@ class FeatureController extends Controller
     /**
      * @param FeatureRequest $request
      * @return RedirectResponse
+     * @throws ReflectionException
      */
     public function store(FeatureRequest $request): RedirectResponse
     {
@@ -94,6 +96,7 @@ class FeatureController extends Controller
      * @param FeatureRequest $request
      * @param Feature $feature
      * @return RedirectResponse
+     * @throws ReflectionException
      */
     public function update(FeatureRequest $request, Feature $feature): RedirectResponse
     {
