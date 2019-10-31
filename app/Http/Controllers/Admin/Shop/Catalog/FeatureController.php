@@ -6,12 +6,13 @@ use App\Repositories\Shop\Catalog\CategoryRepository;
 use Exception;
 use DomainException;
 use Illuminate\View\View;
-use App\Entity\Shop\Feature;
+use App\Entity\Shop\Feature\Feature;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use App\UseCase\Shop\Catalog\FeatureService;
 use App\Http\Requests\Admin\Shop\Catalog\FeatureRequest;
+use ReflectionException;
 
 class FeatureController extends Controller
 {
@@ -77,11 +78,12 @@ class FeatureController extends Controller
     /**
      * @param FeatureRequest $request
      * @return RedirectResponse
+     * @throws ReflectionException
      */
     public function store(FeatureRequest $request): RedirectResponse
     {
         try {
-            $feature = $this->service->create($request->toArray());
+            $feature = $this->service->create($request);
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -107,11 +109,12 @@ class FeatureController extends Controller
      * @param FeatureRequest $request
      * @param Feature $feature
      * @return RedirectResponse
+     * @throws ReflectionException
      */
     public function update(FeatureRequest $request, Feature $feature): RedirectResponse
     {
         try {
-            $this->service->edit($feature->id, $request->toArray());
+            $this->service->edit($feature->id, $request);
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }

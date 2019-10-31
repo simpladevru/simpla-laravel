@@ -3,9 +3,12 @@
 namespace App\UseCase\Shop\Catalog;
 
 use Exception;
-use Illuminate\Support\Arr;
-use App\Entity\Shop\Feature;
+use ReflectionException;
+use App\Helpers\Dto;
+use App\Entity\Shop\Feature\Feature;
+use App\Entity\Shop\Catalog\Feature\FeatureDto;
 use App\Repositories\Shop\Catalog\FeatureRepository;
+use App\Http\Requests\Admin\Shop\Catalog\FeatureRequest;
 
 class FeatureService
 {
@@ -25,34 +28,38 @@ class FeatureService
     }
 
     /**
-     * @param array $data
+     * @param FeatureRequest $request
      * @return Feature
+     * @throws ReflectionException
      */
-    public function create(array $data): Feature
+    public function create(FeatureRequest $request): Feature
     {
-        return $this->fillAndSave(new Feature(), $data);
+        $dto = Dto::make($request->validated(), FeatureDto::class);
+        return $this->fillAndSave(new Feature(), $dto);
     }
 
     /**
      * @param int $id
-     * @param array $data
+     * @param FeatureRequest $request
      * @return Feature
+     * @throws ReflectionException
      */
-    public function edit(int $id, array $data): Feature
+    public function edit(int $id, FeatureRequest $request): Feature
     {
-        return $this->fillAndSave($this->repository->getOne($id), $data);
+        $dto = Dto::make($request->validated(), FeatureDto::class);
+        return $this->fillAndSave($this->repository->getOne($id), $dto);
     }
 
     /**
      * @param Feature $feature
-     * @param array $data
+     * @param FeatureDto $dto
      * @return Feature
      */
-    public function fillAndSave(Feature $feature, array $data): Feature
+    public function fillAndSave(Feature $feature, FeatureDto $dto): Feature
     {
-        $feature->fill(Arr::only($data, [
-            'name',
-        ]))->save();
+        $feature->fill([
+            'name' => $dto->name
+        ])->save();
 
         return $feature;
     }

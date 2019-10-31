@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Shop\Catalog;
 
-use App\Entity\Shop\Feature;
+use App\Entity\Shop\Feature\Feature;
 use Illuminate\Support\Collection;
 
 class FeatureRepository
