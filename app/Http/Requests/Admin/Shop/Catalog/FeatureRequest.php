@@ -13,6 +13,20 @@ class FeatureRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
+
+            'category_ids.*' => 'nullable|integer',
         ];
+    }
+
+    /**
+     * @return array
+     */
+    public function validated()
+    {
+        $data = parent::validated();
+
+        $data['category_ids'] = $this->get('category_ids', []);
+
+        return $data;
     }
 }

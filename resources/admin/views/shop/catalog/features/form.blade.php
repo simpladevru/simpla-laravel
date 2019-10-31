@@ -59,10 +59,14 @@
                                     class="form-control{{ $errors->has('category_ids') ? ' is-invalid' : '' }}"
                                     name="category_ids[]"
                                     multiple
+                                    data-show-subtext="true"
+                                    data-live-search="true"
+                                    data-selected-text-format="count"
                                 >
                                     @foreach ($categories as $parent)
                                         <option
                                             value="{{ $parent->id }}"
+                                            {{ in_array($parent->id, $categoriesIds) ? 'selected' : '' }}
                                         >
                                             @for ($i = 0; $i < $parent->depth; $i++) &mdash; @endfor
                                             {{ $parent->name }}

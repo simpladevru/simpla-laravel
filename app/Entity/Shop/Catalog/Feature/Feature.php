@@ -2,7 +2,10 @@
 
 namespace App\Entity\Shop\Feature;
 
+use DomainException;
 use Illuminate\Database\Eloquent\Model;
+use App\Entity\Shop\Catalog\Category\Category;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Class Feature
@@ -25,4 +28,28 @@ class Feature extends Model
     protected $guarded = ['id'];
 
     protected $fillable = ['name'];
+
+    /**
+     * @return BelongsToMany
+     */
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(Category::class, 'category_features', 'feature_id', 'category_id');
+    }
+
+    /**
+     * @param int $id
+     */
+    public function addToCategory(int $id)
+    {
+        $this->categories()->attach($id);
+    }
+
+    /**
+     * @param int $id
+     */
+    public function removeFromCategory(int $id)
+    {
+        $this->categories()->detach($id);
+    }
 }

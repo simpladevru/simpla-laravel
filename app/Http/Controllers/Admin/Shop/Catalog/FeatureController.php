@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Shop\Catalog;
 
 use Exception;
+use Throwable;
 use DomainException;
 use Illuminate\View\View;
 use Illuminate\Http\Response;
@@ -77,11 +78,12 @@ class FeatureController extends Controller
     /**
      * @param FeatureRequest $request
      * @return RedirectResponse
+     * @throws Throwable
      */
     public function store(FeatureRequest $request): RedirectResponse
     {
         try {
-            $feature = $this->service->create($request->validated());
+            $feature = $this->service->createWithRelations($request->validated());
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -95,11 +97,13 @@ class FeatureController extends Controller
      */
     public function edit(Feature $feature): View
     {
-        $categories = $this->categoryRepository->getAllWithDepth();
+        $categories    = $this->categoryRepository->getAllWithDepth();
+        $categoriesIds = $feature->categories()->allRelatedIds()->toArray();
 
         return view(static::VIEW_PATH . 'form', [
-            'feature'    => $feature,
-            'categories' => $categories,
+            'feature'       => $feature,
+            'categories'    => $categories,
+            'categoriesIds' => $categoriesIds,
         ]);
     }
 
@@ -107,11 +111,12 @@ class FeatureController extends Controller
      * @param FeatureRequest $request
      * @param Feature $feature
      * @return RedirectResponse
+     * @throws Throwable
      */
     public function update(FeatureRequest $request, Feature $feature): RedirectResponse
     {
         try {
-            $this->service->update($feature->id, $request->validated());
+            $this->service->updateWithRelations($feature->id, $request->validated());
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
