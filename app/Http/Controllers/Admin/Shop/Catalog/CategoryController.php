@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin\Shop\Catalog;
 
 use Exception;
 use DomainException;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;

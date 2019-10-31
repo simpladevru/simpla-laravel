@@ -51,6 +51,35 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="categoryIds" class="col-md-3 col-form-label">Use in categories</label>
+                            <div class="col-md-9">
+                                <select
+                                    id="categoryIds"
+                                    data-style="border"
+                                    class="form-control{{ $errors->has('category_ids') ? ' is-invalid' : '' }}"
+                                    name="category_ids[]"
+                                    multiple
+                                >
+                                    @foreach ($categories as $parent)
+                                        <option
+                                            value="{{ $parent->id }}"
+                                        >
+                                            @for ($i = 0; $i < $parent->depth; $i++) &mdash; @endfor
+                                            {{ $parent->name }}
+                                        </option>
+                                    @endforeach;
+                                </select>
+                                @if ($errors->has('category_ids'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('category_ids') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group border-top mt-4 mb-4"></div>
+
+                        <div class="form-group row">
                             <label class="col-md-3 col-form-label">Created</label>
                             <div class="col-md-9">
                                 <label>

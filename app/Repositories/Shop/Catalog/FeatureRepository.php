@@ -33,4 +33,12 @@ class FeatureRepository
     {
         return Feature::get();
     }
+
+    /**
+     * @return Collection|null
+     */
+    public function getAll(): ?Collection
+    {
+        return Feature::get();
+    }
 }

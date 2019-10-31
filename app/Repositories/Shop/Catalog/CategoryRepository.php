@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Shop\Catalog;
 
+use Illuminate\Support\Collection;
 use App\Entity\Shop\Catalog\Category\Category;
 
 class CategoryRepository
@@ -22,5 +23,13 @@ class CategoryRepository
     public function findOne(int $id): ?Category
     {
         return Category::find($id);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWithDepth(): ?Collection
+    {
+        return Category::defaultOrder()->withDepth()->get();
     }
 }

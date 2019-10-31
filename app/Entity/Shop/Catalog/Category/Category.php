@@ -54,7 +54,7 @@ class Category extends Model
     use NodeTrait;
     use Scopes;
 
-    protected $guarded = ['id'];
+    protected $guarded = [];
 
     /**
      * @param int $width

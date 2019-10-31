@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Shop\Catalog;
 
+use App\Repositories\Shop\Catalog\CategoryRepository;
 use Exception;
 use DomainException;
 use Illuminate\View\View;
@@ -21,15 +22,21 @@ class FeatureController extends Controller
      * @var FeatureService
      */
     private $service;
+    /**
+     * @var CategoryRepository
+     */
+    private $categoryRepository;
 
     /**
      * FeatureController constructor.
      *
      * @param FeatureService $service
+     * @param CategoryRepository $categoryRepository
      */
-    public function __construct(FeatureService $service)
+    public function __construct(FeatureService $service, CategoryRepository $categoryRepository)
     {
-        $this->service = $service;
+        $this->service            = $service;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -59,8 +66,11 @@ class FeatureController extends Controller
      */
     public function create(): View
     {
+        $categories = $this->categoryRepository->getWithDepth();
+
         return view(static::VIEW_PATH . 'form', [
-            'feature' => new Feature(),
+            'feature'    => new Feature(),
+            'categories' => $categories,
         ]);
     }
 
@@ -85,8 +95,11 @@ class FeatureController extends Controller
      */
     public function edit(Feature $feature): View
     {
+        $categories = $this->categoryRepository->getWithDepth();
+
         return view(static::VIEW_PATH . 'form', [
-            'feature' => $feature,
+            'feature'    => $feature,
+            'categories' => $categories,
         ]);
     }
 
