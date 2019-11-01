@@ -42,6 +42,7 @@ class Variant extends Model
         'stock',
         'price',
         'compare_price',
+        'product_id',
         'sort',
     ];
 }

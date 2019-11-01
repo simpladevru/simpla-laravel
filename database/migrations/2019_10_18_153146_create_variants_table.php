@@ -15,14 +15,24 @@ class CreateVariantsTable extends Migration
     {
         Schema::create('variants', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('product_id');
+            $table->bigInteger('product_id')->unsigned()->nullable();
             $table->string('name')->nullable();
             $table->string('sku')->nullable();
-            $table->integer('stock')->nullable();
-            $table->decimal('price')->nullable();
-            $table->decimal('compare_price')->nullable();
-            $table->integer('sort')->nullable();
+            $table->integer('stock')->nullable()->unsigned();
+            $table->decimal('price')->nullable()->unsigned();
+            $table->decimal('compare_price')->nullable()->unsigned();
+            $table->integer('sort')->nullable()->unsigned();
             $table->timestamps();
+
+            $table->index('product_id');
+            $table->index('name');
+            $table->index('sku');
+            $table->index('stock');
+            $table->index('price');
+            $table->index('compare_price');
+            $table->index('sort');
+
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('CASCADE');
         });
     }
 

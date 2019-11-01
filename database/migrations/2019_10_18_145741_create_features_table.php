@@ -19,6 +19,9 @@ class CreateFeaturesTable extends Migration
             $table->boolean('in_filter');
             $table->integer('sort')->unsigned();
             $table->timestamps();
+
+            $table->index('in_filter');
+            $table->index('sort');
         });
     }
 
