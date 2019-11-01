@@ -18,8 +18,8 @@ class CreateVariantsTable extends Migration
             $table->bigInteger('product_id')->unsigned()->nullable();
             $table->string('name')->nullable();
             $table->string('sku')->nullable();
-            $table->integer('stock')->nullable()->unsigned();
-            $table->decimal('price')->nullable()->unsigned();
+            $table->integer('stock', 14)->nullable()->unsigned();
+            $table->decimal('price', 14)->nullable()->unsigned();
             $table->decimal('compare_price')->nullable()->unsigned();
             $table->integer('sort')->nullable()->unsigned();
             $table->timestamps();
