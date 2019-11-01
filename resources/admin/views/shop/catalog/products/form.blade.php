@@ -106,23 +106,22 @@
                                         <strong>{{ $errors->first('brand_id') }}</strong>
                                     </span>
                                 @endif
-                            </div>
-                            <div class="col-md-6">
-                                <h3 class="border-bottom mb-3 pb-2">Categories</h3>
+
+                                <h3 class="border-bottom mb-3 mt-4 pb-2">Categories</h3>
                                 <select
-                                    id="categoryIds"
-                                    data-style="border"
-                                    class="form-control{{ $errors->has('category_ids') ? ' is-invalid' : '' }}"
-                                    name="category_ids[]"
-                                    multiple
-                                    data-show-subtext="true"
-                                    data-live-search="true"
-                                    data-selected-text-format="count"
+                                        id="categoryIds"
+                                        data-style="border"
+                                        class="form-control{{ $errors->has('category_ids') ? ' is-invalid' : '' }}"
+                                        name="category_ids[]"
+                                        multiple
+                                        data-show-subtext="true"
+                                        data-live-search="true"
+                                        data-selected-text-format="count"
                                 >
                                     @foreach ($categories as $parent)
                                         <option
-                                            value="{{ $parent->id }}"
-                                            {{ in_array($parent->id, $categoriesIds) ? 'selected' : '' }}
+                                                value="{{ $parent->id }}"
+                                                {{ in_array($parent->id, $categoriesIds) ? 'selected' : '' }}
                                         >
                                             @for ($i = 0; $i < $parent->depth; $i++) &mdash; @endfor
                                             {{ $parent->name }}
@@ -134,12 +133,8 @@
                                         <strong>{{ $errors->first('category_ids') }}</strong>
                                     </span>
                                 @endif
-                            </div>
-                        </div>
 
-                        <div class="row mt-5">
-                            <div class="col-md-6">
-                                <h3 class="border-bottom mb-3 pb-2">Features</h3>
+                                <h3 class="border-bottom mb-3 mt-4 pb-2">Features</h3>
                                 @if($features)
                                     @include('shop.catalog.products.features')
                                 @endif
@@ -147,6 +142,8 @@
                             <div class="col-md-6">
                                 <h3 class="border-bottom mb-3 pb-2">Images</h3>
                                 @include('shop.catalog.products.images')
+
+                                <h3 class="border-bottom mb-3 mt-4 pb-2">Relation products</h3>
                             </div>
                         </div>
 

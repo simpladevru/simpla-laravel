@@ -75,6 +75,8 @@ class Product extends Model
     ];
 
     /**
+     * Получить связи с категориями.
+     *
      * @return BelongsToMany
      */
     public function categories(): BelongsToMany
@@ -83,6 +85,8 @@ class Product extends Model
     }
 
     /**
+     * Получить связи с вариантами.
+     *
      * @return HasMany
      */
     public function variants(): HasMany
@@ -91,6 +95,8 @@ class Product extends Model
     }
 
     /**
+     * Получить связи со свойствами.
+     *
      * @return HasMany
      */
     public function attributes(): HasMany
@@ -99,6 +105,8 @@ class Product extends Model
     }
 
     /**
+     * Получить связи с изображениями.
+     *
      * @return HasMany
      */
     public function images(): HasMany
@@ -107,6 +115,8 @@ class Product extends Model
     }
 
     /**
+     * Получить связь с изображением.
+     *
      * @return HasOne
      */
     public function image(): HasOne
