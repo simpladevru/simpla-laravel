@@ -38,6 +38,7 @@ class Brand extends Model
     protected $guarded = ['id'];
 
     protected $fillable = [
+        'id',
         'name',
         'image',
         'meta_title',
