@@ -21,8 +21,8 @@
                 <i class="fa fa-plus-circle"></i> Add
             </a>
         </div>
-        <div class="card-body p-0">
-            <form action="" method="post" class="list-form">
+        <form action="{{ route('admin.shop.catalog.products.groupAction') }}" method="post" class="list-form">
+            <div class="card-body p-0">
                 @csrf
                 <table class="table table-hover table-striped mb-0">
                     <tr>
@@ -51,13 +51,11 @@
                                         <div class="form-row">
                                             <div class="col-md-4">
                                                 <input
-                                                    type="hidden"
-                                                    name="variants[{{ $variant->id }}][id]"
-                                                    value="{{ $variant->id  }}"
-                                                >
-                                                <input
-                                                    value="{{ $variant->name }}"
+                                                    type="text"
                                                     class="form-control form-control-sm mb-1"
+                                                    placeholder="Name"
+                                                    name="variants[{{ $variant->id }}][name]"
+                                                    value="{{ $variant->name }}"
                                                 >
                                             </div>
                                             <div class="col-md-4">
@@ -65,8 +63,9 @@
                                                     type="text"
                                                     class="form-control form-control-sm mb-1"
                                                     placeholder="Price"
-                                                    name="variants[{{ $variant->id }}][id]"
-                                                    value="{{ $variant->price  }}">
+                                                    name="variants[{{ $variant->id }}][price]"
+                                                    value="{{ $variant->price }}"
+                                                >
                                             </div>
                                             <div class="col-md-4">
                                                 <input
@@ -74,7 +73,7 @@
                                                     class="form-control form-control-sm mb-1"
                                                     placeholder="Stock"
                                                     name="variants[{{ $variant->id }}][stock]"
-                                                    value="{{ $variant->stock  }}"
+                                                    value="{{ $variant->stock }}"
                                                 >
                                             </div>
                                         </div>
@@ -101,13 +100,13 @@
                         </tr>
                     @endforeach
                 </table>
-            </form>
-        </div>
-        <div class="card-footer">
-            <button type="submit" class="btn btn-primary float-right">Save</button>
-        </div>
-        <div class="card-footer pt-4 pb-2">
-            {{ $products->appends(request()->all())->links() }}
-        </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary float-right">Save</button>
+            </div>
+            <div class="card-footer pt-4 pb-2">
+                {{ $products->appends(request()->all())->links() }}
+            </div>
+        </form>
     </div>
 @endsection

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin\Shop\Catalog;
 
+use App\UseCase\Admin\VariantService;
+use Illuminate\Http\Request;
 use Throwable;
 use Exception;
 use DomainException;
@@ -31,15 +33,25 @@ class ProductController extends Controller
     private $featureRepository;
 
     /**
+     * @var VariantService
+     */
+    private $variantService;
+
+    /**
      * ProductController constructor.
      *
      * @param ProductService $service
      * @param FeatureRepository $featureRepository
+     * @param VariantService $variantService
      */
-    public function __construct(ProductService $service, FeatureRepository $featureRepository)
-    {
+    public function __construct(
+        ProductService $service,
+        FeatureRepository $featureRepository,
+        VariantService $variantService
+    ) {
         $this->service           = $service;
         $this->featureRepository = $featureRepository;
+        $this->variantService    = $variantService;
     }
 
     /**
@@ -55,6 +67,17 @@ class ProductController extends Controller
         return view(static::VIEW_PATH . 'index', [
             'products' => $products,
         ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function groupAction(Request $request): RedirectResponse
+    {
+        $this->variantService->updateGroupedByPrimaryKey($request->get('variants'));
+
+        return back()->with('success', 'updated');
     }
 
     /**

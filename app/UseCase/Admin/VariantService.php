@@ -15,11 +15,22 @@ class VariantService
 
     /**
      * VariantService constructor.
+     *
      * @param VariantRepository $repository
      */
     public function __construct(VariantRepository $repository)
     {
         $this->repository = $repository;
+    }
+
+    /**
+     * @param array $variants
+     */
+    public function updateGroupedByPrimaryKey(array $variants)
+    {
+        foreach ($variants as $variantId => $variant) {
+            $this->update($variantId, $variant);
+        }
     }
 
     /**
