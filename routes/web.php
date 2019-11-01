@@ -29,8 +29,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::group(['prefix' => 'shop', 'as' => 'shop.', 'namespace' => 'Shop'], function () {
         Route::group(['prefix' => 'catalog', 'as' => 'catalog.', 'namespace' => 'Catalog'], function () {
             Route::resource('products', 'ProductController');
+            Route::post('products/group-action', 'ProductController@groupAction')->name('products.groupAction');
+
             Route::resource('categories', 'CategoryController');
             Route::get('categories/{category}/children', 'CategoryController@index')->name('categories.children');
+
             Route::resource('brands', 'BrandController');
             Route::resource('features', 'FeatureController');
             Route::resource('comments', 'CommentController');
