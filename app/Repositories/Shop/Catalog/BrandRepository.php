@@ -2,13 +2,14 @@
 
 namespace App\Repositories\Shop\Catalog;
 
-use Exception;
-use RuntimeException;
 use App\Entity\Shop\Catalog\Brand;
+use Illuminate\Database\Eloquent\Collection;
 
 class BrandRepository
 {
     /**
+     * Получить бренд по ID.
+     *
      * @param int $id
      * @return Brand
      */
@@ -18,11 +19,23 @@ class BrandRepository
     }
 
     /**
+     * Найти бренд по ID.
+     *
      * @param int $id
      * @return Brand|null
      */
     public function findOne(int $id): ?Brand
     {
         return Brand::find($id);
+    }
+
+    /**
+     * Получить все бренды.
+     *
+     * @return Collection|null
+     */
+    public function getAll(): ?Collection
+    {
+        return Brand::get();
     }
 }

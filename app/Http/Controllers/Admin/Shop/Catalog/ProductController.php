@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers\Admin\Shop\Catalog;
 
-use App\UseCase\Admin\VariantService;
-use Illuminate\Http\Request;
 use Throwable;
 use Exception;
 use DomainException;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Entity\Shop\Product\Product;
 use App\Entity\Shop\Product\Variant;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use App\UseCase\Admin\ProductService;
+use App\UseCase\Admin\VariantService;
+use App\Repositories\Shop\Catalog\BrandRepository;
 use App\Repositories\Shop\Catalog\FeatureRepository;
+use App\Repositories\Shop\Catalog\CategoryRepository;
 use App\Http\Requests\Admin\Shop\Catalog\ProductRequest;
 
 class ProductController extends Controller
@@ -26,32 +28,44 @@ class ProductController extends Controller
      * @var ProductService
      */
     private $service;
-
     /**
      * @var FeatureRepository
      */
     private $featureRepository;
-
     /**
      * @var VariantService
      */
     private $variantService;
+    /**
+     * @var BrandRepository
+     */
+    private $brandRepository;
+    /**
+     * @var CategoryRepository
+     */
+    private $categoryRepository;
 
     /**
      * ProductController constructor.
      *
      * @param ProductService $service
+     * @param BrandRepository $brandRepository
+     * @param CategoryRepository $categoryRepository
      * @param FeatureRepository $featureRepository
      * @param VariantService $variantService
      */
     public function __construct(
         ProductService $service,
+        BrandRepository $brandRepository,
+        CategoryRepository $categoryRepository,
         FeatureRepository $featureRepository,
         VariantService $variantService
     ) {
-        $this->service           = $service;
-        $this->featureRepository = $featureRepository;
-        $this->variantService    = $variantService;
+        $this->service            = $service;
+        $this->featureRepository  = $featureRepository;
+        $this->variantService     = $variantService;
+        $this->brandRepository    = $brandRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -127,11 +141,17 @@ class ProductController extends Controller
      */
     public function edit(Product $product): View
     {
-        $features = $this->featureRepository->getByCategoryId(1);
+        $features      = $this->featureRepository->getByCategoryId(1);
+        $brands        = $this->brandRepository->getAll();
+        $categories    = $this->categoryRepository->getAllWithDepth();
+        $categoriesIds = $product->categories()->allRelatedIds()->toArray();
 
         return view(static::VIEW_PATH . 'form', [
-            'product'  => $product,
-            'features' => $features,
+            'product'       => $product,
+            'brands'        => $brands,
+            'categories'    => $categories,
+            'categoriesIds' => $categoriesIds,
+            'features'      => $features,
         ]);
     }
 

@@ -108,7 +108,7 @@ class FeatureService
         $feature->categories()->detach();
 
         foreach ($categoryIds as $categoryId) {
-            $feature->addToCategory($categoryId);
+            $feature->categories()->attach($categoryId);
         }
     }
 

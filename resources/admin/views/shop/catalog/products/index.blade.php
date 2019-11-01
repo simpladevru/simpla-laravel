@@ -101,10 +101,8 @@
                     @endforeach
                 </table>
             </div>
-            <div class="card-footer">
-                <button type="submit" class="btn btn-primary float-right">Save</button>
-            </div>
             <div class="card-footer pt-4 pb-2">
+                <button type="submit" class="btn btn-primary float-right">Save</button>
                 {{ $products->appends(request()->all())->links() }}
             </div>
         </form>

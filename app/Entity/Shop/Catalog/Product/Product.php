@@ -2,11 +2,13 @@
 
 namespace App\Entity\Shop\Product;
 
-use App\Entity\Shop\Product\Image\Image;
 use Illuminate\Database\Eloquent\Model;
+use App\Entity\Shop\Product\Image\Image;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Entity\Shop\Catalog\Category\Category;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * App\Entity\Shop\Product\Product
@@ -71,6 +73,14 @@ class Product extends Model
         'meta_description',
         'sort',
     ];
+
+    /**
+     * @return BelongsToMany
+     */
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(Category::class, 'product_categories', 'product_id', 'category_id');
+    }
 
     /**
      * @return HasMany

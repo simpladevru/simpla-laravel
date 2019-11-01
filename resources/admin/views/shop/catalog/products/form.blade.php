@@ -50,11 +50,9 @@
                                 @endif
                             </div>
                         </div>
-
-                        <div class="form-group border-top mt-4 mb-4"></div>
-
                         <div class="form-group row">
-                            <div class="col-md-12">
+                            <label class="col-md-3 col-form-label"></label>
+                            <div class="col-md-9">
                                 <div class="custom-control custom-switch d-inline-block mr-4">
                                     <input
                                         type="checkbox"
@@ -83,6 +81,61 @@
                         <h3 class="border-bottom mt-5 mb-3 pb-2">Variants</h3>
 
                         @include('shop.catalog.products.variants')
+
+                        <div class="row mt-5">
+                            <div class="col-md-6">
+                                <h3 class="border-bottom mb-3 pb-2">Brand</h3>
+                                <select
+                                    id="brandId"
+                                    data-style="border"
+                                    class="form-control{{ $errors->has('brand_id') ? ' is-invalid' : '' }}"
+                                    name="brand_id"
+                                >
+                                    <option value=""></option>
+                                    @foreach ($brands as $brand)
+                                        <option
+                                            value="{{ $brand->id }}"
+                                            {{ $product->brand_id == $brand->id ? 'selected' : '' }}
+                                        >
+                                            {{ $brand->name }}
+                                        </option>
+                                    @endforeach;
+                                </select>
+                                @if ($errors->has('brand_id'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('brand_id') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="col-md-6">
+                                <h3 class="border-bottom mb-3 pb-2">Categories</h3>
+                                <select
+                                    id="categoryIds"
+                                    data-style="border"
+                                    class="form-control{{ $errors->has('category_ids') ? ' is-invalid' : '' }}"
+                                    name="category_ids[]"
+                                    multiple
+                                    data-show-subtext="true"
+                                    data-live-search="true"
+                                    data-selected-text-format="count"
+                                >
+                                    @foreach ($categories as $parent)
+                                        <option
+                                            value="{{ $parent->id }}"
+                                            {{ in_array($parent->id, $categoriesIds) ? 'selected' : '' }}
+                                        >
+                                            @for ($i = 0; $i < $parent->depth; $i++) &mdash; @endfor
+                                            {{ $parent->name }}
+                                        </option>
+                                    @endforeach;
+                                </select>
+                                @if ($errors->has('category_ids'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('category_ids') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
 
                         <div class="row mt-5">
                             <div class="col-md-6">

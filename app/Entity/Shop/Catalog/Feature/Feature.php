@@ -35,20 +35,4 @@ class Feature extends Model
     {
         return $this->belongsToMany(Category::class, 'category_features', 'feature_id', 'category_id');
     }
-
-    /**
-     * @param int $id
-     */
-    public function addToCategory(int $id)
-    {
-        $this->categories()->attach($id);
-    }
-
-    /**
-     * @param int $id
-     */
-    public function removeFromCategory(int $id)
-    {
-        $this->categories()->detach($id);
-    }
 }

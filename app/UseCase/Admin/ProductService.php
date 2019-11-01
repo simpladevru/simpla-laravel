@@ -112,10 +112,26 @@ class ProductService
     public function updateRelations(Product $product, array $data = []): void
     {
         DB::transaction(function () use ($product, $data) {
+            $this->updateCategories($product, $data['category_ids']);
             $this->updateVariants($product, $data['variants']);
             $this->updateAttributes($product, $data['attributes']);
             $this->updateImages($product, $data['images'], $data['upload_images']);
         });
+    }
+
+    /**
+     * Обновить список категорий в которых присутствует товар.
+     *
+     * @param Product $product
+     * @param array $categoryIds
+     */
+    public function updateCategories(Product $product, array $categoryIds = []): void
+    {
+        $product->categories()->detach();
+
+        foreach ($categoryIds as $categoryId) {
+            $product->categories()->attach($categoryId);
+        }
     }
 
     /**
