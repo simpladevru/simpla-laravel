@@ -65,6 +65,7 @@ class Category extends Model
         'meta_title',
         'meta_keywords',
         'meta_description',
+        'parent_id',
     ];
 
     /**
