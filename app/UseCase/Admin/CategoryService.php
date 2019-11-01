@@ -14,7 +14,6 @@ class CategoryService
     private $repository;
 
     /**
-     * CategoryService constructor.
      * @param CategoryRepository $repository
      */
     public function __construct(CategoryRepository $repository)
@@ -23,6 +22,8 @@ class CategoryService
     }
 
     /**
+     * Создать категорию.
+     *
      * @param array $attributes
      * @return Category
      */
@@ -32,6 +33,8 @@ class CategoryService
     }
 
     /**
+     * Обновить категорию.
+     *
      * @param int $id
      * @param array $attributes
      * @return Category
@@ -45,6 +48,8 @@ class CategoryService
     }
 
     /**
+     * Удалить категорию.
+     *
      * @param int $id
      * @throws Exception
      */

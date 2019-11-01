@@ -14,7 +14,6 @@ class BrandService
     private $brands;
 
     /**
-     * BrandService constructor.
      * @param BrandRepository $repository
      */
     public function __construct(BrandRepository $repository)
@@ -23,6 +22,8 @@ class BrandService
     }
 
     /**
+     * Создать бренд.
+     *
      * @param array $attributes
      * @return Brand
      */
@@ -32,6 +33,8 @@ class BrandService
     }
 
     /**
+     * Обновить бренд.
+     *
      * @param int $id
      * @param array $attributes
      * @return Brand
@@ -45,6 +48,8 @@ class BrandService
     }
 
     /**
+     * Удалить бренд.
+     *
      * @param int $id
      * @throws Exception
      */

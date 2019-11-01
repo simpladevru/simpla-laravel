@@ -25,6 +25,8 @@ class FeatureService
     }
 
     /**
+     * Создать свойство.
+     *
      * @param array $attributes
      * @return Feature
      */
@@ -34,6 +36,8 @@ class FeatureService
     }
 
     /**
+     * Обновить свойсто.
+     *
      * @param int $id
      * @param array $attributes
      * @return Feature
@@ -47,6 +51,8 @@ class FeatureService
     }
 
     /**
+     * Создать свойство со связями.
+     *
      * @param array $attributes
      * @return Feature
      * @throws Throwable
@@ -61,6 +67,8 @@ class FeatureService
     }
 
     /**
+     * Обновить свойство со связями.
+     *
      * @param int $id
      * @param array $attributes
      * @return Feature
@@ -76,6 +84,8 @@ class FeatureService
     }
 
     /**
+     * Обновить связи свойства.
+     *
      * @param Feature $feature
      * @param array $data
      * @throws Throwable
@@ -88,6 +98,8 @@ class FeatureService
     }
 
     /**
+     * Обновить список категорий в которых используется свойство.
+     *
      * @param Feature $feature
      * @param array $categoryIds
      */
@@ -101,6 +113,8 @@ class FeatureService
     }
 
     /**
+     * Удалить свойство.
+     *
      * @param int $id
      * @throws Exception
      */

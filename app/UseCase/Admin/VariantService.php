@@ -14,8 +14,6 @@ class VariantService
     private $repository;
 
     /**
-     * VariantService constructor.
-     *
      * @param VariantRepository $repository
      */
     public function __construct(VariantRepository $repository)
@@ -24,6 +22,8 @@ class VariantService
     }
 
     /**
+     * Обновить варианты сгруппированные по ID.
+     *
      * @param array $variants
      */
     public function updateGroupedByPrimaryKey(array $variants)
@@ -34,6 +34,8 @@ class VariantService
     }
 
     /**
+     * Создать вариант.
+     *
      * @param array $attributes
      * @return Variant
      */
@@ -43,6 +45,8 @@ class VariantService
     }
 
     /**
+     * Обновить вариант.
+     *
      * @param int $id
      * @param array $attributes
      * @return Variant
@@ -56,6 +60,8 @@ class VariantService
     }
 
     /**
+     * Заполнить вариант и сохранить.
+     *
      * @param Variant $variant
      * @param array $attributes
      */
@@ -65,6 +71,8 @@ class VariantService
     }
 
     /**
+     * Удалить вариант.
+     *
      * @param int $id
      * @throws Exception
      */

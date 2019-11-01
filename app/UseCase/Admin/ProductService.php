@@ -24,7 +24,6 @@ class ProductService
     private $variantService;
 
     /**
-     * ProductService constructor.
      * @param ProductRepository $repository
      * @param VariantService $variantService
      */
@@ -35,6 +34,8 @@ class ProductService
     }
 
     /**
+     * Создать товар.
+     *
      * @param array $attributes
      * @return Product
      */
@@ -44,6 +45,8 @@ class ProductService
     }
 
     /**
+     * Обновить товар.
+     *
      * @param int $id
      * @param array $attributes
      * @return Product
@@ -57,14 +60,18 @@ class ProductService
     }
 
     /**
+     * Копировать товар.
+     *
      * @param int $id
      */
-    public function clone(int $id)
+    public function copy(int $id)
     {
         $product = $this->repository->getOne($id);
     }
 
     /**
+     * Создать товар со связями.
+     *
      * @param array $attributes
      * @return Product
      * @throws Throwable
@@ -79,6 +86,8 @@ class ProductService
     }
 
     /**
+     * Обновить товар со связями.
+     *
      * @param int $id
      * @param array $attributes
      * @return Product
@@ -94,6 +103,8 @@ class ProductService
     }
 
     /**
+     * Обновить связи товара.
+     *
      * @param Product $product
      * @param array $data
      * @throws Throwable
@@ -108,6 +119,8 @@ class ProductService
     }
 
     /**
+     * Обновить варианты.
+     *
      * @param Product $product
      * @param array $variants
      * @throws Throwable
@@ -134,6 +147,8 @@ class ProductService
     }
 
     /**
+     * Обновить характеристики.
+     *
      * @param Product $product
      * @param array $attributes
      */
@@ -165,6 +180,8 @@ class ProductService
     }
 
     /**
+     * Обновить изображения.
+     *
      * @param Product $product
      * @param array $images
      * @param array $uploads
@@ -192,6 +209,8 @@ class ProductService
     }
 
     /**
+     * Добавить изображения.
+     *
      * @param Product $product
      * @param array $images
      * @param int $sort
@@ -204,6 +223,8 @@ class ProductService
     }
 
     /**
+     * Удалить товар.
+     *
      * @param int $id
      * @throws Exception
      */
