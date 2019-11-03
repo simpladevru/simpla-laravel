@@ -15,9 +15,9 @@
         method="POST"
         enctype="multipart/form-data"
         action="{{
-        $product->id
-            ? route('admin.shop.catalog.products.update', $product)
-            : route('admin.shop.catalog.products.store')
+            $product->id
+                ? route('admin.shop.catalog.products.update', $product)
+                : route('admin.shop.catalog.products.store')
         }}"
     >
         @csrf
@@ -37,11 +37,11 @@
                             <label for="name" class="col-md-3 col-form-label">Name</label>
                             <div class="col-md-9">
                                 <input
-                                    id="name"
-                                    class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
-                                    name="name"
-                                    value="{{ old('name', $product->name) }}"
-                                    required
+                                        id="name"
+                                        class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
+                                        name="name"
+                                        value="{{ old('name', $product->name) }}"
+                                        required
                                 >
                                 @if ($errors->has('name'))
                                     <span class="invalid-feedback">
@@ -55,23 +55,23 @@
                             <div class="col-md-9">
                                 <div class="custom-control custom-switch d-inline-block mr-4">
                                     <input
-                                        type="checkbox"
-                                        class="custom-control-input"
-                                        id="isActive"
-                                        name="is_active"
-                                        value="1"
-                                        {{ $product->is_active ? 'checked' : '' }}
+                                            type="checkbox"
+                                            class="custom-control-input"
+                                            id="isActive"
+                                            name="is_active"
+                                            value="1"
+                                            {{ $product->is_active ? 'checked' : '' }}
                                     >
                                     <label class="custom-control-label" for="isActive">Active</label>
                                 </div>
                                 <div class="custom-control custom-switch d-inline-block">
                                     <input
-                                        type="checkbox"
-                                        class="custom-control-input"
-                                        id="isFeatured"
-                                        name="is_featured"
-                                        value="1"
-                                        {{ $product->is_featured ? 'checked' : '' }}
+                                            type="checkbox"
+                                            class="custom-control-input"
+                                            id="isFeatured"
+                                            name="is_featured"
+                                            value="1"
+                                            {{ $product->is_featured ? 'checked' : '' }}
                                     >
                                     <label class="custom-control-label" for="isFeatured">Featured</label>
                                 </div>
@@ -84,60 +84,43 @@
 
                         <div class="row mt-5">
                             <div class="col-md-6">
-                                <h3 class="border-bottom mb-3 pb-2">Brand</h3>
-                                <select
-                                    id="brandId"
-                                    data-style="border"
-                                    class="form-control{{ $errors->has('brand_id') ? ' is-invalid' : '' }}"
-                                    name="brand_id"
-                                >
-                                    <option value=""></option>
-                                    @foreach ($brands as $brand)
-                                        <option
-                                            value="{{ $brand->id }}"
-                                            {{ $product->brand_id == $brand->id ? 'selected' : '' }}
-                                        >
-                                            {{ $brand->name }}
-                                        </option>
-                                    @endforeach;
-                                </select>
-                                @if ($errors->has('brand_id'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('brand_id') }}</strong>
-                                    </span>
+                                @if($brands)
+                                    <h3 class="border-bottom mb-3 pb-2">Brand</h3>
+                                    <select
+                                        id="brandId"
+                                        data-style="border"
+                                        class="form-control{{ $errors->has('brand_id') ? ' is-invalid' : '' }}"
+                                        name="brand_id"
+                                    >
+                                        <option value=""></option>
+                                        @foreach ($brands as $brand)
+                                            <option
+                                                value="{{ $brand->id }}"
+                                                {{ $product->brand_id == $brand->id ? 'selected' : '' }}
+                                            >
+                                                {{ $brand->name }}
+                                            </option>
+                                        @endforeach;
+                                    </select>
+                                    @if ($errors->has('brand_id'))
+                                        <span class="invalid-feedback">
+                                            <strong>{{ $errors->first('brand_id') }}</strong>
+                                        </span>
+                                    @endif
                                 @endif
 
-                                <h3 class="border-bottom mb-3 mt-4 pb-2">Categories</h3>
-                                <select
-                                        id="categoryIds"
-                                        data-style="border"
-                                        class="form-control{{ $errors->has('category_ids') ? ' is-invalid' : '' }}"
-                                        name="category_ids[]"
-                                        multiple
-                                        data-show-subtext="true"
-                                        data-live-search="true"
-                                        data-selected-text-format="count"
-                                >
-                                    @foreach ($categories as $parent)
-                                        <option
-                                                value="{{ $parent->id }}"
-                                                {{ in_array($parent->id, $categoriesIds) ? 'selected' : '' }}
-                                        >
-                                            @for ($i = 0; $i < $parent->depth; $i++) &mdash; @endfor
-                                            {{ $parent->name }}
-                                        </option>
-                                    @endforeach;
-                                </select>
-                                @if ($errors->has('category_ids'))
-                                    <span class="invalid-feedback">
+                                @if($categories)
+                                    <h3 class="border-bottom mb-3 mt-4 pb-2">Categories</h3>
+                                    @include('shop.catalog.products.categories')
+                                    @if ($errors->has('category_ids'))
+                                        <span class="invalid-feedback">
                                         <strong>{{ $errors->first('category_ids') }}</strong>
                                     </span>
+                                    @endif
                                 @endif
 
                                 <h3 class="border-bottom mb-3 mt-4 pb-2">Features</h3>
-                                @if($features)
-                                    @include('shop.catalog.products.features')
-                                @endif
+                                @include('shop.catalog.products.features')
                             </div>
                             <div class="col-md-6">
                                 <h3 class="border-bottom mb-3 pb-2">Images</h3>
@@ -153,11 +136,11 @@
                             <label for="annotation" class="col-md-3 col-form-label">Annotation</label>
                             <div class="col-md-9">
                                 <textarea
-                                    name="annotation"
-                                    id="annotation"
-                                    cols="30"
-                                    rows="3"
-                                    class="form-control{{ $errors->has('annotation') ? ' is-invalid' : '' }}"
+                                        name="annotation"
+                                        id="annotation"
+                                        cols="30"
+                                        rows="3"
+                                        class="form-control{{ $errors->has('annotation') ? ' is-invalid' : '' }}"
                                 >{{ old('annotation', $product->annotation) }}</textarea>
                                 @if ($errors->has('annotation'))
                                     <span class="invalid-feedback">
@@ -171,11 +154,11 @@
                             <label for="description" class="col-md-3 col-form-label">Description</label>
                             <div class="col-md-9">
                                 <textarea
-                                    name="description"
-                                    id="description"
-                                    cols="30"
-                                    rows="10"
-                                    class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}"
+                                        name="description"
+                                        id="description"
+                                        cols="30"
+                                        rows="10"
+                                        class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}"
                                 >{{ old('description', $product->description) }}</textarea>
                                 @if ($errors->has('description'))
                                     <span class="invalid-feedback">
@@ -191,10 +174,10 @@
                             <label for="slug" class="col-md-3 col-form-label">Slug</label>
                             <div class="col-md-9">
                                 <input
-                                    id="slug"
-                                    class="form-control{{ $errors->has('slug') ? ' is-invalid' : '' }}"
-                                    name="slug"
-                                    value="{{ old('slug', $product->slug) }}"
+                                        id="slug"
+                                        class="form-control{{ $errors->has('slug') ? ' is-invalid' : '' }}"
+                                        name="slug"
+                                        value="{{ old('slug', $product->slug) }}"
                                 >
                                 @if ($errors->has('slug'))
                                     <span class="invalid-feedback">
@@ -208,11 +191,11 @@
                             <label for="metaTitle" class="col-md-3 col-form-label">Meta Title</label>
                             <div class="col-md-9">
                                 <textarea
-                                    name="meta_title"
-                                    id="metaTitle"
-                                    cols="30"
-                                    rows="3"
-                                    class="form-control{{ $errors->has('meta_title') ? ' is-invalid' : '' }}"
+                                        name="meta_title"
+                                        id="metaTitle"
+                                        cols="30"
+                                        rows="3"
+                                        class="form-control{{ $errors->has('meta_title') ? ' is-invalid' : '' }}"
                                 >{{ old('meta_title', $product->meta_title) }}</textarea>
                                 @if ($errors->has('meta_title'))
                                     <span class="invalid-feedback">
@@ -226,11 +209,11 @@
                             <label for="metaKeywords" class="col-md-3 col-form-label">Meta Keywords</label>
                             <div class="col-md-9">
                                 <textarea
-                                    name="meta_keywords"
-                                    id="metaKeywords"
-                                    cols="30"
-                                    rows="3"
-                                    class="form-control{{ $errors->has('meta_keywords') ? ' is-invalid' : '' }}"
+                                        name="meta_keywords"
+                                        id="metaKeywords"
+                                        cols="30"
+                                        rows="3"
+                                        class="form-control{{ $errors->has('meta_keywords') ? ' is-invalid' : '' }}"
                                 >{{ old('meta_keywords', $product->meta_keywords) }}</textarea>
                                 @if ($errors->has('meta_keywords'))
                                     <span class="invalid-feedback">
@@ -244,11 +227,11 @@
                             <label for="metaDescription" class="col-md-3 col-form-label">Meta Description</label>
                             <div class="col-md-9">
                                 <textarea
-                                    name="meta_description"
-                                    id="metaDescription"
-                                    cols="30"
-                                    rows="3"
-                                    class="form-control{{ $errors->has('meta_description') ? ' is-invalid' : '' }}"
+                                        name="meta_description"
+                                        id="metaDescription"
+                                        cols="30"
+                                        rows="3"
+                                        class="form-control{{ $errors->has('meta_description') ? ' is-invalid' : '' }}"
                                 >{{ old('meta_description', $product->meta_description) }}</textarea>
                                 @if ($errors->has('meta_description'))
                                     <span class="invalid-feedback">
@@ -264,11 +247,11 @@
                             <label for="sort" class="col-md-3 col-form-label">Sort</label>
                             <div class="col-md-9">
                                 <input
-                                    id="sort"
-                                    class="form-control{{ $errors->has('sort') ? ' is-invalid' : '' }}"
-                                    name="sort"
-                                    value="{{ old('sort', $product->sort) }}"
-                                    required
+                                        id="sort"
+                                        class="form-control{{ $errors->has('sort') ? ' is-invalid' : '' }}"
+                                        name="sort"
+                                        value="{{ old('sort', $product->sort) }}"
+                                        required
                                 >
                                 @if ($errors->has('sort'))
                                     <span class="invalid-feedback">

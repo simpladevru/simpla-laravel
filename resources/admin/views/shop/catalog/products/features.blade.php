@@ -22,7 +22,8 @@
                     v-model="attribute.value"
                 >
                 <div class="input-group-append">
-                    <button v-if="index === 0" class="btn btn-outline-secondary" @click="add(feature.id, index)" type="button">
+                    <button v-if="index === 0" class="btn btn-outline-secondary" @click="add(feature.id, index)"
+                            type="button">
                         <i class="fa fa-plus-circle"></i>
                     </button>
                     <button v-else class="btn btn-outline-secondary" @click="remove(feature.id, index)" type="button">
@@ -45,6 +46,9 @@
                     return "attributes[" + featureId + "][" + index + "][" + key + "]";
                 },
                 getAttributes: function (featureId) {
+                    if (typeof this.attributes[featureId] === 'undefined') {
+                        this.attributes[featureId] = [];
+                    }
                     if (this.attributes[featureId].length === 0) {
                         this.add(featureId);
                     }
@@ -64,21 +68,27 @@
                     }
                 },
                 load: function (features, attributes, errors) {
-                    features.map(function (feature) {
-                        if (typeof attributes[feature.id] === 'undefined') {
-                            attributes[feature.id] = [];
-                        }
-                    });
-
-                    this.features = features;
                     this.attributes = attributes;
                     this.errors = errors;
+
+                    this.loadCategoryFeatures(
+                        $('select[name*=category_ids]').find('option:selected').val()
+                    );
                 },
+                loadCategoryFeatures: function (categoryId) {
+                    let self = this;
+
+                    axios.get('/admin/shop/catalog/categories/' + categoryId + '/ajax-features').then(function (response) {
+                        self.features = response.data;
+                    });
+                },
+                loadAttributes: function () {
+
+                }
             }
         });
 
         Features.load(
-            @json($features),
             @json(old('attributes', $product->attributes()->get()->groupBy('feature_id'))),
             @json($errors->get('attributes.*'))
         );

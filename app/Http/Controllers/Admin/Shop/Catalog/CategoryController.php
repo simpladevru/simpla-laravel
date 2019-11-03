@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin\Shop\Catalog;
 
+use App\Repositories\Shop\Catalog\CategoryRepository;
 use Exception;
 use DomainException;
+use Illuminate\Support\Arr;
 use Illuminate\View\View;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
@@ -21,15 +23,21 @@ class CategoryController extends Controller
      * @var CategoryService
      */
     private $service;
+    /**
+     * @var CategoryRepository
+     */
+    private $repository;
 
     /**
      * CategoryController constructor.
      *
      * @param CategoryService $service
+     * @param CategoryRepository $repository
      */
-    public function __construct(CategoryService $service)
+    public function __construct(CategoryService $service, CategoryRepository $repository)
     {
-        $this->service = $service;
+        $this->service    = $service;
+        $this->repository = $repository;
     }
 
     /**
@@ -149,5 +157,16 @@ class CategoryController extends Controller
         }
 
         return back()->with('success', 'deleted');
+    }
+
+    /**
+     * @param Category $category
+     * @return array
+     */
+    public function ajaxFeatures(Category $category)
+    {
+        return array_map(function ($feature) {
+            return Arr::only($feature, ['id', 'name']);
+        }, $category->features()->get(['id', 'name'])->toArray());
     }
 }

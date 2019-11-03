@@ -33,6 +33,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
             Route::resource('categories', 'CategoryController');
             Route::get('categories/{category}/children', 'CategoryController@index')->name('categories.children');
+            Route::get('categories/{category}/ajax-features', 'CategoryController@ajaxFeatures')->name('products.ajaxFeatures');
 
             Route::resource('brands', 'BrandController');
             Route::resource('features', 'FeatureController');

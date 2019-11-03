@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Admin\Shop\Catalog;
 
-use App\Entity\Shop\Catalog\Category\Category;
-use App\ReadModel\Shop\Catalog\FeatureFetcher;
 use Throwable;
 use Exception;
 use DomainException;
@@ -11,7 +9,6 @@ use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Entity\Shop\Product\Product;
-use App\Entity\Shop\Product\Variant;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use App\UseCase\Admin\ProductService;
@@ -110,13 +107,14 @@ class ProductController extends Controller
      */
     public function create(): View
     {
-        $features = $this->featureRepository->getByCategoryId(1);
-        $variants = [new Variant()];
+        $categories = $this->categoryRepository->getAllWithDepth();
+        $brands     = $this->brandRepository->getAll();
 
         return view(static::VIEW_PATH . 'form', [
-            'product'  => new Product(),
-            'variants' => $variants,
-            'features' => $features,
+            'product'            => new Product(),
+            'categories'         => $categories,
+            'productCategoryIds' => [],
+            'brands'             => $brands,
         ]);
     }
 
@@ -144,17 +142,15 @@ class ProductController extends Controller
     public function edit(Product $product): View
     {
         $categories = $this->categoryRepository->getAllWithDepth();
-        $features   = !$categories->isEmpty() ? $categories->first()->features : [];
         $brands     = $this->brandRepository->getAll();
 
-        $categoriesIds = $product->categories()->allRelatedIds()->toArray();
+        $productCategoryIds = $product->categories()->allRelatedIds()->toArray();
 
         return view(static::VIEW_PATH . 'form', [
-            'product'       => $product,
-            'categories'    => $categories,
-            'categoriesIds' => $categoriesIds,
-            'features'      => $features,
-            'brands'        => $brands,
+            'product'            => $product,
+            'categories'         => $categories,
+            'productCategoryIds' => $productCategoryIds,
+            'brands'             => $brands,
         ]);
     }
 
