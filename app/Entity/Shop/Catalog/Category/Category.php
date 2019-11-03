@@ -2,7 +2,9 @@
 
 namespace App\Entity\Shop\Catalog\Category;
 
+use App\Entity\Shop\Feature\Feature;
 use App\Helpers\ImageHelper;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Kalnoy\Nestedset\NodeTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
@@ -104,5 +106,13 @@ class Category extends Model
     public function getDescendantsAndSelf()
     {
         return $this->getDescendants()->add($this);
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function features(): BelongsToMany
+    {
+        return $this->belongsToMany(Feature::class, 'category_features', 'category_id', 'feature_id');
     }
 }

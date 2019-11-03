@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin\Shop\Catalog;
 
+use App\Entity\Shop\Catalog\Category\Category;
+use App\ReadModel\Shop\Catalog\FeatureFetcher;
 use Throwable;
 use Exception;
 use DomainException;
@@ -141,17 +143,18 @@ class ProductController extends Controller
      */
     public function edit(Product $product): View
     {
-        $features      = $this->featureRepository->getByCategoryId(1);
-        $brands        = $this->brandRepository->getAll();
-        $categories    = $this->categoryRepository->getAllWithDepth();
+        $categories = $this->categoryRepository->getAllWithDepth();
+        $features   = !$categories->isEmpty() ? $categories->first()->features : [];
+        $brands     = $this->brandRepository->getAll();
+
         $categoriesIds = $product->categories()->allRelatedIds()->toArray();
 
         return view(static::VIEW_PATH . 'form', [
             'product'       => $product,
-            'brands'        => $brands,
             'categories'    => $categories,
             'categoriesIds' => $categoriesIds,
             'features'      => $features,
+            'brands'        => $brands,
         ]);
     }
 

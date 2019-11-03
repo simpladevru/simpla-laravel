@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Shop\Catalog;
 
+use App\Helpers\Tables;
 use Illuminate\Support\Collection;
 use App\Entity\Shop\Feature\Feature;
 
@@ -23,15 +24,6 @@ class FeatureRepository
     public function findOne(int $id): ?Feature
     {
         return Feature::find($id);
-    }
-
-    /**
-     * @param int $id
-     * @return Collection|null
-     */
-    public function getByCategoryId(int $id): ?Collection
-    {
-        return Feature::get();
     }
 
     /**
