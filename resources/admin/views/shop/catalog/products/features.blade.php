@@ -4,7 +4,10 @@
             <span class="feature-name">@{{ feature.name }}</span>
         </label>
         <div class="col-md-8">
-            <div class="input-group input-group-sm mb-2" v-for="(attribute, index) in getAttributes(feature.id)">
+            <div
+                v-for="(attribute, index) in attributes[feature.id]"
+                class="input-group input-group-sm mb-2"
+            >
                 <input
                     type="hidden"
                     :name="getInputName(feature.id, index, 'id')"
@@ -22,10 +25,12 @@
                     v-model="attribute.value"
                 >
                 <div class="input-group-append">
-                    <button v-if="index === 0" class="btn btn-outline-secondary" @click="add(feature.id, index)"
-                            type="button">
-                        <i class="fa fa-plus-circle"></i>
-                    </button>
+                    <button
+                        v-if="index === 0"
+                        @click="add(feature.id, index)"
+                        class="btn btn-outline-secondary"
+                        type="button"
+                    ><i class="fa fa-plus-circle"></i></button>
                     <button v-else class="btn btn-outline-secondary" @click="remove(feature.id, index)" type="button">
                         <i class="fa fa-trash-o"></i>
                     </button>
@@ -42,17 +47,8 @@
             el: '#featuresBlock',
             props: ['features', 'attributes', 'errors'],
             methods: {
-                getInputName(featureId, index, key) {
+                getInputName: function (featureId, index, key) {
                     return "attributes[" + featureId + "][" + index + "][" + key + "]";
-                },
-                getAttributes: function (featureId) {
-                    if (typeof this.attributes[featureId] === 'undefined') {
-                        this.attributes[featureId] = [];
-                    }
-                    if (this.attributes[featureId].length === 0) {
-                        this.add(featureId);
-                    }
-                    return this.attributes[featureId];
                 },
                 add: function (featureId) {
                     this.attributes[featureId].push({
@@ -63,27 +59,31 @@
                 },
                 remove: function (featureId, index) {
                     this.attributes[featureId].splice(index, 1);
+
                     if (this.attributes[featureId] === 0) {
                         this.add();
                     }
                 },
-                load: function (features, attributes, errors) {
+                load: function (attributes, errors) {
                     this.attributes = attributes;
                     this.errors = errors;
-
-                    this.loadCategoryFeatures(
-                        $('select[name*=category_ids]').find('option:selected').val()
-                    );
+                    this.loadFeaturesByCategory($('select[name*=category_ids]').find('option:selected').val());
                 },
-                loadCategoryFeatures: function (categoryId) {
-                    let self = this;
+                loadFeaturesByCategory: function (categoryId) {
+                    let self= this;
 
                     axios.get('/admin/shop/catalog/categories/' + categoryId + '/ajax-features').then(function (response) {
                         self.features = response.data;
-                    });
-                },
-                loadAttributes: function () {
 
+                        self.features.map(function (feature) {
+                            if (typeof self.attributes[feature.id] === 'undefined') {
+                                self.$set(self.attributes, feature.id, [])
+                            }
+                            if (self.attributes[feature.id].length === 0) {
+                                self.add(feature.id);
+                            }
+                        });
+                    });
                 }
             }
         });

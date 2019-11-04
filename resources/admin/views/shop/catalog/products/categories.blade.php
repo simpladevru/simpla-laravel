@@ -29,7 +29,7 @@
 
             if (categoryId !== firstId) {
                 categoryId = firstId;
-                Features.loadCategoryFeatures(firstId);
+                Features.loadFeaturesByCategory(firstId);
             }
         });
     </script>

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin\Shop\Catalog;
 
-use App\Repositories\Shop\Catalog\CategoryRepository;
 use Exception;
 use DomainException;
 use Illuminate\Support\Arr;
@@ -12,6 +11,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use App\UseCase\Admin\CategoryService;
 use App\Entity\Shop\Catalog\Category\Category;
+use App\Repositories\Shop\Catalog\CategoryRepository;
 use App\Http\Requests\Admin\Shop\Catalog\CategoryRequest;
 
 class CategoryController extends Controller
