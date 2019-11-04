@@ -1,36 +1,79 @@
-<select
-    id="categoryIds"
-    data-style="border"
-    class="form-control{{ $errors->has('category_ids') ? ' is-invalid' : '' }}"
-    name="category_ids[]"
-    multiple
-    data-show-subtext="true"
-    data-live-search="true"
-    data-selected-text-format="count"
->
-    @foreach ($categories as $parent)
-        <option
-            value="{{ $parent->id }}"
-            {{ in_array($parent->id, $productCategoryIds) ? 'selected' : '' }}
+<div id="categoriesBlock">
+    <div>
+        <div class="mb-3">
+            <draggable v-model="selected" @change="onSort">
+                <span class="badge badge-secondary p-2 mr-1 mb-1" v-for="category in selected">
+                    <input
+                        type="hidden"
+                        name="category_ids[]"
+                        :value="category.id"
+                    >
+                    @{{ category.name }}
+                </span>
+            </draggable>
+        </div>
+
+        <select
+            multiple
+            id="categoryIds"
+            data-style="border"
+            class="form-control selectpicker"
+            data-show-subtext="true"
+            data-live-search="true"
+            data-selected-text-format="count"
+            v-model="selectedId"
+            @change="onChange"
         >
-            @for ($i = 0; $i < $parent->depth; $i++) &mdash; @endfor
-            {{ $parent->name }}
-        </option>
-    @endforeach;
-</select>
+            <option
+                v-for="category in categories"
+                :value="category.id"
+            >@{{ ('-').repeat(category.depth) }} @{{ category.name }}</option>
+        </select>
+    </div>
+</div>
 
 @push('scripts-footer')
     <script>
-        let $categoriesSelect = $('select[name*=category_ids]');
-        let categoryId = $categoriesSelect.find('option:selected').val();
+        let Categories = new Vue({
+            el: '#categoriesBlock',
+            props: ['categories', 'selectedId', 'selected'],
+            data: {
+                firstId: null
+            },
+            methods: {
+                onSort: function () {
+                    if (this.selected[0].id !== this.firstId) {
+                        Features.loadByCategory(this.selected[0].id);
+                    }
+                },
+                onChange: function () {
+                    this.findSelected();
+                },
+                findSelected: function () {
+                    let self = this;
+                    self.selected = [];
+                    this.selectedId.map(function (id) {
+                        self.selected.push(
+                            self.categories.find(category => category.id === id)
+                        );
+                    });
+                },
+                load: function (selectedId) {
+                    let self = this;
 
-        $('select[name*=category_ids]').change(function () {
-            let firstId = $(this).find('option:selected').val();
+                    self.selectedId = selectedId;
+                    self.firstId = selectedId[0];
 
-            if (categoryId !== firstId) {
-                categoryId = firstId;
-                Features.loadFeaturesByCategory(firstId);
+                    axios.get('/admin/shop/catalog/categories/ajax-all-with-depth').then(function (response) {
+                        self.categories = response.data;
+                        self.findSelected();
+                        Features.loadByCategory(self.firstId);
+                        $('#categoryIds').selectpicker('destroy').selectpicker();
+                    });
+                },
             }
         });
+
+        Categories.load(@json(old('category_ids', $productCategoryIds)));
     </script>
 @endpush

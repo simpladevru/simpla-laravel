@@ -26,10 +26,11 @@ class CategoryRepository
     }
 
     /**
+     * @param array|null $select
      * @return Collection|null
      */
-    public function getAllWithDepth(): ?Collection
+    public function getAllWithDepth(array $select = ['*']): ?Collection
     {
-        return Category::defaultOrder()->withDepth()->get();
+        return Category::defaultOrder()->select($select)->withDepth()->get();
     }
 }

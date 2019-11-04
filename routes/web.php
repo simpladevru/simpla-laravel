@@ -31,9 +31,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             Route::resource('products', 'ProductController');
             Route::post('products/group-action', 'ProductController@groupAction')->name('products.groupAction');
 
+            Route::get('categories/ajax-all-with-depth', 'CategoryController@ajaxAllWithDepth')->name('categories.ajaxAllWithDepth');
             Route::resource('categories', 'CategoryController');
+            Route::get('categories/{category}/ajax-features', 'CategoryController@ajaxFeatures')->name('categories.ajaxFeatures');
             Route::get('categories/{category}/children', 'CategoryController@index')->name('categories.children');
-            Route::get('categories/{category}/ajax-features', 'CategoryController@ajaxFeatures')->name('products.ajaxFeatures');
 
             Route::resource('brands', 'BrandController');
             Route::resource('features', 'FeatureController');

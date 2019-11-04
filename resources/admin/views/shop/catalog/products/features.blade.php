@@ -67,9 +67,8 @@
                 load: function (attributes, errors) {
                     this.attributes = attributes;
                     this.errors = errors;
-                    this.loadFeaturesByCategory($('select[name*=category_ids]').find('option:selected').val());
                 },
-                loadFeaturesByCategory: function (categoryId) {
+                loadByCategory: function (categoryId) {
                     let self= this;
 
                     axios.get('/admin/shop/catalog/categories/' + categoryId + '/ajax-features').then(function (response) {
@@ -88,9 +87,11 @@
             }
         });
 
-        Features.load(
-            @json(old('attributes', $product->attributes()->get()->groupBy('feature_id'))),
-            @json($errors->get('attributes.*'))
-        );
+        @if($productCategoryIds)
+            Features.load(
+                @json(old('attributes', $product->attributes()->get()->groupBy('feature_id'))),
+                @json($errors->get('attributes.*'))
+            );
+        @endif
     </script>
 @endpush

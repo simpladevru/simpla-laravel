@@ -29,7 +29,7 @@ $(document).on('click', 'a[data-method]', function () {
 });
 
 $(function () {
-    $('select').selectpicker()
+    $('.selectpicker').selectpicker()
         .on('changed.bs.select', selectPickerReplaceClass)
         .on('loaded.bs.select', selectPickerReplaceClass);
 

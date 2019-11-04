@@ -160,6 +160,14 @@ class CategoryController extends Controller
     }
 
     /**
+     * @return array
+     */
+    public function ajaxAllWithDepth(): array
+    {
+        return $this->repository->getAllWithDepth(['id', 'name'])->toArray();
+    }
+
+    /**
      * @param Category $category
      * @return array
      */
