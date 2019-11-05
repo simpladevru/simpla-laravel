@@ -126,6 +126,16 @@ class Product extends Model
     }
 
     /**
+     * Получить атрибуты сгруппированные по ID свойств.
+     *
+     * @return Collection|null
+     */
+    public function getAttributesGroupedByFeatureId(): ?Collection
+    {
+        return $this->attributes()->get()->groupBy('feature_id');
+    }
+
+    /**
      * Получить отношение к изображениям.
      *
      * @return HasMany

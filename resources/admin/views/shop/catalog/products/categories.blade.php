@@ -21,7 +21,7 @@
             data-show-subtext="true"
             data-live-search="true"
             data-selected-text-format="count"
-            v-model="selectedId"
+            v-model="selectedIds"
             @change="onChange"
         >
             <option
@@ -36,13 +36,18 @@
     <script>
         let Categories = new Vue({
             el: '#categoriesBlock',
-            props: ['categories', 'selectedId', 'selected'],
+            props: ['categories'],
             data: {
-                firstId: null
+                firstId: null,
+                selected: [],
+                selectedIds: [],
             },
             methods: {
                 onSort: function () {
-                    if (this.selected[0].id !== this.firstId) {
+                    if (
+                        this.selected.length
+                        && this.selected[0].id !== this.firstId
+                    ) {
                         Features.loadByCategory(this.selected[0].id);
                     }
                 },
@@ -52,22 +57,27 @@
                 findSelected: function () {
                     let self = this;
                     self.selected = [];
-                    this.selectedId.map(function (id) {
+                    this.selectedIds.map(function (id) {
                         self.selected.push(
                             self.categories.find(category => category.id === id)
                         );
                     });
                 },
-                load: function (selectedId) {
+                load: function (selectedIds) {
                     let self = this;
 
-                    self.selectedId = selectedId;
-                    self.firstId = selectedId[0];
+                    self.selectedIds = selectedIds;
 
                     axios.get('/admin/shop/catalog/categories/ajax-all-with-depth').then(function (response) {
                         self.categories = response.data;
+
                         self.findSelected();
-                        Features.loadByCategory(self.firstId);
+
+                        if (selectedIds.length) {
+                            self.firstId = selectedIds[0];
+                            Features.loadByCategory(self.firstId);
+                        }
+
                         $('#categoryIds').selectpicker('destroy').selectpicker();
                     });
                 },

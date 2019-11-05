@@ -89,7 +89,7 @@
 
         @if($productCategoryIds)
             Features.load(
-                @json(old('attributes', $product->attributes()->get()->groupBy('feature_id'))),
+                @json(old('attributes', $product->getAttributesGroupedByFeatureId()->toArray())),
                 @json($errors->get('attributes.*'))
             );
         @endif
