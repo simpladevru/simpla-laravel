@@ -129,8 +129,8 @@ class ProductService
     {
         $product->categories()->detach();
 
-        foreach ($categoryIds as $categoryId) {
-            $product->categories()->attach($categoryId);
+        foreach ($categoryIds as $index => $categoryId) {
+            $product->categories()->attach($categoryId, ['sort' => $index]);
         }
     }
 

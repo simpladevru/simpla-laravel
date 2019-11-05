@@ -84,43 +84,48 @@
 
                         <div class="row mt-5">
                             <div class="col-md-6">
-                                @if($brands)
-                                    <h3 class="border-bottom mb-3 pb-2">Brand</h3>
-                                    <select
-                                        id="brandId"
-                                        data-style="border"
-                                        class="form-control{{ $errors->has('brand_id') ? ' is-invalid' : '' }}"
-                                        name="brand_id"
-                                    >
-                                        <option value=""></option>
-                                        @foreach ($brands as $brand)
-                                            <option
-                                                value="{{ $brand->id }}"
-                                                {{ $product->brand_id == $brand->id ? 'selected' : '' }}
-                                            >
-                                                {{ $brand->name }}
-                                            </option>
-                                        @endforeach;
-                                    </select>
-                                    @if ($errors->has('brand_id'))
-                                        <span class="invalid-feedback">
-                                            <strong>{{ $errors->first('brand_id') }}</strong>
+                                @if(count($brands) > 0)
+                                    <div class="mb-4">
+                                        <h3 class="border-bottom mb-3 pb-2">Brand</h3>
+                                        <select
+                                            id="brandId"
+                                            data-style="border"
+                                            data-live-search="true"
+                                            class="form-control selectpicker {{ $errors->has('brand_id') ? ' is-invalid' : '' }}"
+                                            name="brand_id"
+                                        >
+                                            <option value=""></option>
+                                            @foreach ($brands as $brand)
+                                                <option
+                                                    value="{{ $brand->id }}"
+                                                    {{ $product->brand_id == $brand->id ? 'selected' : '' }}
+                                                >
+                                                    {{ $brand->name }}
+                                                </option>
+                                            @endforeach;
+                                        </select>
+                                        @if ($errors->has('brand_id'))
+                                            <span class="invalid-feedback">
+                                                <strong>{{ $errors->first('brand_id') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                @endif
+
+                               @if(count($categories) > 0)
+                                    <div class="mb-4">
+                                        <h3 class="border-bottom mb-3 pb-2">Categories</h3>
+                                        @include('shop.catalog.products.categories')
+                                        @if ($errors->has('category_ids'))
+                                            <span class="invalid-feedback">
+                                            <strong>{{ $errors->first('category_ids') }}</strong>
                                         </span>
-                                    @endif
-                                @endif
+                                        @endif
+                                    </div>
 
-                                @if($categories)
-                                    <h3 class="border-bottom mb-3 mt-4 pb-2">Categories</h3>
-                                    @include('shop.catalog.products.categories')
-                                    @if ($errors->has('category_ids'))
-                                        <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('category_ids') }}</strong>
-                                    </span>
-                                    @endif
+                                    <h3 class="border-bottom mb-3 pb-2">Features</h3>
+                                    @include('shop.catalog.products.features')
                                 @endif
-
-                                <h3 class="border-bottom mb-3 mt-4 pb-2">Features</h3>
-                                @include('shop.catalog.products.features')
                             </div>
                             <div class="col-md-6">
                                 <h3 class="border-bottom mb-3 pb-2">Images</h3>

@@ -144,7 +144,7 @@ class ProductController extends Controller
         $categories = $this->categoryRepository->getAllWithDepth();
         $brands     = $this->brandRepository->getAll();
 
-        $productCategoryIds = $product->categories()->allRelatedIds()->toArray();
+        $productCategoryIds = $product->categoryRelations()->get()->pluck('category_id')->toArray();
 
         return view(static::VIEW_PATH . 'form', [
             'product'            => $product,

@@ -2,6 +2,7 @@
 
 namespace App\Entity\Shop\Product;
 
+use App\Entity\Shop\Catalog\Product\Category\CategoryRelation;
 use Illuminate\Database\Eloquent\Model;
 use App\Entity\Shop\Product\Image\Image;
 use Illuminate\Database\Eloquent\Collection;
@@ -82,6 +83,16 @@ class Product extends Model
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class, 'product_categories', 'product_id', 'category_id');
+    }
+
+    /**
+     * Получить значения промежуточной таблицы связи с категориями.
+     *
+     * @return HasMany
+     */
+    public function categoryRelations(): HasMany
+    {
+        return $this->hasMany(CategoryRelation::class, 'product_id', 'id')->orderBy('sort');
     }
 
     /**
