@@ -2,7 +2,6 @@
 
 namespace App\Entity\Shop\Product;
 
-use App\Entity\Shop\Catalog\Product\Category\CategoryRelation;
 use Illuminate\Database\Eloquent\Model;
 use App\Entity\Shop\Product\Image\Image;
 use Illuminate\Database\Eloquent\Collection;
@@ -10,6 +9,7 @@ use App\Entity\Shop\Catalog\Category\Category;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Entity\Shop\Catalog\Product\Category\CategoryRelation;
 
 /**
  * App\Entity\Shop\Product\Product
@@ -76,7 +76,7 @@ class Product extends Model
     ];
 
     /**
-     * Получить связи с категориями.
+     * Получить отношение к категориями.
      *
      * @return BelongsToMany
      */
@@ -86,7 +86,7 @@ class Product extends Model
     }
 
     /**
-     * Получить значения промежуточной таблицы связи с категориями.
+     * Получить связи промежуточной таблицы отношений к категориями.
      *
      * @return HasMany
      */
@@ -96,7 +96,17 @@ class Product extends Model
     }
 
     /**
-     * Получить связи с вариантами.
+     * Получить значения промежуточной таблицы отношений к категориями.
+     *
+     * @return array
+     */
+    public function categoryRelationIds(): array
+    {
+        return $this->categoryRelations()->get()->pluck('category_id')->toArray();
+    }
+
+    /**
+     * Получить отношение к вариантами.
      *
      * @return HasMany
      */
@@ -106,7 +116,7 @@ class Product extends Model
     }
 
     /**
-     * Получить связи со свойствами.
+     * Получить отношение к свойствам.
      *
      * @return HasMany
      */
@@ -116,7 +126,7 @@ class Product extends Model
     }
 
     /**
-     * Получить связи с изображениями.
+     * Получить отношение к изображениям.
      *
      * @return HasMany
      */
