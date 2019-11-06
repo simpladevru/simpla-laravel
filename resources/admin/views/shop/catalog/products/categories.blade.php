@@ -1,7 +1,7 @@
 <div id="categoriesBlock">
     <div>
         <div class="mb-3">
-            <draggable v-model="selected" @change="onSort">
+            <draggable v-model="selected">
                 <span class="badge badge-secondary p-2 mr-1 mb-1" v-for="category in selected">
                     <input
                         type="hidden"
@@ -14,20 +14,20 @@
         </div>
 
         <select
-            multiple
-            id="categoryIds"
-            data-style="border"
-            class="form-control selectpicker"
-            data-show-subtext="true"
-            data-live-search="true"
-            data-selected-text-format="count"
-            v-model="selectedIds"
-            @change="onChange"
+                multiple
+                id="categoryIds"
+                data-style="border"
+                class="form-control selectpicker"
+                data-show-subtext="true"
+                data-live-search="true"
+                data-selected-text-format="count"
+                v-model="selectedIds"
         >
             <option
                 v-for="category in categories"
                 :value="category.id"
-            >@{{ ('-').repeat(category.depth) }} @{{ category.name }}</option>
+            >@{{ ('-').repeat(category.depth) }} @{{ category.name }}
+            </option>
         </select>
     </div>
 </div>
@@ -42,42 +42,34 @@
                 selected: [],
                 selectedIds: [],
             },
-            methods: {
-                onSort: function () {
-                    if (
-                        this.selected.length
-                        && this.selected[0].id !== this.firstId
-                    ) {
-                        Features.loadByCategory(this.selected[0].id);
-                    }
-                },
-                onChange: function () {
-                    this.findSelected();
-                },
-                findSelected: function () {
+            watch: {
+                selectedIds: function (value) {
                     let self = this;
                     self.selected = [];
-                    this.selectedIds.map(function (id) {
-                        self.selected.push(
-                            self.categories.find(category => category.id === id)
-                        );
+                    value.map(function (id) {
+                        self.selected.push(self.categories.find(category => category.id === id));
                     });
                 },
+                selected: function (value) {
+                    if (value.length === 0) {
+                        this.firstId = null;
+                        return;
+                    }
+
+                    if (value[0].id !== this.firstId) {
+                        this.firstId = value[0].id;
+                    }
+                },
+                firstId: function (value) {
+                    Features.loadByCategory(value);
+                },
+            },
+            methods: {
                 load: function (selectedIds) {
                     let self = this;
-
-                    self.selectedIds = selectedIds;
-
                     axios.get('/admin/shop/catalog/categories/ajax-all-with-depth').then(function (response) {
                         self.categories = response.data;
-
-                        self.findSelected();
-
-                        if (selectedIds.length) {
-                            self.firstId = selectedIds[0];
-                            Features.loadByCategory(self.firstId);
-                        }
-
+                        self.selectedIds = selectedIds;
                         $('#categoryIds').selectpicker('destroy').selectpicker();
                     });
                 },

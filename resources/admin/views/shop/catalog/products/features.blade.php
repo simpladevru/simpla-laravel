@@ -45,7 +45,11 @@
     <script>
         let Features = new Vue({
             el: '#featuresBlock',
-            props: ['features', 'attributes', 'errors'],
+            data: {
+                features: [],
+                attributes: [],
+                errors: [],
+            },
             methods: {
                 getInputName: function (featureId, index, key) {
                     return "attributes[" + featureId + "][" + index + "][" + key + "]";
@@ -69,7 +73,12 @@
                     this.errors = errors;
                 },
                 loadByCategory: function (categoryId) {
-                    let self= this;
+                    let self = this;
+
+                    if (categoryId === null) {
+                        self.features = [];
+                        return;
+                    }
 
                     axios.get('/admin/shop/catalog/categories/' + categoryId + '/ajax-features').then(function (response) {
                         self.features = response.data;
