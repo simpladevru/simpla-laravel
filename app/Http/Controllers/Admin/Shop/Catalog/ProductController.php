@@ -85,9 +85,9 @@ class ProductController extends Controller
         }
 
         if ($categoryId = $request->get('category_id')) {
-            $category    = $this->categoryRepository->getOne($categoryId);
-            $categoryIds = $category->descendants()->pluck('id')->add($category->id);
-            $query->whereCategoryIdsAndDescendants($categoryIds->toArray());
+            //$category    = $this->categoryRepository->getOne($categoryId);
+            //$categoryIds = $category->descendants()->pluck('id')->add($category->id);
+            $query->whereCategoryIdsAndDescendants([$categoryId]);
         }
 
         return view(static::VIEW_PATH . 'index', [

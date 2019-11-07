@@ -37,8 +37,20 @@ trait Scopes
      */
     public function scopeWhereCategoryIdsAndDescendants(Builder $query, array $ids)
     {
-        $query->join(Tables::PRODUCT_CATEGORIES . ' as pc', function (JoinClause $join) use ($ids) {
-            $join->on('pc.product_id', 'id')->whereIn('pc.category_id', $ids);
+        $nestedSet = function ($query) use ($ids) {
+            $query
+                ->fromRaw('categories c, categories o')
+                ->selectRaw('distinct c.id')
+                ->whereIn('o.id', $ids)
+                ->whereRaw('c._lft between o._lft and o._rgt');
+        };
+
+        $query->join(Tables::PRODUCT_CATEGORIES . ' as pc', function (JoinClause $join) use ($nestedSet) {
+            $join->on('pc.product_id', 'id')->whereIn('pc.category_id', $nestedSet);
         });
+
+//        $query->join(Tables::PRODUCT_CATEGORIES . ' as pc', function (JoinClause $join) use ($ids) {
+//            $join->on('pc.product_id', 'id')->whereIn('pc.category_id', $ids);
+//        });
     }
 }
