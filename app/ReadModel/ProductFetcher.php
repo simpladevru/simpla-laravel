@@ -14,7 +14,7 @@ class ProductFetcher
     public function countByCategoryIds(array $ids)
     {
         $subSelect = DB::table('categories')
-            ->selectRaw('COUNT(DISTINCT product_categories.product_id)')
+            ->selectRaw('count(distinct product_categories.product_id)')
             ->join('product_categories', 'product_categories.category_id', 'categories.id')
             ->whereRaw('categories._lft between c._lft and c._rgt')
             ->toSql();

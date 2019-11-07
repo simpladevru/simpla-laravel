@@ -53,7 +53,7 @@ class CategoryController extends Controller
             'keyword',
         ]);
 
-        $query = Category::defaultOrder()->withCount('descendants')->with('descendants');
+        $query = Category::defaultOrder()->withCount('descendants')->withCount('productRelations');
 
         if ($category) {
             $query->whereParentId($category->id);
@@ -65,13 +65,9 @@ class CategoryController extends Controller
 
         $categories = $query->paginate(20);
 
-        $counter = (new ProductFetcher)->countByCategoryIds($categories->pluck('id')->toArray());
-
-        //dd($counter);
         return view(static::VIEW_PATH . 'index', [
             'category'   => $category,
             'categories' => $categories,
-            'counter'    => $counter,
         ]);
     }
 

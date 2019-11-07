@@ -2,11 +2,14 @@
 
 namespace App\Entity\Shop\Catalog\Category;
 
+use App\Entity\Shop\Catalog\Product\Category\CategoryRelation;
+use App\Entity\Shop\Product\Product;
 use App\Helpers\ImageHelper;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Kalnoy\Nestedset\NodeTrait;
 use App\Entity\Shop\Feature\Feature;
-use App\Entity\Shop\Product\Product;
 use Illuminate\Database\Eloquent\Model;
+use Kalnoy\Nestedset\DescendantsRelation;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -127,11 +130,14 @@ class Category extends Model
      */
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(
-            Product::class,
-            'product_categories',
-            'category_id',
-            'product_id'
-        );
+        return ProductRelation::build($this);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function productRelations(): HasMany
+    {
+        return ProductPivotRelation::build($this);
     }
 }
