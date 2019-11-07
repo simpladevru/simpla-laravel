@@ -2,12 +2,13 @@
 
 namespace App\Entity\Shop\Catalog\Category;
 
-use App\Entity\Shop\Feature\Feature;
 use App\Helpers\ImageHelper;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Kalnoy\Nestedset\NodeTrait;
+use App\Entity\Shop\Feature\Feature;
+use App\Entity\Shop\Product\Product;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * App\Entity\Shop\Catalog\Category\Category
@@ -113,6 +114,24 @@ class Category extends Model
      */
     public function features(): BelongsToMany
     {
-        return $this->belongsToMany(Feature::class, 'category_features', 'category_id', 'feature_id');
+        return $this->belongsToMany(
+            Feature::class,
+            'category_features',
+            'category_id',
+            'feature_id'
+        );
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Product::class,
+            'product_categories',
+            'category_id',
+            'product_id'
+        );
     }
 }

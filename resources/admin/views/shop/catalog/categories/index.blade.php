@@ -65,7 +65,8 @@
                         <th class="w-1 text-center">Id</th>
                         <th class="w-5 text-center">Image</th>
                         <th class="w-50">Name</th>
-                        <th class="w-25">Edit</th>
+                        <th class="w-15">Count products</th>
+                        <th class="w-15 text-right">Edit</th>
                     </tr>
                     @foreach($categories as $category)
                         <tr>
@@ -92,6 +93,9 @@
                                         ({{ $category->descendants_count }} {{ Str::lower(trans_choice('titles.categories.plural', $category->descendants_count)) }})
                                     </small>
                                 @endif
+                            </td>
+                            <td>
+                                {{ $category->products_count }}
                             </td>
                             <td>
                                 <div class="float-right">
