@@ -2,6 +2,7 @@
 
 namespace App\Entity\Shop\Catalog\Category;
 
+use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Entity\Shop\Catalog\Product\Category\CategoryRelation;
@@ -19,6 +20,18 @@ class ProductPivotRelation extends HasMany
         $localKey   = 'id';
 
         return new static($query, $parent, $foreignKey, $localKey);
+    }
+
+    /**
+     * @param Builder $query
+     * @param Builder $parentQuery
+     * @return Builder
+     */
+    public function getRelationExistenceCountQuery(Builder $query, Builder $parentQuery)
+    {
+        return $this->getRelationExistenceQuery(
+            $query, $parentQuery, new Expression('count(distinct product_categories.product_id)')
+        )->setBindings([], 'select');
     }
 
     /**

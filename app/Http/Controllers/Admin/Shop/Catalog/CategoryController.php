@@ -53,7 +53,7 @@ class CategoryController extends Controller
             'keyword',
         ]);
 
-        $query = Category::defaultOrder()->withCount('descendants')->withCount('productRelations');
+        $query = Category::defaultOrder()->withCount(['descendants', 'productRelations']);
 
         if ($category) {
             $query->whereParentId($category->id);
