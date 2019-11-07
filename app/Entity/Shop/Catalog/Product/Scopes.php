@@ -38,6 +38,6 @@ trait Scopes
     {
         $query
             ->join('product_categories as pc', 'product_id', 'id')
-            ->where('pc.category_id', $ids);
+            ->whereIn('pc.category_id', $ids);
     }
 }
