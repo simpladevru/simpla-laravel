@@ -36,8 +36,8 @@ trait Scopes
      */
     public function scopeWhereCategoryIdsAndDescendants(Builder $query, array $ids)
     {
-        $query
-            ->join('product_categories as pc', 'product_id', 'id')
-            ->whereIn('pc.category_id', $ids);
+        $query->join('product_categories as pc', function (JoinClause $join) use ($ids) {
+            $join->on('pc.product_id', 'id')->whereIn('pc.category_id', $ids);
+        });
     }
 }
