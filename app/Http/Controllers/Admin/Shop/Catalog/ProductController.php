@@ -79,7 +79,7 @@ class ProductController extends Controller
     public function index(Request $request): View
     {
         $query = Product::with(['variants', 'image'])
-            ->orderByDesc('id');
+            ->orderByDesc('products.id');
 
         if ($brandIds = $request->get('brand_id')) {
             $query->whereBrandIds([$brandIds]);

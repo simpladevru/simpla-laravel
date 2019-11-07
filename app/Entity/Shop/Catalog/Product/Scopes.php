@@ -2,8 +2,9 @@
 
 namespace App\Entity\Shop\Catalog\Product;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\JoinClause;
+use Illuminate\Support\Facades\DB;
 
 trait Scopes
 {
@@ -24,7 +25,7 @@ trait Scopes
      */
     public function scopeWhereCategoryIds(Builder $query, array $ids)
     {
-        return $query->whereHas('categoryRelations', function(Builder $query) use ($ids){
+        return $query->whereHas('categoryRelations', function (Builder $query) use ($ids) {
             $query->whereIn('id', $ids);
         });
     }
@@ -36,13 +37,17 @@ trait Scopes
      */
     public function scopeWhereCategoryIdsAndDescendants(Builder $query, array $ids)
     {
-        return $query->whereHas('categories', function(Builder $query) use ($ids){
-            $query->whereExists(function ($query) use ($ids) {
-                $query->select('*')
-                    ->from('categories', 'sc')
-                    ->whereRaw('categories._lft between sc._lft and sc._rgt')
-                    ->whereIn('sc.id', $ids);
+        $query
+            ->join('product_categories as pc', function (JoinClause $join) use ($ids) {
+                $join
+                    ->on('pc.product_id', '=', 'id')
+                    ->whereIn('pc.product_id' , $ids);
+            })
+            ->join('categories as c', 'c.id', 'pc.category_id')
+            ->whereIn('c.id', function ($query) {
+                $query->from('categories')
+                    ->selectRaw('id')
+                    ->whereRaw('c._lft between categories._lft and categories._rgt');
             });
-        });
     }
 }
