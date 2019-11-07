@@ -65,7 +65,7 @@
                         <th class="w-1 text-center">Id</th>
                         <th class="w-5 text-center">Image</th>
                         <th class="w-50">Name</th>
-                        <th class="w-15">Count products</th>
+                        <th class="w-15 text-center">Count products</th>
                         <th class="w-15 text-right">Edit</th>
                     </tr>
                     @foreach($categories as $category)
@@ -94,8 +94,11 @@
                                     </small>
                                 @endif
                             </td>
-                            <td>
-                                {{ $category->product_relations_count }}
+                            <td class="text-center">
+                                <a href="{{ route('admin.shop.catalog.products.index', ['category_id' => $category->id]) }}"
+                                    class="btn btn-sm btn-outline-primary">
+                                    {{ $category->product_relations_count }}
+                                </a>
                             </td>
                             <td>
                                 <div class="float-right">

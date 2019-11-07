@@ -28,18 +28,22 @@ class ProductController extends Controller
      * @var ProductService
      */
     private $service;
+
     /**
      * @var FeatureRepository
      */
     private $featureRepository;
+
     /**
      * @var VariantService
      */
     private $variantService;
+
     /**
      * @var BrandRepository
      */
     private $brandRepository;
+
     /**
      * @var CategoryRepository
      */
@@ -69,17 +73,24 @@ class ProductController extends Controller
     }
 
     /**
+     * @param Request $request
      * @return View
      */
-    public function index(): View
+    public function index(Request $request): View
     {
         $query = Product::with(['variants', 'image'])
             ->orderByDesc('id');
 
-        $products = $query->paginate(20);
+        if ($brandIds = $request->get('brand_id')) {
+            $query->whereBrandIds([$brandIds]);
+        }
+
+        if ($categoryId = $request->get('category_id')) {
+            $query->whereCategoryIds([$categoryId]);
+        }
 
         return view(static::VIEW_PATH . 'index', [
-            'products' => $products,
+            'products' => $query->paginate(20),
         ]);
     }
 

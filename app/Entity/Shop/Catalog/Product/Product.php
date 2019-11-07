@@ -2,6 +2,7 @@
 
 namespace App\Entity\Shop\Product;
 
+use App\Entity\Shop\Catalog\Product\Scopes;
 use Illuminate\Database\Eloquent\Model;
 use App\Entity\Shop\Product\Image\Image;
 use Illuminate\Database\Eloquent\Collection;
@@ -59,6 +60,8 @@ use App\Entity\Shop\Catalog\Product\Category\CategoryRelation;
  */
 class Product extends Model
 {
+    use Scopes;
+
     protected $guarded = ['id'];
 
     protected $fillable = [
