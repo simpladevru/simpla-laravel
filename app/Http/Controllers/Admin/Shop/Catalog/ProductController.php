@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin\Shop\Catalog;
 
-use function MongoDB\BSON\toPHP;
 use Throwable;
 use Exception;
 use DomainException;
@@ -86,7 +85,10 @@ class ProductController extends Controller
         }
 
         if ($categoryId = $request->get('category_id')) {
-            $query->whereCategoryIdsAndDescendants([$categoryId]);
+            $category = $this->categoryRepository->getOne($categoryId);
+            $descendantIds = $category->descendants()->pluck('id');
+            $descendantIds[] = $category->id;
+            $query->whereCategoryIdsAndDescendants($descendantIds->toArray());
         }
 
         return view(static::VIEW_PATH . 'index', [

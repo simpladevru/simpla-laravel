@@ -33,21 +33,11 @@ trait Scopes
     /**
      * @param Builder $query
      * @param array $ids
-     * @return Builder
      */
     public function scopeWhereCategoryIdsAndDescendants(Builder $query, array $ids)
     {
         $query
-            ->join('product_categories as pc', function (JoinClause $join) use ($ids) {
-                $join
-                    ->on('pc.product_id', '=', 'id')
-                    ->whereIn('pc.product_id' , $ids);
-            })
-            ->join('categories as c', 'c.id', 'pc.category_id')
-            ->whereIn('c.id', function ($query) {
-                $query->from('categories')
-                    ->selectRaw('id')
-                    ->whereRaw('c._lft between categories._lft and categories._rgt');
-            });
+            ->join('product_categories as pc', 'product_id', 'id')
+            ->where('pc.category_id', $ids);
     }
 }
