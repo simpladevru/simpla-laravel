@@ -2,38 +2,28 @@
 
 namespace App\ReadModel;
 
-use App\Helpers\Tables;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class ProductFetcher
 {
-    public function getProductCountByCategoryLeftAndRight(array $intervals)
+    /**
+     * @param array $ids
+     * @return Collection
+     */
+    public function countByCategoryIds(array $ids)
     {
-        $products           = Tables::PRODUCTS;
-        $product_categories = Tables::PRODUCT_CATEGORIES;
-        $categories         = Tables::CATEGORIES;
+        $subSelect = DB::table('categories')
+            ->selectRaw('COUNT(DISTINCT product_categories.product_id)')
+            ->join('product_categories', 'product_categories.category_id', 'categories.id')
+            ->whereRaw('categories._lft between c._lft and c._rgt')
+            ->toSql();
 
-        $select_count = DB::raw('COUNT(' . $products . '.id) as products_count');
+        $counter = DB::table('categories', 'c')
+            ->select('id', DB::raw("($subSelect) as count"))
+            ->whereIn('id', $ids)
+            ->get();
 
-        $query = DB::table($products)
-            ->select($select_count)
-            ->join(
-                $product_categories,
-                $product_categories . '.product_id',
-                '=',
-                $products . '.id'
-            )
-            ->join(
-                $categories,
-                $categories . '.id',
-                '=',
-                $product_categories . '.category_id'
-            );
-
-        foreach ($intervals as $interval) {
-            $query->whereBetween($categories . '._lft', $interval);
-        }
-
-        $query->get();
+        return $counter->pluck('count', 'id');
     }
 }

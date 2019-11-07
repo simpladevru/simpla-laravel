@@ -95,7 +95,7 @@
                                 @endif
                             </td>
                             <td>
-                                {{ $category->products_count }}
+                                {{ $counter->get($category->id, 0) }}
                             </td>
                             <td>
                                 <div class="float-right">

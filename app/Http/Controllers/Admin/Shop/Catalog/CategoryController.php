@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin\Shop\Catalog;
 
+use App\Entity\Shop\Product\Product;
+use App\ReadModel\ProductFetcher;
 use Exception;
 use DomainException;
 use Illuminate\Support\Arr;
@@ -23,6 +25,7 @@ class CategoryController extends Controller
      * @var CategoryService
      */
     private $service;
+
     /**
      * @var CategoryRepository
      */
@@ -50,7 +53,7 @@ class CategoryController extends Controller
             'keyword',
         ]);
 
-        $query = Category::defaultOrder()->withCount('descendants');
+        $query = Category::defaultOrder()->withCount('descendants')->with('descendants');
 
         if ($category) {
             $query->whereParentId($category->id);
@@ -62,9 +65,13 @@ class CategoryController extends Controller
 
         $categories = $query->paginate(20);
 
+        $counter = (new ProductFetcher)->countByCategoryIds($categories->pluck('id')->toArray());
+
+        //dd($counter);
         return view(static::VIEW_PATH . 'index', [
             'category'   => $category,
             'categories' => $categories,
+            'counter'    => $counter,
         ]);
     }
 
