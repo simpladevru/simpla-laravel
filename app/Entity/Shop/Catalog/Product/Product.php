@@ -164,6 +164,6 @@ class Product extends Model
      */
     public function image(): HasOne
     {
-        return $this->hasOne(Image::class, 'product_id', 'id')->orderBy('sort');
+        return $this->hasOne(Image::class, 'product_id', 'id')->where('sort', 0);
     }
 }

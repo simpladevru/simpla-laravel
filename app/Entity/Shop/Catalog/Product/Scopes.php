@@ -2,6 +2,7 @@
 
 namespace App\Entity\Shop\Catalog\Product;
 
+use App\Helpers\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Facades\DB;
@@ -36,7 +37,7 @@ trait Scopes
      */
     public function scopeWhereCategoryIdsAndDescendants(Builder $query, array $ids)
     {
-        $query->join('product_categories as pc', function (JoinClause $join) use ($ids) {
+        $query->join(Tables::PRODUCT_CATEGORIES . ' as pc', function (JoinClause $join) use ($ids) {
             $join->on('pc.product_id', 'id')->whereIn('pc.category_id', $ids);
         });
     }
