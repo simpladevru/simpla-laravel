@@ -86,7 +86,7 @@ class ProductController extends Controller
         }
 
         if ($categoryId = $request->get('category_id')) {
-            $query->whereCategoryIds([$categoryId]);
+            $query->whereCategoryIdsAndDescendants([$categoryId]);
         }
 
         return view(static::VIEW_PATH . 'index', [

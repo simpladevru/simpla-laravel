@@ -62,7 +62,7 @@ class Product extends Model
 {
     use Scopes;
 
-    protected $guarded = ['id'];
+    protected $guarded  = ['id'];
 
     protected $fillable = [
         'name',
@@ -85,7 +85,12 @@ class Product extends Model
      */
     public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(Category::class, 'product_categories', 'product_id', 'category_id');
+        return $this->belongsToMany(
+            Category::class,
+            'product_categories',
+            'product_id',
+            'category_id'
+        );
     }
 
     /**
@@ -95,7 +100,11 @@ class Product extends Model
      */
     public function categoryRelations(): HasMany
     {
-        return $this->hasMany(CategoryRelation::class, 'product_id', 'id')->orderBy('sort');
+        return $this->hasMany(
+            CategoryRelation::class,
+            'product_id',
+            'id'
+        )->orderBy('sort');
     }
 
     /**
