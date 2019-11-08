@@ -46,8 +46,8 @@ class Image extends Model
         }
 
         return app(ImageHelper::class)->getResizedUrl(
-            'public',
-            'products',
+            env('PRODUCT_IMAGE_STORAGE_DISK'),
+            env('PRODUCT_IMAGE_STORAGE_PUBLIC'),
             $this->file,
             $width,
             $height,

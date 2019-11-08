@@ -118,7 +118,6 @@
                             <td>
                                 @foreach($product->variants as $variant)
                                     <div class="variants">
-
                                         <div class="form-row">
                                             <div class="col-md-4">
                                                 <input
