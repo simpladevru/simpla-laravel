@@ -54,6 +54,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Category\Category whereSort($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Category\Category whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Shop\Feature\Feature[] $features
+ * @property-read int|null $features_count
+ * @property-read \App\Entity\Shop\Catalog\Product\Category\CategoryRelation $productRelations
+ * @property-read \App\Entity\Shop\Product\Product $products
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Category\Category whereNameLike($name)
  */
 class Category extends Model
 {

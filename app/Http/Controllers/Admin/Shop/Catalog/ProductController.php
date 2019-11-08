@@ -77,8 +77,7 @@ class ProductController extends Controller
      */
     public function index(Request $request): View
     {
-        $query = Product::with(['variants', 'image'])
-            ->orderByDesc('products.id');
+        $query = Product::query()->with(['variants', 'image']);
 
         if ($brandIds = $request->get('brand_id')) {
             $query->whereBrandIds([$brandIds]);
@@ -87,6 +86,8 @@ class ProductController extends Controller
         if ($categoryId = $request->get('category_id')) {
             $query->whereJoinedCategoryNested([$categoryId]);
         }
+
+        $query->orderByDesc('products.id');
 
         return view(static::VIEW_PATH . 'index', [
             'products' => $query->paginate(20),

@@ -21,6 +21,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Feature whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Feature whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int $in_filter
+ * @property int $sort
+ * @property-read \Kalnoy\Nestedset\Collection|\App\Entity\Shop\Catalog\Category\Category[] $categories
+ * @property-read int|null $categories_count
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Feature\Feature whereInFilter($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Feature\Feature whereSort($value)
  */
 class Feature extends Model
 {
