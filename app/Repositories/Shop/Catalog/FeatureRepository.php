@@ -2,9 +2,9 @@
 
 namespace App\Repositories\Shop\Catalog;
 
-use App\Helpers\Tables;
 use Illuminate\Support\Collection;
 use App\Entity\Shop\Feature\Feature;
+use Illuminate\Database\Eloquent\Builder;
 
 class FeatureRepository
 {
@@ -32,5 +32,13 @@ class FeatureRepository
     public function getAll(): ?Collection
     {
         return Feature::get();
+    }
+
+    /**
+     * @return Feature|Builder
+     */
+    public function query(): Builder
+    {
+        return Feature::query();
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Repositories\Shop\Catalog;
 
 use App\Entity\Shop\Catalog\Brand;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
 class BrandRepository
@@ -37,5 +38,13 @@ class BrandRepository
     public function getAll(): ?Collection
     {
         return Brand::get();
+    }
+
+    /**
+     * @return Brand|Builder
+     */
+    public function query(): Builder
+    {
+        return Brand::query();
     }
 }

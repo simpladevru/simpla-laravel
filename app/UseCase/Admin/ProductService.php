@@ -5,6 +5,7 @@ namespace App\UseCase\Admin;
 use Throwable;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use App\Entity\Shop\Catalog\Products\Image\Image;
 use App\Entity\Shop\Catalog\Products\Product\Product;
 use App\Repositories\Shop\Catalog\ProductRepository;
 

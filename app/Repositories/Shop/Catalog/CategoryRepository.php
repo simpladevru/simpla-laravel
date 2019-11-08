@@ -3,6 +3,7 @@
 namespace App\Repositories\Shop\Catalog;
 
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Builder;
 use App\Entity\Shop\Catalog\Category\Category;
 
 class CategoryRepository
@@ -32,5 +33,13 @@ class CategoryRepository
     public function getAllWithDepth(array $select = ['*']): ?Collection
     {
         return Category::defaultOrder()->select($select)->withDepth()->get();
+    }
+
+    /**
+     * @return Category|Builder
+     */
+    public function query(): Builder
+    {
+        return Category::query();
     }
 }

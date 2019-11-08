@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Shop\Catalog;
 
+use Illuminate\Database\Eloquent\Builder;
 use App\Entity\Shop\Catalog\Products\Variant\Variant;
 
 class VariantRepository
@@ -22,5 +23,13 @@ class VariantRepository
     public function findOne(int $id): ?Variant
     {
         return Variant::find($id);
+    }
+
+    /**
+     * @return Variant|Builder
+     */
+    public function query(): Builder
+    {
+        return Variant::query();
     }
 }
