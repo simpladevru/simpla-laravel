@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Admin\Shop\Catalog;
 
-use App\Entity\Shop\Product\Product;
-use App\ReadModel\ProductFetcher;
 use Exception;
 use DomainException;
 use Illuminate\Support\Arr;

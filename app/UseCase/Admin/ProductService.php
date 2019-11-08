@@ -5,10 +5,10 @@ namespace App\UseCase\Admin;
 use Throwable;
 use Exception;
 use Illuminate\Support\Facades\DB;
-use App\Entity\Shop\Product\Product;
-use App\Entity\Shop\Product\Variant;
-use App\Entity\Shop\Product\Attribute;
-use App\Entity\Shop\Product\Image\Image;
+use App\Entity\Shop\Product\Product\Image;
+use App\Entity\Shop\Product\Product\Product;
+use App\Entity\Shop\Product\Variant\Variant;
+use App\Entity\Shop\Product\Attribute\Attribute;
 use App\Repositories\Shop\Catalog\ProductRepository;
 
 class ProductService

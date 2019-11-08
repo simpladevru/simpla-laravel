@@ -3,7 +3,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use Faker\Generator as Faker;
-use App\Entity\Shop\Product\Product;
+use App\Entity\Shop\Product\Product\Product;
 
 $factory->define(Product::class, function (Faker $faker) {
     return [

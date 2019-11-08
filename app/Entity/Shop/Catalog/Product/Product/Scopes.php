@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Entity\Shop\Catalog\Product;
+namespace App\Entity\Shop\Catalog\Product\Product;
 
 use App\Helpers\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
-use Illuminate\Support\Facades\DB;
 
 trait Scopes
 {

@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Entity\Shop\Product\Image;
+namespace App\Entity\Shop\Catalog\Product\Image;
 
-use Illuminate\Http\UploadedFile;
 use App\Helpers\ImageHelper;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\UploadedFile;
 
 class ImageObserver
 {

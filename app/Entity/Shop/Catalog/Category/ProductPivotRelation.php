@@ -5,7 +5,7 @@ namespace App\Entity\Shop\Catalog\Category;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Entity\Shop\Catalog\Product\Category\CategoryRelation;
+use App\Entity\Shop\Catalog\Product\Product\Pivot\CategoryPivot;
 
 class ProductPivotRelation extends HasMany
 {
@@ -15,7 +15,7 @@ class ProductPivotRelation extends HasMany
      */
     public static function build($parent)
     {
-        $query      = (new CategoryRelation)->newQuery();
+        $query      = (new CategoryPivot)->newQuery();
         $foreignKey = 'category_id';
         $localKey   = 'id';
 

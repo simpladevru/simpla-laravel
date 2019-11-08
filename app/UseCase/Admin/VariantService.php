@@ -3,7 +3,7 @@
 namespace App\UseCase\Admin;
 
 use Exception;
-use App\Entity\Shop\Product\Variant;
+use App\Entity\Shop\Product\Variant\Variant;
 use App\Repositories\Shop\Catalog\VariantRepository;
 
 class VariantService

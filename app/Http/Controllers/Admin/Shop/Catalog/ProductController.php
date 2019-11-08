@@ -8,12 +8,12 @@ use DomainException;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Entity\Shop\Product\Product;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use App\UseCase\Admin\ProductService;
 use App\UseCase\Admin\VariantService;
 use App\Repositories\Shop\Catalog\BrandRepository;
+use App\Entity\Shop\Catalog\Product\Product\Product;
 use App\Repositories\Shop\Catalog\FeatureRepository;
 use App\Repositories\Shop\Catalog\CategoryRepository;
 use App\Http\Requests\Admin\Shop\Catalog\ProductRequest;
@@ -77,7 +77,7 @@ class ProductController extends Controller
      */
     public function index(Request $request): View
     {
-        $query = Product::query()->with(['variants', 'image']);
+        $query = Product::query()->with(['variants', 'image', 'categoryPivot']);
 
         if ($brandIds = $request->get('brand_id')) {
             $query->whereBrandIds([$brandIds]);
@@ -156,7 +156,7 @@ class ProductController extends Controller
         $categories = $this->categoryRepository->getAllWithDepth();
         $brands     = $this->brandRepository->getAll();
 
-        $productCategoryIds = $product->categoryRelationIds();
+        $productCategoryIds = $product->categoryPivotIds();
 
         return view(static::VIEW_PATH . 'form', [
             'product'            => $product,

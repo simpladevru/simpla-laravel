@@ -3,14 +3,14 @@
 namespace App\Providers;
 
 use App\Entity\Shop\Catalog\Brand;
-use App\Entity\Shop\Product\Product;
 use Illuminate\Support\ServiceProvider;
-use App\Entity\Shop\Product\Image\Image;
 use App\Entity\Shop\Brand\BrandObserver;
 use App\Entity\Shop\Catalog\Category\Category;
-use App\Entity\Shop\Product\Image\ImageObserver;
-use App\Entity\Shop\Catalog\Product\ProductObserver;
+use App\Entity\Shop\Catalog\Product\Image\Image;
+use App\Entity\Shop\Catalog\Product\Product\Product;
 use App\Entity\Shop\Catalog\Category\CategoryObserver;
+use App\Entity\Shop\Catalog\Product\Image\ImageObserver;
+use App\Entity\Shop\Catalog\Product\Product\ProductObserver;
 
 class AppServiceProvider extends ServiceProvider
 {

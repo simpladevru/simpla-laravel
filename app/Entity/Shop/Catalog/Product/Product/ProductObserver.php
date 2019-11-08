@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Entity\Shop\Catalog\Product;
+namespace App\Entity\Shop\Catalog\Product\Product;
 
 use Illuminate\Support\Str;
-use App\Entity\Shop\Product\Product;
-use App\Entity\Shop\Product\Variant;
-use App\Entity\Shop\Product\Attribute;
-use App\Entity\Shop\Product\Image\Image;
+use App\Entity\Shop\Catalog\Product\Image\Image;
+use App\Entity\Shop\Catalog\Product\Variant\Variant;
+use App\Entity\Shop\Catalog\Product\Attribute\Attribute;
 
 class ProductObserver
 {

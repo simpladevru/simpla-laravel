@@ -1,31 +1,29 @@
 <?php
 
-namespace App\Entity\Shop\Product\Image;
+namespace App\Entity\Shop\Catalog\Product\Image;
 
 use App\Helpers\ImageHelper;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * App\Entity\Shop\Product\Image
+ * App\Entity\Shop\Catalog\Product\Image\Image
  *
- * @property UploadedFile|string $file
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Product\Image newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Product\Image newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Product\Image query()
- * @mixin Eloquent
  * @property int $id
  * @property int $product_id
+ * @property string $file
  * @property int $sort
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Product\Image\Image whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Product\Image\Image whereFile($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Product\Image\Image whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Product\Image\Image whereProductId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Product\Image\Image whereSort($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Product\Image\Image whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Product\Image\Image newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Product\Image\Image newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Product\Image\Image query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Product\Image\Image whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Product\Image\Image whereFile($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Product\Image\Image whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Product\Image\Image whereProductId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Product\Image\Image whereSort($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Product\Image\Image whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Image extends Model
 {
