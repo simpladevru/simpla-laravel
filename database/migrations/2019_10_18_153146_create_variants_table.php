@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\Tables;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,7 +14,7 @@ class CreateVariantsTable extends Migration
      */
     public function up()
     {
-        Schema::create('variants', function (Blueprint $table) {
+        Schema::create(Tables::SHOP_PRODUCT_VARIANTS, function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('product_id')->unsigned()->nullable();
             $table->string('name')->nullable();
@@ -32,7 +33,7 @@ class CreateVariantsTable extends Migration
             $table->index('compare_price');
             $table->index('sort');
 
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('CASCADE');
+            $table->foreign('product_id')->references('id')->on(Tables::SHOP_PRODUCTS)->onDelete('CASCADE');
         });
     }
 
@@ -43,6 +44,6 @@ class CreateVariantsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('variants');
+        Schema::dropIfExists(Tables::SHOP_PRODUCT_VARIANTS);
     }
 }

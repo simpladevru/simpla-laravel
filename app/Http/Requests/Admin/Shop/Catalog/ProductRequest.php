@@ -22,7 +22,6 @@ class ProductRequest extends FormRequest
             'meta_title'       => 'nullable|string|max:500',
             'meta_keywords'    => 'nullable|string|max:500',
             'meta_description' => 'nullable|string|max:500',
-            'sort'             => 'required|integer',
 
             'category_ids.*' => 'nullable|integer|exists:categories,id',
 

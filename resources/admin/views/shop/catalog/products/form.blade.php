@@ -249,24 +249,6 @@
                         <div class="form-group border-top mt-4 mb-4"></div>
 
                         <div class="form-group row">
-                            <label for="sort" class="col-md-3 col-form-label">Sort</label>
-                            <div class="col-md-9">
-                                <input
-                                    id="sort"
-                                    class="form-control{{ $errors->has('sort') ? ' is-invalid' : '' }}"
-                                    name="sort"
-                                    value="{{ old('sort', $product->sort) }}"
-                                    required
-                                >
-                                @if ($errors->has('sort'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('sort') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
                             <label class="col-md-3 col-form-label">Created</label>
                             <div class="col-md-9">
                                 <label>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\Tables;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,7 +14,7 @@ class CreateProductImagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_images', function (Blueprint $table) {
+        Schema::create(Tables::SHOP_PRODUCT_IMAGES, function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('product_id')->unsigned();
             $table->string('file');
@@ -23,7 +24,7 @@ class CreateProductImagesTable extends Migration
             $table->index('product_id');
             $table->index('sort');
 
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('CASCADE');
+            $table->foreign('product_id')->references('id')->on(Tables::SHOP_PRODUCTS)->onDelete('CASCADE');
         });
     }
 
@@ -34,6 +35,6 @@ class CreateProductImagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_images');
+        Schema::dropIfExists(Tables::SHOP_PRODUCT_IMAGES);
     }
 }

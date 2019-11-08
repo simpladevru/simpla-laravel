@@ -2,6 +2,7 @@
 
 namespace App\Entity\Shop\Catalog\Category;
 
+use App\Helpers\Tables;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -30,7 +31,7 @@ class ProductPivotNested extends HasMany
     public function getRelationExistenceCountQuery(Builder $query, Builder $parentQuery)
     {
         return $this->getRelationExistenceQuery(
-            $query, $parentQuery, new Expression('count(distinct product_categories.product_id)')
+            $query, $parentQuery, new Expression('count(distinct ' . Tables::SHOP_PRODUCT_CATEGORIES . '.product_id)')
         )->setBindings([], 'select');
     }
 
@@ -44,8 +45,8 @@ class ProductPivotNested extends HasMany
     {
         $query
             ->select($columns)
-            ->join('categories as sc', 'sc.id', 'product_categories.category_id')
-            ->whereRaw('sc._lft between categories._lft and categories._rgt');
+            ->join(Tables::SHOP_CATEGORIES . ' as sc', 'sc.id', Tables::SHOP_PRODUCT_CATEGORIES . '.category_id')
+            ->whereRaw('sc._lft between ' . Tables::SHOP_CATEGORIES . '._lft and ' . Tables::SHOP_CATEGORIES . '._rgt');
 
         return $query;
     }

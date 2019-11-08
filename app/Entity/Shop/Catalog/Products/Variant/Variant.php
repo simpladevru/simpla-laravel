@@ -2,6 +2,7 @@
 
 namespace App\Entity\Shop\Catalog\Products\Variant;
 
+use App\Helpers\Tables;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -34,6 +35,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Variant extends Model
 {
+    protected $table = Tables::SHOP_PRODUCT_VARIANTS;
+
     protected $guarded = ['id'];
 
     protected $fillable = [

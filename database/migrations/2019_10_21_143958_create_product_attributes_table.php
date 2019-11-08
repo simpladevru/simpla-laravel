@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\Tables;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,7 +14,7 @@ class CreateProductAttributesTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_attributes', function (Blueprint $table) {
+        Schema::create(Tables::SHOP_PRODUCT_ATTRIBUTES, function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('product_id')->unsigned();
             $table->bigInteger('feature_id')->unsigned();
@@ -23,8 +24,8 @@ class CreateProductAttributesTable extends Migration
             $table->index('feature_id');
             $table->index('product_id');
 
-            $table->foreign('feature_id')->references('id')->on('features')->onDelete('CASCADE');
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('CASCADE');
+            $table->foreign('feature_id')->references('id')->on(Tables::SHOP_FEATURES)->onDelete('CASCADE');
+            $table->foreign('product_id')->references('id')->on(Tables::SHOP_PRODUCTS)->onDelete('CASCADE');
         });
     }
 
@@ -35,6 +36,6 @@ class CreateProductAttributesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_attributes');
+        Schema::dropIfExists(Tables::SHOP_PRODUCT_ATTRIBUTES);
     }
 }

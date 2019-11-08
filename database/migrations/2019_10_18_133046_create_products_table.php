@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\Tables;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,7 +14,7 @@ class CreateProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create(Tables::SHOP_PRODUCTS, function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('slug')->nullable();
@@ -25,7 +26,6 @@ class CreateProductsTable extends Migration
             $table->string('meta_title', 500)->nullable();
             $table->string('meta_keywords', 500)->nullable();
             $table->string('meta_description', 500)->nullable();
-            $table->integer('sort')->nullable()->unsigned();
             $table->timestamps();
 
             $table->index('name');
@@ -33,9 +33,8 @@ class CreateProductsTable extends Migration
             $table->index('brand_id');
             $table->index('is_active');
             $table->index('is_featured');
-            $table->index('sort');
 
-            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('SET NULL');
+            $table->foreign('brand_id')->references('id')->on(Tables::SHOP_BRANDS)->onDelete('SET NULL');
         });
     }
 
@@ -46,6 +45,6 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists(Tables::SHOP_PRODUCTS);
     }
 }

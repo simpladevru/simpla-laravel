@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Entity\Shop\Feature\Feature;
 use Illuminate\Http\RedirectResponse;
 use App\UseCase\Admin\FeatureService;
+use App\Repositories\Shop\Catalog\FeatureRepository;
 use App\Repositories\Shop\Catalog\CategoryRepository;
 use App\Http\Requests\Admin\Shop\Catalog\FeatureRequest;
 
@@ -27,17 +28,26 @@ class FeatureController extends Controller
      * @var CategoryRepository
      */
     private $categoryRepository;
+    /**
+     * @var FeatureRepository
+     */
+    private $featureRepository;
 
     /**
      * FeatureController constructor.
      *
      * @param FeatureService $service
      * @param CategoryRepository $categoryRepository
+     * @param FeatureRepository $featureRepository
      */
-    public function __construct(FeatureService $service, CategoryRepository $categoryRepository)
-    {
+    public function __construct(
+        FeatureService $service,
+        CategoryRepository $categoryRepository,
+        FeatureRepository $featureRepository
+    ) {
         $this->service            = $service;
         $this->categoryRepository = $categoryRepository;
+        $this->featureRepository  = $featureRepository;
     }
 
     /**
@@ -45,8 +55,7 @@ class FeatureController extends Controller
      */
     public function index(): View
     {
-        $query    = Feature::orderByDesc('id')->with(['categories']);
-        $features = $query->paginate(20);
+        $features = $this->featureRepository->query()->orderBy('name')->paginate(20);
 
         return view(static::VIEW_PATH . 'index', [
             'features' => $features,

@@ -29,18 +29,12 @@
                     <tr>
                         <th class="w-1 text-center">Id</th>
                         <th class="w-40">Name</th>
-                        <th>Categories</th>
                         <th class="w-10 text-right">Edit</th>
                     </tr>
                     @foreach($features as $feature)
                         <tr>
                             <td class="text-center">{{ $feature->id }}</td>
                             <td>{{ $feature->name }}</td>
-                            <td>
-                                @foreach($feature->categories as $category)
-                                    <span class="badge badge-info">{{ $category->name }}</span>
-                                @endforeach
-                            </td>
                             <td>
                                 <div class="float-right">
                                     <a

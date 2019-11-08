@@ -2,6 +2,7 @@
 
 namespace App\Entity\Shop\Catalog\Category;
 
+use App\Helpers\Tables;
 use App\Helpers\ImageHelper;
 use Kalnoy\Nestedset\NodeTrait;
 use App\Entity\Shop\Feature\Feature;
@@ -15,6 +16,8 @@ class Category extends Model
 {
     use NodeTrait;
     use Scopes;
+
+    protected $table = Tables::SHOP_CATEGORIES;
 
     protected $guarded = [];
 
@@ -75,7 +78,7 @@ class Category extends Model
     {
         return $this->belongsToMany(
             Feature::class,
-            'category_features',
+            Tables::SHOP_CATEGORY_FEATURES,
             'category_id',
             'feature_id'
         );

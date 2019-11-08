@@ -38,42 +38,42 @@
                                 <a class="dropdown-item" href="{{ route('admin.shop.catalog.categories.index') }}">Категории</a>
                                 <a class="dropdown-item" href="{{ route('admin.shop.catalog.brands.index') }}">Бренды</a>
                                 <a class="dropdown-item" href="{{ route('admin.shop.catalog.features.index') }}">Свойства</a>
-                                <a class="dropdown-item" href="{{ route('admin.shop.catalog.comments.index') }}">Комментарии</a>
+                                {{--<a class="dropdown-item" href="{{ route('admin.shop.catalog.comments.index') }}">Комментарии</a>--}}
                             </div>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Заказы <span class="caret"></span>
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="{{ route('admin.shop.order.orders.index') }}">Заказы</a>
-                                <a class="dropdown-item" href="{{ route('admin.shop.order.coupons.index') }}">Купоны</a>
-                                <a class="dropdown-item" href="{{ route('admin.shop.order.labels.index') }}">Метки</a>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Настройки <span class="caret"></span>
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="#">Общие настройки магазина</a>
-                                <a class="dropdown-item" href="{{ route('admin.shop.setting.deliveries.index') }}">Методы доставки</a>
-                                <a class="dropdown-item" href="{{ route('admin.shop.setting.payment-methods.index') }}">Способы оплаты</a>
-                                <a class="dropdown-item" href="{{ route('admin.shop.setting.currencies.index') }}">Валюты</a>
-                            </div>
-                        </li>
+                        {{--<li class="nav-item dropdown">--}}
+                            {{--<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
+                                {{--Заказы <span class="caret"></span>--}}
+                            {{--</a>--}}
+                            {{--<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">--}}
+                                {{--<a class="dropdown-item" href="{{ route('admin.shop.order.orders.index') }}">Заказы</a>--}}
+                                {{--<a class="dropdown-item" href="{{ route('admin.shop.order.coupons.index') }}">Купоны</a>--}}
+                                {{--<a class="dropdown-item" href="{{ route('admin.shop.order.labels.index') }}">Метки</a>--}}
+                            {{--</div>--}}
+                        {{--</li>--}}
+                        {{--<li class="nav-item dropdown">--}}
+                            {{--<a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
+                                {{--Настройки <span class="caret"></span>--}}
+                            {{--</a>--}}
+                            {{--<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">--}}
+                                {{--<a class="dropdown-item" href="#">Общие настройки магазина</a>--}}
+                                {{--<a class="dropdown-item" href="{{ route('admin.shop.setting.deliveries.index') }}">Методы доставки</a>--}}
+                                {{--<a class="dropdown-item" href="{{ route('admin.shop.setting.payment-methods.index') }}">Способы оплаты</a>--}}
+                                {{--<a class="dropdown-item" href="{{ route('admin.shop.setting.currencies.index') }}">Валюты</a>--}}
+                            {{--</div>--}}
+                        {{--</li>--}}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Сайт <span class="caret"></span>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <a class="dropdown-item" href="#">Страницы</a>
-                                <a class="dropdown-item" href="#">Обратная связь</a>
+                                {{--<a class="dropdown-item" href="#">Обратная связь</a>--}}
                             </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Блог</a>
-                        </li>
+                        {{--<li class="nav-item">--}}
+                            {{--<a class="nav-link" href="#">Блог</a>--}}
+                        {{--</li>--}}
                     </ul>
 
                     <!-- Right Side Of Navbar -->

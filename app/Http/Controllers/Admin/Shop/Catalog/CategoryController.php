@@ -51,7 +51,7 @@ class CategoryController extends Controller
             'keyword',
         ]);
 
-        $query = Category::defaultOrder()->withCount(['descendants', 'productsPivot', 'productsPivotNested']);
+        $query = $this->repository->query()->withCount(['descendants', 'productsPivot', 'productsPivotNested']);
 
         if ($category) {
             $query->whereParentId($category->id);
@@ -61,7 +61,7 @@ class CategoryController extends Controller
             $query->whereIsRoot();
         }
 
-        $categories = $query->paginate(20);
+        $categories = $query->defaultOrder()->paginate(20);
 
         return view(static::VIEW_PATH . 'index', [
             'category'   => $category,

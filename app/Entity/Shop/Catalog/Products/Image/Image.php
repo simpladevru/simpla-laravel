@@ -2,34 +2,15 @@
 
 namespace App\Entity\Shop\Catalog\Products\Image;
 
+use App\Helpers\Tables;
 use App\Helpers\ImageHelper;
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * App\Entity\Shop\Catalog\Products\Image\Image
- *
- * @property int $id
- * @property int $product_id
- * @property string $file
- * @property int $sort
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Image\Image newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Image\Image newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Image\Image query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Image\Image whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Image\Image whereFile($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Image\Image whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Image\Image whereProductId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Image\Image whereSort($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Image\Image whereUpdatedAt($value)
- * @mixin \Eloquent
- */
 class Image extends Model
 {
     const FILE_PATH = 'products';
 
-    protected $table = 'product_images';
+    protected $table = Tables::SHOP_PRODUCT_IMAGES;
 
     protected $fillable = ['file', 'sort'];
 

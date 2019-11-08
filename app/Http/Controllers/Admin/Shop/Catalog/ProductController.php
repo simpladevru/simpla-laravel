@@ -48,6 +48,7 @@ class ProductController extends Controller
      * @var CategoryRepository
      */
     private $categoryRepository;
+
     /**
      * @var ProductRepository
      */
@@ -103,7 +104,7 @@ class ProductController extends Controller
             $query = $query->whereNameLike($keyword);
         }
 
-        $query->orderByDesc('products.id');
+        $query->orderByDesc('id');
 
         $categories = $this->categoryRepository->getAllWithDepth();
         $brands     = $this->brandRepository->getAll();

@@ -2,10 +2,11 @@
 
 namespace App\Entity\Shop\Catalog;
 
-use App\Entity\Shop\Catalog\Products\Product\Product;
+use App\Helpers\Tables;
 use App\Helpers\ImageHelper;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Entity\Shop\Catalog\Products\Product\Product;
 
 /**
  * Class Brand
@@ -37,6 +38,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Brand extends Model
 {
+    protected $table = Tables::SHOP_BRANDS;
+
     protected $guarded = ['id'];
 
     protected $fillable = [
