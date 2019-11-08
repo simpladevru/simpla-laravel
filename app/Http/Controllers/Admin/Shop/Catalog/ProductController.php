@@ -13,8 +13,9 @@ use Illuminate\Http\RedirectResponse;
 use App\UseCase\Admin\ProductService;
 use App\UseCase\Admin\VariantService;
 use App\Repositories\Shop\Catalog\BrandRepository;
-use App\Entity\Shop\Catalog\Products\Product\Product;
 use App\Repositories\Shop\Catalog\FeatureRepository;
+use App\Repositories\Shop\Catalog\ProductRepository;
+use App\Entity\Shop\Catalog\Products\Product\Product;
 use App\Repositories\Shop\Catalog\CategoryRepository;
 use App\Http\Requests\Admin\Shop\Catalog\ProductRequest;
 
@@ -47,6 +48,10 @@ class ProductController extends Controller
      * @var CategoryRepository
      */
     private $categoryRepository;
+    /**
+     * @var ProductRepository
+     */
+    private $productRepository;
 
     /**
      * ProductController constructor.
@@ -56,19 +61,22 @@ class ProductController extends Controller
      * @param CategoryRepository $categoryRepository
      * @param FeatureRepository $featureRepository
      * @param VariantService $variantService
+     * @param ProductRepository $productRepository
      */
     public function __construct(
         ProductService $service,
         BrandRepository $brandRepository,
         CategoryRepository $categoryRepository,
         FeatureRepository $featureRepository,
-        VariantService $variantService
+        VariantService $variantService,
+        ProductRepository $productRepository
     ) {
         $this->service            = $service;
         $this->featureRepository  = $featureRepository;
         $this->variantService     = $variantService;
         $this->brandRepository    = $brandRepository;
         $this->categoryRepository = $categoryRepository;
+        $this->productRepository  = $productRepository;
     }
 
     /**
@@ -77,7 +85,7 @@ class ProductController extends Controller
      */
     public function index(Request $request): View
     {
-        $query = Product::query()->with(['variants', 'image', 'categoryPivot']);
+        $query = $this->productRepository->query()->with(['variants', 'image', 'categoryPivot']);
 
         if ($brandIds = $request->get('brand_id')) {
             $query->whereBrandIds([$brandIds]);
@@ -101,7 +109,7 @@ class ProductController extends Controller
         $brands     = $this->brandRepository->getAll();
 
         return view(static::VIEW_PATH . 'index', [
-            'products'    => $query->paginate(20),
+            'products'   => $query->paginate(20),
             'categories' => $categories,
             'brands'     => $brands,
         ]);

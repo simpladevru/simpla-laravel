@@ -61,6 +61,7 @@ use App\Entity\Shop\Catalog\Products\Product\Pivot\ProductCategoryPivot;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Product\Product whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Product\Product whereSort($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Product\Product whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Product\Product whereNameLike($name)
  * @mixin \Eloquent
  */
 class Product extends Model

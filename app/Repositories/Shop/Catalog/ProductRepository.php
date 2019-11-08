@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Shop\Catalog;
 
+use Illuminate\Database\Eloquent\Builder;
 use App\Entity\Shop\Catalog\Products\Product\Product;
 
 class ProductRepository
@@ -22,5 +23,13 @@ class ProductRepository
     public function findOne(int $id): ?Product
     {
         return Product::find($id);
+    }
+
+    /**
+     * @return Product|Builder
+     */
+    public function query(): Builder
+    {
+        return Product::query();
     }
 }
