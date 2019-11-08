@@ -5,17 +5,17 @@ namespace App\Entity\Shop\Catalog\Category;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Entity\Shop\Catalog\Products\Product\Pivot\CategoryPivot;
+use App\Entity\Shop\Catalog\Products\Product\Pivot\ProductCategoryPivot;
 
-class ProductPivotRelation extends HasMany
+class ProductPivotNested extends HasMany
 {
     /**
      * @param $parent
-     * @return ProductPivotRelation
+     * @return ProductPivotNested
      */
     public static function build($parent)
     {
-        $query      = (new CategoryPivot)->newQuery();
+        $query      = (new ProductCategoryPivot)->newQuery();
         $foreignKey = 'category_id';
         $localKey   = 'id';
 

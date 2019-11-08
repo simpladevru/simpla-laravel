@@ -65,8 +65,9 @@
                         <th class="w-1 text-center">Id</th>
                         <th class="w-5 text-center">Image</th>
                         <th class="w-50">Name</th>
-                        <th class="w-15 text-center">Count products</th>
-                        <th class="w-15 text-right">Edit</th>
+                        <th class="w-15 text-center">Product count</th>
+                        <th class="w-15 text-center">Product count nested</th>
+                        <th class="w-10 text-right">Edit</th>
                     </tr>
                     @foreach($categories as $category)
                         <tr>
@@ -97,7 +98,13 @@
                             <td class="text-center">
                                 <a href="{{ route('admin.shop.catalog.products.index', ['category_id' => $category->id]) }}"
                                     class="btn btn-sm btn-outline-primary">
-                                    {{ $category->product_relations_count }}
+                                    {{ $category->products_pivot_count }}
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{{ route('admin.shop.catalog.products.index', ['category_id' => $category->id]) }}"
+                                    class="btn btn-sm btn-outline-primary">
+                                    {{ $category->products_pivot_nested_count }}
                                 </a>
                             </td>
                             <td>

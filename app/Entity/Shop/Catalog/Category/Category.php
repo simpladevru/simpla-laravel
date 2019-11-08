@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Entity\Shop\Catalog\Products\Product\Pivot\ProductCategoryPivot;
 
 class Category extends Model
 {
@@ -85,14 +86,22 @@ class Category extends Model
      */
     public function products(): BelongsToMany
     {
-        return ProductRelation::build($this);
+        //
     }
 
     /**
      * @return HasMany
      */
-    public function productRelations(): HasMany
+    public function productsPivot(): HasMany
     {
-        return ProductPivotRelation::build($this);
+        return $this->hasMany(ProductCategoryPivot::class, 'category_id', 'id');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function productsPivotNested(): HasMany
+    {
+        return ProductPivotNested::build($this);
     }
 }

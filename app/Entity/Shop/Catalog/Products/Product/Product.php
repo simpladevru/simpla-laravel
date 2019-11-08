@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Entity\Shop\Catalog\Products\Variant\Variant;
 use App\Entity\Shop\Catalog\Products\Attribute\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use App\Entity\Shop\Catalog\Products\Product\Pivot\CategoryPivot;
+use App\Entity\Shop\Catalog\Products\Product\Pivot\ProductCategoryPivot;
 
 /**
  * App\Entity\Shop\Catalog\Products\Product\Product
@@ -34,7 +34,7 @@ use App\Entity\Shop\Catalog\Products\Product\Pivot\CategoryPivot;
  * @property-read int|null $attributes_count
  * @property-read \Kalnoy\Nestedset\Collection|\App\Entity\Shop\Catalog\Category\Category[] $categories
  * @property-read int|null $categories_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Shop\Catalog\Products\Product\Pivot\CategoryPivot[] $categoryPivot
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Shop\Catalog\Products\Product\Pivot\ProductCategoryPivot[] $categoryPivot
  * @property-read int|null $category_pivot_count
  * @property-read \App\Entity\Shop\Catalog\Products\Image\Image $image
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Shop\Catalog\Products\Image\Image[] $images
@@ -100,7 +100,7 @@ class Product extends Model
      */
     public function categoryPivot(): HasMany
     {
-        return $this->hasMany(CategoryPivot::class, 'product_id', 'id')
+        return $this->hasMany(ProductCategoryPivot::class, 'product_id', 'id')
             ->orderBy('product_id')
             ->orderBy('sort');
     }
