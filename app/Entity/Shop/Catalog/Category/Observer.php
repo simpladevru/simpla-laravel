@@ -6,7 +6,7 @@ use App\Helpers\ImageHelper;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 
-class CategoryObserver
+class Observer
 {
     /**
      * @var ImageHelper

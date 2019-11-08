@@ -2,7 +2,7 @@
 
 use App\Entity\Region;
 use Illuminate\Database\Seeder;
-use App\Entity\Shop\Product\Product\Product;
+use App\Entity\Shop\Products\Product\Product;
 
 class ProductsSeeder extends Seeder
 {

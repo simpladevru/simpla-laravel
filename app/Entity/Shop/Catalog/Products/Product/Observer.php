@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Entity\Shop\Catalog\Product\Product;
+namespace App\Entity\Shop\Catalog\Products\Product;
 
 use Illuminate\Support\Str;
-use App\Entity\Shop\Catalog\Product\Image\Image;
-use App\Entity\Shop\Catalog\Product\Variant\Variant;
-use App\Entity\Shop\Catalog\Product\Attribute\Attribute;
+use App\Entity\Shop\Catalog\Products\Image\Image;
+use App\Entity\Shop\Catalog\Products\Variant\Variant;
+use App\Entity\Shop\Catalog\Products\Attribute\Attribute;
 
-class ProductObserver
+class Observer
 {
     /**
      * @param Product $product

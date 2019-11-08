@@ -7,7 +7,7 @@ use App\Helpers\ImageHelper;
 use Illuminate\Http\UploadedFile;
 use App\Entity\Shop\Catalog\Brand;
 
-class BrandObserver
+class Observer
 {
     /**
      * @var ImageHelper

@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Entity\Shop\Catalog\Product\Product;
+namespace App\Entity\Shop\Catalog\Products\Product;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use App\Entity\Shop\Catalog\Category\Category;
-use App\Entity\Shop\Catalog\Product\Image\Image;
+use App\Entity\Shop\Catalog\Products\Image\Image;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Entity\Shop\Catalog\Product\Variant\Variant;
-use App\Entity\Shop\Catalog\Product\Attribute\Attribute;
+use App\Entity\Shop\Catalog\Products\Variant\Variant;
+use App\Entity\Shop\Catalog\Products\Attribute\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use App\Entity\Shop\Catalog\Product\Product\Pivot\CategoryPivot;
+use App\Entity\Shop\Catalog\Products\Product\Pivot\CategoryPivot;
 
 /**
- * App\Entity\Shop\Catalog\Product\Product\Product
+ * App\Entity\Shop\Catalog\Products\Product\Product
  *
  * @property int $id
  * @property string $name
@@ -30,37 +30,37 @@ use App\Entity\Shop\Catalog\Product\Product\Pivot\CategoryPivot;
  * @property int|null $sort
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Shop\Catalog\Product\Attribute\Attribute[] $attributes
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Shop\Catalog\Products\Attribute\Attribute[] $attributes
  * @property-read int|null $attributes_count
  * @property-read \Kalnoy\Nestedset\Collection|\App\Entity\Shop\Catalog\Category\Category[] $categories
  * @property-read int|null $categories_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Shop\Catalog\Product\Product\Pivot\CategoryPivot[] $categoryPivot
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Shop\Catalog\Products\Product\Pivot\CategoryPivot[] $categoryPivot
  * @property-read int|null $category_pivot_count
- * @property-read \App\Entity\Shop\Catalog\Product\Image\Image $image
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Shop\Catalog\Product\Image\Image[] $images
+ * @property-read \App\Entity\Shop\Catalog\Products\Image\Image $image
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Shop\Catalog\Products\Image\Image[] $images
  * @property-read int|null $images_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Shop\Catalog\Product\Variant\Variant[] $variants
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Shop\Catalog\Products\Variant\Variant[] $variants
  * @property-read int|null $variants_count
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Product\Product\Product newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Product\Product\Product newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Product\Product\Product query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Product\Product\Product whereAnnotation($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Product\Product\Product whereBrandId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Product\Product\Product whereBrandIds($ids)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Product\Product\Product whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Product\Product\Product whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Product\Product\Product whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Product\Product\Product whereIsActive($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Product\Product\Product whereIsFeatured($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Product\Product\Product whereJoinedCategory($ids)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Product\Product\Product whereJoinedCategoryNested($ids)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Product\Product\Product whereMetaDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Product\Product\Product whereMetaKeywords($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Product\Product\Product whereMetaTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Product\Product\Product whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Product\Product\Product whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Product\Product\Product whereSort($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Product\Product\Product whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Product\Product newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Product\Product newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Product\Product query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Product\Product whereAnnotation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Product\Product whereBrandId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Product\Product whereBrandIds($ids)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Product\Product whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Product\Product whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Product\Product whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Product\Product whereIsActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Product\Product whereIsFeatured($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Product\Product whereJoinedCategory($ids)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Product\Product whereJoinedCategoryNested($ids)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Product\Product whereMetaDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Product\Product whereMetaKeywords($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Product\Product whereMetaTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Product\Product whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Product\Product whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Product\Product whereSort($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Products\Product\Product whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class Product extends Model

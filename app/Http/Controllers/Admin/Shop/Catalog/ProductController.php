@@ -13,7 +13,7 @@ use Illuminate\Http\RedirectResponse;
 use App\UseCase\Admin\ProductService;
 use App\UseCase\Admin\VariantService;
 use App\Repositories\Shop\Catalog\BrandRepository;
-use App\Entity\Shop\Catalog\Product\Product\Product;
+use App\Entity\Shop\Catalog\Products\Product\Product;
 use App\Repositories\Shop\Catalog\FeatureRepository;
 use App\Repositories\Shop\Catalog\CategoryRepository;
 use App\Http\Requests\Admin\Shop\Catalog\ProductRequest;

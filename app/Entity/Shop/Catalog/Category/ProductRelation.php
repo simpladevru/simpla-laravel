@@ -2,7 +2,7 @@
 
 namespace App\Entity\Shop\Catalog\Category;
 
-use App\Entity\Shop\Product\Product\Product;
+use App\Entity\Shop\Products\Product\Product;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class ProductRelation extends BelongsToMany

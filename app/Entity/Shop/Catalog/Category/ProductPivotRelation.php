@@ -5,7 +5,7 @@ namespace App\Entity\Shop\Catalog\Category;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Entity\Shop\Catalog\Product\Product\Pivot\CategoryPivot;
+use App\Entity\Shop\Catalog\Products\Product\Pivot\CategoryPivot;
 
 class ProductPivotRelation extends HasMany
 {

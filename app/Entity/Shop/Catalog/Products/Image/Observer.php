@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Entity\Shop\Catalog\Product\Image;
+namespace App\Entity\Shop\Catalog\Products\Image;
 
 use App\Helpers\ImageHelper;
 use Illuminate\Http\UploadedFile;
 
-class ImageObserver
+class Observer
 {
     /**
      * @var ImageHelper
