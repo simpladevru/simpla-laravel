@@ -28,7 +28,6 @@
             <div class="p-2 float-left">
                 {{ $categories->total() }}
             </div>
-
             <div class="float-right">
                 <div class="btn-group" role="group">
                     <button class="btn btn-outline-secondary" data-toggle="collapse" href="#collapseFilter" role="button" aria-expanded="false" aria-controls="collapseFilter">

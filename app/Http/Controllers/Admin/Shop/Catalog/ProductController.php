@@ -84,17 +84,26 @@ class ProductController extends Controller
         }
 
         if ($categoryId = $request->get('category_id')) {
-            $query->whereJoinedCategory([$categoryId]);
+            $query->whereJoinedCategory((array) $categoryId);
         }
 
         if ($categoryId = $request->get('category_nested_id')) {
             $query->whereJoinedCategoryNested([$categoryId]);
         }
 
+        if ($keyword = $request->get('keyword')) {
+            $query = $query->whereNameLike($keyword);
+        }
+
         $query->orderByDesc('products.id');
 
+        $categories = $this->categoryRepository->getAllWithDepth();
+        $brands     = $this->brandRepository->getAll();
+
         return view(static::VIEW_PATH . 'index', [
-            'products' => $query->paginate(20),
+            'products'    => $query->paginate(20),
+            'categories' => $categories,
+            'brands'     => $brands,
         ]);
     }
 

@@ -8,11 +8,18 @@ trait Scopes
 {
     /**
      * @param Builder $query
-     * @param $name
-     * @return Builder
+     * @param string $name
      */
-    public function scopeWhereNameLike(Builder $query, $name)
+    public function scopeWhereNameLike(Builder $query, string $name)
     {
-        return $query->where('name', 'like', '%' . $name . '%');
+        $words = explode(' ', $name);
+
+        foreach ($words as $word) {
+            $word = trim($word);
+
+            if ($word) {
+                $query->where('name', 'like', '%' . $name . '%');
+            }
+        }
     }
 }

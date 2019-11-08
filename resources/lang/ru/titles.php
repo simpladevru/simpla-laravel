@@ -13,6 +13,11 @@ return [
     'posts.plural' => 'Пост|Поста|Постов',
     'posts.all'    => 'Все посты',
 
+    'products'        => 'Товары',
+    'products.plural' => 'Товар|Товара|Товаров',
+    'products.all'    => 'Все товары',
+    'products.editor' => 'Товар',
+
     'categories'        => 'Категрии',
     'categories.plural' => 'Категория|Категории|Категорий',
     'categories.all'    => 'Все категрии',

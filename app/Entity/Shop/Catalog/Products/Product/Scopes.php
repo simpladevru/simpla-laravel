@@ -15,7 +15,7 @@ trait Scopes
      */
     public function scopeWhereBrandIds(Builder $query, array $ids)
     {
-        return $query->whereIn('brand_id', $ids);
+        $query->whereIn('brand_id', $ids);
     }
 
     /**
@@ -55,5 +55,22 @@ trait Scopes
         });
 
         $query->groupBy('products.id');
+    }
+
+    /**
+     * @param Builder $query
+     * @param string $name
+     */
+    public function scopeWhereNameLike(Builder $query, string $name)
+    {
+        $words = explode(' ', $name);
+
+        foreach ($words as $word) {
+            $word = trim($word);
+
+            if ($word) {
+                $query->where('name', 'like', '%' . $word . '%');
+            }
+        }
     }
 }

@@ -3,8 +3,8 @@
 namespace App\UseCase\Admin;
 
 use Exception;
-use App\Entity\Shop\Product\Variant\Variant;
 use App\Repositories\Shop\Catalog\VariantRepository;
+use App\Entity\Shop\Catalog\Products\Variant\Variant;
 
 class VariantService
 {

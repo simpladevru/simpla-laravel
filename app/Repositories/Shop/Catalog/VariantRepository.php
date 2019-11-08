@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Shop\Catalog;
 
-use App\Entity\Shop\Product\Variant\Variant;
+use App\Entity\Shop\Catalog\Products\Variant\Variant;
 
 class VariantRepository
 {

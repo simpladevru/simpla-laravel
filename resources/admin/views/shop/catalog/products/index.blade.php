@@ -2,7 +2,7 @@
 
 @section('wrap-content')
     <div class="page-header clearfix mb-3">
-        <h1 class="page-title pull-left">Products</h1>
+        <h1 class="page-title pull-left">{{ trans('titles.products') }}</h1>
     </div>
 
     @if (session()->has('success'))
@@ -17,30 +17,89 @@
             <div class="p-2 float-left">
                 {{ $products->total() }}
             </div>
-            <a href="{{ route('admin.shop.catalog.products.create') }}" class="btn btn-primary float-right">
-                <i class="fa fa-plus-circle"></i> Add
-            </a>
+            <div class="float-right">
+                <div class="btn-group" role="group">
+                    <button class="btn btn-outline-secondary" data-toggle="collapse" href="#collapseFilter" role="button" aria-expanded="false" aria-controls="collapseFilter">
+                        <i class="fa fa-filter"></i> {{ trans('actions.filter') }}
+                    </button>
+                    @if( request()->has('keyword') )
+                        <a href="{{ request()->url() }}" class="btn btn-outline-secondary">
+                            <i class="fa fa-times"></i> {{ trans('actions.reset') }}
+                        </a>
+                    @endif
+                </div>
+                <a href="{{ route('admin.shop.catalog.products.create') }}" class="btn btn-primary">
+                    <i class="fa fa-plus-circle"></i> {{ trans('actions.add') }}
+                </a>
+            </div>
+        </div>
+        <div class="collapse p-3 @if( request()->has('keyword') ) show @endif bg-light" id="collapseFilter">
+            <form method="get">
+                <div class="row">
+                    @if($categories)
+                    <div class="col col-3 mb-3">
+                        <select multiple name='category_id[]' data-style="border" class="form-control selectpicker" data-live-search="true">
+                            <option></option>
+                            @foreach ($categories as $parent)
+                                <option
+                                    value="{{ $parent->id }}"
+                                    {{ in_array($parent->id, (array) request()->get('category_id')) ? 'selected' : '' }}
+                                >
+                                    @for ($i = 0; $i < $parent->depth; $i++) &mdash; @endfor
+                                    {{ $parent->name }}
+                                </option>
+                            @endforeach;
+                        </select>
+                    </div>
+                    @endif
+
+                    @if($brands)
+                        <div class="col col-3 mb-3">
+                            <select name="brand_id" data-style="border" class="form-control selectpicker" data-live-search="true">
+                                <option value=""></option>
+                                @foreach($brands as $brand)
+                                <option
+                                    value="{{ $brand->id }}"
+                                    {{ request()->get('brand_id') == $brand->id ? 'selected' : '' }}
+                                >{{ $brand->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    @endif
+                    <div class="col col-3 mb-3">
+                        <button class="btn btn-outline-primary" type="submit">Найти</button>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <input name="keyword" type="text" class="form-control" placeholder="{{ __('actions.searching') }}" value="{{ request()->get('keyword') }}">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
         <form action="{{ route('admin.shop.catalog.products.groupAction') }}" method="post" class="list-form">
             <div class="card-body p-0">
                 @csrf
                 <table class="table table-hover table-striped mb-0">
                     <tr>
-                        <th>Id</th>
-                        <th>image</th>
+                        <th class="w-1">Id</th>
+                        <th class="w-1">image</th>
                         <th class="w-50">Name</th>
                         <th class="w-25">Variants</th>
-                        <th></th>
+                        <th class="text-right">Actions</th>
                     </tr>
                     @foreach($products as $product)
                         <tr>
                             <td>{{ $product->id }}</td>
                             <td>
                                 <img
-                                    src="{{ $product->image ? $product->image->getResizedUrl(45, 45) : '' }}"
+                                    src="{{ $product->image ? $product->image->getResizedUrl(80, 80) : '' }}"
                                     alt=""
                                     class="img-thumbnail"
-                                    style="max-width: 45px; max-height: 45px"
+                                    style="max-width: 80px; max-height: 80px"
                                 >
                             </td>
                             <td>{{ $product->name }}</td>
