@@ -52,17 +52,19 @@ trait Scopes
             $join->whereRaw('nested_set_0._lft between nested_set_1._lft and nested_set_1._rgt');
         });
 
-        //        $nestedSet = function ($query) use ($ids) {
-        //            $query
-        //                ->fromRaw('categories nested_set_0, categories nested_set_1')
-        //                ->selectRaw('distinct nested_set_0.id')
-        //                ->whereIn('nested_set_1.id', $ids)
-        //                ->whereRaw('nested_set_0._lft between nested_set_1._lft and nested_set_1._rgt');
-        //        };
-        //
-        //        $query->join(Tables::PRODUCT_CATEGORIES . ' as pc', function (JoinClause $join) use ($nestedSet) {
-        //            $join->on('pc.product_id', 'id')->whereIn('pc.category_id', $nestedSet);
-        //        });
+        $query->groupBy('products.id');
+
+//                $nestedSet = function ($query) use ($ids) {
+//                    $query
+//                        ->fromRaw('categories nested_set_0, categories nested_set_1')
+//                        ->selectRaw('distinct nested_set_0.id')
+//                        ->whereIn('nested_set_1.id', $ids)
+//                        ->whereRaw('nested_set_0._lft between nested_set_1._lft and nested_set_1._rgt');
+//                };
+//
+//                $query->join(Tables::PRODUCT_CATEGORIES . ' as pc', function (JoinClause $join) use ($nestedSet) {
+//                    $join->on('pc.product_id', 'id')->whereIn('pc.category_id', $nestedSet);
+//                });
 
         //        $query->join(Tables::PRODUCT_CATEGORIES . ' as pc', function (JoinClause $join) use ($ids) {
         //            $join->on('pc.product_id', 'id')->whereIn('pc.category_id', $ids);
