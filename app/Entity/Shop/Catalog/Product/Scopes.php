@@ -44,7 +44,7 @@ trait Scopes
         });
 
         $query->join('categories as nested_set_0', function (JoinClause $join) {
-            $join->on('nested_set_0.id', 'pc.product_id');
+            $join->on('nested_set_0.id', 'pc.category_id');
         });
 
         $query->join('categories as nested_set_1', function (JoinClause $join) use ($ids) {
