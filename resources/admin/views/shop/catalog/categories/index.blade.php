@@ -102,7 +102,7 @@
                                 </a>
                             </td>
                             <td class="text-center">
-                                <a href="{{ route('admin.shop.catalog.products.index', ['category_id' => $category->id]) }}"
+                                <a href="{{ route('admin.shop.catalog.products.index', ['category_nested_id' => $category->id]) }}"
                                     class="btn btn-sm btn-outline-primary">
                                     {{ $category->products_pivot_nested_count }}
                                 </a>
