@@ -24,36 +24,23 @@ trait Scopes
      * @param array $ids
      * @return Builder
      */
-    public function scopeWhereCategoryIds(Builder $query, array $ids)
+    public function scopeWhereJoinedCategory(Builder $query, array $ids)
     {
-        return $query->whereHas('categoryRelations', function (Builder $query) use ($ids) {
-            $query->whereIn('id', $ids);
+        $query->select('products.*');
+
+        $query->join(Tables::PRODUCT_CATEGORIES . ' as pc', function (JoinClause $join) use ($ids) {
+            $join->on('pc.product_id', 'id')->whereIn('pc.category_id', $ids);
         });
+
+        $query->groupBy('products.id');
     }
 
     /**
      * @param Builder $query
      * @param array $ids
      */
-    public function scopeWhereCategoryIdsAndDescendants(Builder $query, array $ids)
+    public function scopeWhereJoinedCategoryNested(Builder $query, array $ids)
     {
-        //        $query->select('products.*');
-        //
-        //        $query->join(Tables::PRODUCT_CATEGORIES . ' as pc', function (JoinClause $join) use ($ids) {
-        //            $join->on('pc.product_id', 'id');
-        //        });
-        //
-        //        $query->join('categories as nested_set_0', function (JoinClause $join) {
-        //            $join->on('nested_set_0.id', 'pc.category_id');
-        //        });
-        //
-        //        $query->join('categories as nested_set_1', function (JoinClause $join) use ($ids) {
-        //            $join->whereIn('nested_set_1.id', $ids);
-        //            $join->whereRaw('nested_set_0._lft between nested_set_1._lft and nested_set_1._rgt');
-        //        });
-        //
-        //        $query->groupBy('products.id');
-
         $query->select('products.*');
 
         $nestedSet = function ($query) use ($ids) {
@@ -69,9 +56,5 @@ trait Scopes
         });
 
         $query->groupBy('products.id');
-
-        //        $query->join(Tables::PRODUCT_CATEGORIES . ' as pc', function (JoinClause $join) use ($ids) {
-        //            $join->on('pc.product_id', 'id')->whereIn('pc.category_id', $ids);
-        //        });
     }
 }
