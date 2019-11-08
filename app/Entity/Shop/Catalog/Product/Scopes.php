@@ -54,6 +54,8 @@ trait Scopes
         //
         //        $query->groupBy('products.id');
 
+        $query->select('products.*');
+
         $nestedSet = function ($query) use ($ids) {
             $query
                 ->fromRaw('categories nested_set_0, categories nested_set_1')
