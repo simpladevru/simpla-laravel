@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin\Shop\Catalog;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Entity\Shop\Catalog\Product\Comment;
 
 class CommentController extends Controller
 {

@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Admin\Shop\Catalog;
 
-use App\Entity\Shop\Catalog\Brand\BrandDto;
-use App\Helpers\Dto;
 use Exception;
 use DomainException;
 use Illuminate\View\View;
@@ -12,8 +10,8 @@ use App\Entity\Shop\Catalog\Brand;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use App\UseCase\Admin\BrandService;
+use App\Repositories\Shop\Catalog\BrandRepository;
 use App\Http\Requests\Admin\Shop\Catalog\BrandRequest;
-use ReflectionException;
 
 class BrandController extends Controller
 {
@@ -24,15 +22,21 @@ class BrandController extends Controller
      * @var BrandService
      */
     private $service;
+    /**
+     * @var BrandRepository
+     */
+    private $repository;
 
     /**
      * BrandController constructor.
      *
      * @param BrandService $service
+     * @param BrandRepository $repository
      */
-    public function __construct(BrandService $service)
+    public function __construct(BrandService $service, BrandRepository $repository)
     {
-        $this->service = $service;
+        $this->service    = $service;
+        $this->repository = $repository;
     }
 
     /**
@@ -40,8 +44,10 @@ class BrandController extends Controller
      */
     public function index(): View
     {
-        $query  = Brand::orderByDesc('id');
-        $brands = $query->paginate(20);
+        $brands = $this->repository->query()
+            ->withCount('products')
+            ->orderByDesc('name')
+            ->paginate(20);
 
         return view(static::VIEW_PATH . 'index', [
             'brands' => $brands,

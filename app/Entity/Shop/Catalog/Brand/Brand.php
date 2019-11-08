@@ -2,8 +2,10 @@
 
 namespace App\Entity\Shop\Catalog;
 
+use App\Entity\Shop\Catalog\Products\Product\Product;
 use App\Helpers\ImageHelper;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class Brand
@@ -45,6 +47,16 @@ class Brand extends Model
         'meta_description',
         'meta_keywords',
     ];
+
+    /**
+     * Получить отношение к товарам.
+     *
+     * @return HasMany
+     */
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class, 'brand_id', 'id');
+    }
 
     /**
      * @param int $width

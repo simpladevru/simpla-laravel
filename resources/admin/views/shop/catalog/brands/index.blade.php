@@ -30,7 +30,8 @@
                         <th>Id</th>
                         <th>Image</th>
                         <th class="w-50">Name</th>
-                        <th class="w-25">Edit</th>
+                        <th class="w-15 text-center">Product count</th>
+                        <th class="w-25 text-right">Actions</th>
                     </tr>
                     @foreach($brands as $brand)
                         <tr>
@@ -43,7 +44,15 @@
                                     style="max-width: 45px; max-height: 45px"
                                 >
                             </td>
-                            <td>{{ $brand->name }}</td>
+                            <td>
+                                {{ $brand->name }}
+                            </td>
+                            <td class="text-center">
+                                <a href="{{ route('admin.shop.catalog.products.index', ['brand_id' => $brand->id]) }}"
+                                   class="btn btn-sm btn-outline-primary">
+                                    {{ $brand->products_count }}
+                                </a>
+                            </td>
                             <td>
                                 <div class="float-right">
                                     <a
