@@ -85,7 +85,7 @@ class ProductController extends Controller
      */
     public function index(Request $request): View
     {
-        $query = $this->productRepository->query()->with(['variants', 'image', 'categoryPivot']);
+        $query = $this->productRepository->query()->with(['brand', 'category', 'variants', 'image']);
 
         if ($brandIds = $request->get('brand_id')) {
             $query->whereBrandIds([$brandIds]);

@@ -102,7 +102,19 @@
                                     style="max-width: 80px; max-height: 80px"
                                 >
                             </td>
-                            <td>{{ $product->name }}</td>
+                            <td>
+                                <a href="{{ route('admin.shop.catalog.products.edit', $product) }}">{{ $product->name }}</a>
+                                @if($product->brand)
+                                    <div class="text-small">
+                                        <span class="text-muted">Бренд:</span> {{ $product->brand->name }}
+                                    </div>
+                                @endif
+                                @if($product->category)
+                                    <div class="text-small">
+                                        <span class="text-muted">Категория:</span> {{ $product->category->name }}
+                                    </div>
+                                @endif
+                            </td>
                             <td>
                                 @foreach($product->variants as $variant)
                                     <div class="variants">

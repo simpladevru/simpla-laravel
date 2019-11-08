@@ -2,6 +2,8 @@
 
 namespace App\Entity\Shop\Catalog\Products\Product;
 
+use App\Entity\Shop\Catalog\Brand;
+use App\Helpers\Tables;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use App\Entity\Shop\Catalog\Category\Category;
@@ -9,6 +11,7 @@ use App\Entity\Shop\Catalog\Products\Image\Image;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Entity\Shop\Catalog\Products\Variant\Variant;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use App\Entity\Shop\Catalog\Products\Attribute\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Entity\Shop\Catalog\Products\Product\Pivot\ProductCategoryPivot;
@@ -85,13 +88,40 @@ class Product extends Model
     ];
 
     /**
+     * Получить отношение к бренду.
+     *
+     * @return HasOne
+     */
+    public function brand(): HasOne
+    {
+        return $this->hasOne(Brand::class, 'id', 'brand_id');
+    }
+
+    /**
      * Получить отношение к категориями.
      *
      * @return BelongsToMany
      */
     public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(Category::class, 'product_categories', 'product_id', 'category_id');
+        return $this->belongsToMany(Category::class, Tables::PRODUCT_CATEGORIES, 'product_id', 'category_id');
+    }
+
+    /**
+     * Получить отношение к основной категории.
+     *
+     * @return HasOneThrough
+     */
+    public function category(): HasOneThrough
+    {
+        return $this->hasOneThrough(
+            Category::class,
+            ProductCategoryPivot::class,
+            'product_id',
+            'id',
+            'id',
+            'category_id'
+        )->where(Tables::PRODUCT_CATEGORIES . '.sort', 0);
     }
 
     /**
