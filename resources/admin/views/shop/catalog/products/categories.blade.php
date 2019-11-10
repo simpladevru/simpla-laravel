@@ -73,8 +73,6 @@
                             self.selected.push(self.categories.find(category => category.id === id));
                         });
 
-                        console.log(self.selected);
-
                         self.firstId = self.selected[0].id;
                     }
                 },
@@ -86,7 +84,12 @@
                     });
                 },
                 setSelectedIds: function (selectedIds) {
-                    this.selectedIds = selectedIds;
+                    let self = this;
+                    if (selectedIds.length) {
+                        selectedIds.map(function (id) {
+                            self.selectedIds.push(parseInt(id));
+                        });
+                    }
                 },
             },
             created: function() {
