@@ -73,6 +73,8 @@
                             self.selected.push(self.categories.find(category => category.id === id));
                         });
 
+                        console.log(self.selected);
+
                         self.firstId = self.selected[0].id;
                     }
                 },
