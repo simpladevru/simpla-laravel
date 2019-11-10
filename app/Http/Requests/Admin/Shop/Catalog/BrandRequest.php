@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\Shop\Catalog;
 
 use App\Entity\Shop\Catalog\Brand;
+use App\Helpers\Tables;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
@@ -17,7 +18,7 @@ class BrandRequest extends FormRequest
     {
         return [
             'name'             => 'required|string|max:255',
-            'slug'             => 'required|string|max:500|unique:brands,slug' . ($this->brand ? ',' . $this->brand->id : null),
+            'slug'             => 'required|string|max:500|unique:' . Tables::SHOP_BRANDS . ',slug' . ($this->brand ? ',' . $this->brand->id : null),
             'description'      => 'nullable|string',
             'meta_title'       => 'nullable|string|max:500',
             'meta_keywords'    => 'nullable|string|max:500',

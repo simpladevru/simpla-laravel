@@ -85,7 +85,11 @@ class BrandController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return redirect()->route(static::ROUTE_PATH . 'edit', $brand)->with('success', 'added');
+        $response = !empty($request['submit-apply'])
+            ? redirect()->route(static::ROUTE_PATH . 'edit', $brand)
+            : redirect()->route(static::ROUTE_PATH . 'index');
+
+        return $response->with('success', 'added');
     }
 
     /**
@@ -112,7 +116,11 @@ class BrandController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return back()->with('success', 'updated');
+        $response = !empty($request['submit-apply'])
+            ? redirect()->route(static::ROUTE_PATH . 'edit', $brand)
+            : redirect()->route(static::ROUTE_PATH . 'index');
+
+        return $response->with('success', 'updated');
     }
 
     /**

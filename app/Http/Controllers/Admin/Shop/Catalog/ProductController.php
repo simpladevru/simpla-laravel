@@ -163,7 +163,11 @@ class ProductController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return redirect()->route(static::ROUTE_PATH . 'edit', $product)->with('success', 'added');
+        $response = !empty($request['submit-apply'])
+            ? redirect()->route(static::ROUTE_PATH . 'edit', $product)
+            : redirect()->route(static::ROUTE_PATH . 'index');
+
+        return $response->with('success', 'added');
     }
 
     /**
@@ -197,7 +201,11 @@ class ProductController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return back()->with('success', 'updated');
+        $response = !empty($request['submit-apply'])
+            ? redirect()->route(static::ROUTE_PATH . 'edit', $product)
+            : redirect()->route(static::ROUTE_PATH . 'index');
+
+        return $response->with('success', 'updated');
     }
 
     /**

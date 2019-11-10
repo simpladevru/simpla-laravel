@@ -98,7 +98,11 @@ class FeatureController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return redirect()->route(static::ROUTE_PATH . 'edit', $feature)->with('success', 'added');
+        $response = !empty($request['submit-apply'])
+            ? redirect()->route(static::ROUTE_PATH . 'edit', $feature)
+            : redirect()->route(static::ROUTE_PATH . 'index');
+
+        return $response->with('success', 'added');
     }
 
     /**
@@ -131,7 +135,11 @@ class FeatureController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return back()->with('success', 'updated');
+        $response = !empty($request['submit-apply'])
+            ? redirect()->route(static::ROUTE_PATH . 'edit', $feature)
+            : redirect()->route(static::ROUTE_PATH . 'index');
+
+        return $response->with('success', 'updated');
     }
 
     /**

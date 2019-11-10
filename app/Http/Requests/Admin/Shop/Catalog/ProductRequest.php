@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin\Shop\Catalog;
 
+use App\Helpers\Tables;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProductRequest extends FormRequest
@@ -14,7 +15,7 @@ class ProductRequest extends FormRequest
         return [
             'name'             => 'required|string|max:255',
             'slug'             => 'nullable|string|max:500',
-            'brand_id'         => 'nullable|integer|exists:brands,id',
+            'brand_id'         => 'nullable|integer|exists:' . Tables::SHOP_BRANDS . ',id',
             'is_active'        => 'boolean',
             'is_featured'      => 'boolean',
             'annotation'       => 'nullable|string',
@@ -23,7 +24,7 @@ class ProductRequest extends FormRequest
             'meta_keywords'    => 'nullable|string|max:500',
             'meta_description' => 'nullable|string|max:500',
 
-            'category_ids.*' => 'nullable|integer|exists:categories,id',
+            'category_ids.*' => 'nullable|integer|exists:' . Tables::SHOP_CATEGORIES . ',id',
 
             'variants.*.id'            => 'nullable|integer',
             'variants.*.name'          => 'nullable|string|max:255',

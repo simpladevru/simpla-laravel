@@ -270,7 +270,8 @@
             </div>
 
             <div class="card-footer text-center">
-                <button type="submit" class="btn btn-primary">{{ $product->id ? 'Save' : 'Add'}}</button>
+                <button type="submit" class="btn btn-outline-primary mr-2" name="submit-save" value="1">{{ trans('actions.save') }}</button>
+                <button type="submit" class="btn btn-outline-dark" name="submit-apply" value="1">{{ trans('actions.apply') }}</button>
             </div>
         </div>
     </form>
