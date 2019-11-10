@@ -2,7 +2,10 @@
 
 @section('wrap-content')
     <div class="page-header clearfix mb-3">
-        <h1 class="page-title pull-left">Features</h1>
+        <h1 class="page-title pull-left">
+            <a href="{{ route('admin.shop.catalog.features.index') }}">{{ __('titles.features.all') }}</a>
+            / {{ $feature->id ? $feature->name : __('actions.create') }}
+        </h1>
     </div>
 
     @if (session()->has('success'))

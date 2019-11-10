@@ -141,12 +141,10 @@ class ProductController extends Controller
      */
     public function create(): View
     {
-        $categories = $this->categoryRepository->getAllWithDepth();
-        $brands     = $this->brandRepository->getAll();
+        $brands = $this->brandRepository->getAll();
 
         return view(static::VIEW_PATH . 'form', [
             'product'            => new Product(),
-            'categories'         => $categories,
             'productCategoryIds' => [],
             'brands'             => $brands,
         ]);
@@ -175,14 +173,11 @@ class ProductController extends Controller
      */
     public function edit(Product $product): View
     {
-        $categories = $this->categoryRepository->getAllWithDepth();
-        $brands     = $this->brandRepository->getAll();
-
+        $brands             = $this->brandRepository->getAll();
         $productCategoryIds = $product->categoryPivotIds();
 
         return view(static::VIEW_PATH . 'form', [
             'product'            => $product,
-            'categories'         => $categories,
             'productCategoryIds' => $productCategoryIds,
             'brands'             => $brands,
         ]);

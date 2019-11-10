@@ -2,7 +2,7 @@
 
 @section('wrap-content')
     <div class="page-header clearfix mb-3">
-        <h1 class="page-title pull-left">Features</h1>
+        <h1 class="page-title pull-left">{{ __('titles.features.all') }}</h1>
     </div>
 
     @if (session()->has('success'))
@@ -19,7 +19,7 @@
             </div>
 
             <a href="{{ route('admin.shop.catalog.features.create') }}" class="btn btn-primary float-right">
-                <i class="fa fa-plus-circle"></i> Add
+                <i class="fa fa-plus-circle"></i> {{ __('actions.add') }}
             </a>
         </div>
         <div class="card-body p-0">
@@ -29,7 +29,7 @@
                     <tr>
                         <th class="w-1 text-center">Id</th>
                         <th class="w-40">Name</th>
-                        <th class="w-10 text-right">Edit</th>
+                        <th class="w-10 text-right">Actions</th>
                     </tr>
                     @foreach($features as $feature)
                         <tr>

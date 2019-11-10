@@ -22,4 +22,9 @@ return [
     'categories.plural' => 'Категория|Категории|Категорий',
     'categories.all'    => 'Все категрии',
     'categories.editor' => 'Категорию',
+
+    'features'        => 'Свойства',
+    'features.plural' => 'Свойство|Свойства|Свойств',
+    'features.all'    => 'Все свойства',
+    'features.editor' => 'Свойство',
 ];

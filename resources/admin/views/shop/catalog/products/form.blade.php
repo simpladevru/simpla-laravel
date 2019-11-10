@@ -112,7 +112,7 @@
                                     </div>
                                 @endif
 
-                               @if(count($categories) > 0)
+                               {{--@if(count($categories) > 0)--}}
                                     <div class="mb-4">
                                         <h3 class="border-bottom mb-3 pb-2">Categories</h3>
                                         @include('shop.catalog.products.categories')
@@ -125,7 +125,7 @@
 
                                     <h3 class="border-bottom mb-3 pb-2">Features</h3>
                                     @include('shop.catalog.products.features')
-                                @endif
+                                {{--@endif--}}
                             </div>
                             <div class="col-md-6">
                                 <h3 class="border-bottom mb-3 pb-2">Images</h3>
