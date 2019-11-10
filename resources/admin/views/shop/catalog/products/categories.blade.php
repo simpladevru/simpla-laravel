@@ -31,19 +31,18 @@
     <script>
         let Categories = new Vue({
             el: '#categoriesBlock',
-            props: ['categories'],
             data: {
                 firstId: null,
                 selected: [],
                 selectedIds: [],
+                categories: [],
             },
             watch: {
-                selectedIds: function (value) {
-                    let self = this;
-                    self.selected = [];
-                    value.map(function (id) {
-                        self.selected.push(self.categories.find(category => category.id === id));
-                    });
+                categories: function () {
+                    this.findSelected()
+                },
+                selectedIds: function () {
+                    this.findSelected()
                 },
                 selected: function (value) {
                     if (value.length === 0) {
@@ -64,17 +63,35 @@
                     this.selectedIds.splice(index, 1);
                     $('#categoryIds').selectpicker('refresh');
                 },
-                load: function (selectedIds) {
+                findSelected: function () {
+                    let self = this;
+
+                    self.selected = [];
+
+                    if (self.categories.length && self.selectedIds.length) {
+                        self.selectedIds.map(function (id) {
+                            self.selected.push(self.categories.find(category => category.id === id));
+                        });
+
+                        self.firstId = self.selected[0].id;
+                    }
+                },
+                loadCategories: function () {
                     let self = this;
                     axios.get('/admin/shop/catalog/categories/ajax-all-with-depth').then(function (response) {
                         self.categories = response.data;
-                        self.selectedIds = selectedIds;
                         $('#categoryIds').selectpicker('destroy').selectpicker();
                     });
                 },
+                setSelectedIds: function (selectedIds) {
+                    this.selectedIds = selectedIds;
+                },
+            },
+            created: function() {
+                this.loadCategories();
             }
         });
 
-        Categories.load(@json(old('category_ids', $productCategoryIds)));
+        Categories.setSelectedIds(@json(old('category_ids', $productCategoryIds)));
     </script>
 @endpush

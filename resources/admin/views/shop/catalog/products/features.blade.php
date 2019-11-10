@@ -80,18 +80,18 @@
                         return;
                     }
 
-                    // axios.get('/admin/shop/catalog/categories/' + categoryId + '/ajax-features').then(function (response) {
-                    //     self.features = response.data;
-                    //
-                    //     self.features.map(function (feature) {
-                    //         if (typeof self.attributes[feature.id] === 'undefined') {
-                    //             self.$set(self.attributes, feature.id, [])
-                    //         }
-                    //         if (self.attributes[feature.id].length === 0) {
-                    //             self.add(feature.id);
-                    //         }
-                    //     });
-                    // });
+                    axios.get('/admin/shop/catalog/categories/' + categoryId + '/ajax-features').then(function (response) {
+                        self.features = response.data;
+
+                        self.features.map(function (feature) {
+                            if (typeof self.attributes[feature.id] === 'undefined') {
+                                self.$set(self.attributes, feature.id, [])
+                            }
+                            if (self.attributes[feature.id].length === 0) {
+                                self.add(feature.id);
+                            }
+                        });
+                    });
                 }
             }
         });
