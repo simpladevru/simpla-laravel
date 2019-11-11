@@ -72,7 +72,7 @@ class ProductService
             'categoryPivot',
             'variants',
             'attributes',
-            'images'
+            'images',
         ]);
 
         DB::transaction(function () use ($product) {
@@ -130,7 +130,7 @@ class ProductService
         DB::transaction(function () use ($product, $data) {
             $this->updateCategories($product, $data['category_ids']);
             $this->updateVariants($product, $data['variants']);
-            $this->updateAttributes($product, $data['attributes']);
+            $this->updateAttributesGroupedByFeatureId($product, $data['attributes']);
             $this->updateImages($product, $data['exist_image_ids'], $data['upload_images']);
         });
     }
@@ -165,12 +165,10 @@ class ProductService
         $existIds = [];
 
         foreach (array_values($variants) as $sort => $data) {
-            $existIds[] = $data['id'];
+            $variant = $variantsCollection->get($data['id'], $variantsRelation->make());
+            $this->variantService->fillAndSave($variant, array_merge($data, ['sort' => $sort]));
 
-            $this->variantService->fillAndSave(
-                $variantsCollection->get($data['id'], $variantsRelation->make()),
-                array_merge($data, ['sort' => $sort])
-            );
+            $existIds[] = $data['id'];
         }
 
         $variantsCollection->whereNotIn('id', array_filter($existIds))->map(function (Variant $variant) {
@@ -184,7 +182,7 @@ class ProductService
      * @param Product $product
      * @param array $attributes
      */
-    public function updateAttributes(Product $product, array $attributes = []): void
+    public function updateAttributesGroupedByFeatureId(Product $product, array $attributes = []): void
     {
         $attributesRelation   = $product->attributes();
         $attributesCollection = $attributesRelation->get()->keyBy('id');
@@ -194,14 +192,10 @@ class ProductService
         foreach ($attributes as $featureId => $values) {
             foreach ($values as $value) {
                 if ($value['value']) {
-                    $existIds[] = $value['id'];
-
                     $attribute = $attributesCollection->get($value['id'], $attributesRelation->make());
+                    $attribute->fill(['feature_id' => $featureId, 'value' => $value['value'] ?? ''])->saveOrFail();
 
-                    $attribute->fill([
-                        'feature_id' => $featureId,
-                        'value'      => $value['value'] ?? '',
-                    ])->saveOrFail();
+                    $existIds[] = $value['id'];
                 }
             }
         }

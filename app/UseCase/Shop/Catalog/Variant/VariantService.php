@@ -2,7 +2,9 @@
 
 namespace App\UseCase\Shop\Catalog\Variant;
 
+use Throwable;
 use Exception;
+use DomainException;
 use App\Repositories\Shop\Catalog\VariantRepository;
 use App\Entity\Shop\Catalog\Products\Variant\Variant;
 
@@ -22,7 +24,7 @@ class VariantService
     }
 
     /**
-     * Обновить варианты сгруппированные по ID.
+     * Обновить список вариантов.
      *
      * @param array $variants
      */
@@ -64,10 +66,11 @@ class VariantService
      *
      * @param Variant $variant
      * @param array $attributes
+     * @throws Throwable
      */
     public function fillAndSave(Variant $variant, array $attributes)
     {
-        $variant->fill($attributes)->save();
+        $variant->fill($attributes)->saveOrFail();
     }
 
     /**
