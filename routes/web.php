@@ -4,7 +4,7 @@ use App\Http\Middleware\Admin;
 use App\Http\Middleware\Frontend;
 use Illuminate\Support\Facades\Route;
 
-//Auth::routes();
+Auth::routes();
 
 Route::group(['middleware' => Frontend::class], function () {
     Route::get('/', 'HomeController@index')->name('home');
