@@ -116,7 +116,7 @@ class ProductService
             $this->updateCategories($product, $data['category_ids']);
             $this->updateVariants($product, $data['variants']);
             $this->updateAttributes($product, $data['attributes']);
-            $this->updateImages($product, $data['images'], $data['upload_images']);
+            $this->updateImages($product, $data['exist_image_ids'], $data['upload_images']);
         });
     }
 
@@ -200,19 +200,19 @@ class ProductService
      * Обновить изображения.
      *
      * @param Product $product
-     * @param array $images
+     * @param array $existImageIds
      * @param array $uploads
      * @param array $downloads
      */
-    public function updateImages(Product $product, array $images = [], array $uploads = [], array $downloads = [])
+    public function updateImages(Product $product, array $existImageIds = [], array $uploads = [], array $downloads = [])
     {
         $imagesCollection = $product->images()->get()->keyBy('id');
 
-        foreach (array_values($images) as $sort => $imageId) {
+        foreach (array_values($existImageIds) as $sort => $imageId) {
             $imagesCollection->get($imageId)->fill(['sort' => $sort])->saveOrFail();
         }
 
-        $imagesCollection->whereNotIn('id', $images)->map(function (Image $image) {
+        $imagesCollection->whereNotIn('id', $existImageIds)->map(function (Image $image) {
             $image->delete();
         });
 

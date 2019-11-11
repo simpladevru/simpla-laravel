@@ -19,7 +19,11 @@
     <draggable v-model="variants" class="variants-list">
         <div class="form-row mb-2" v-for="(variant, index) in variants">
             <div class="col-md-4">
-                <input type="hidden" :name="getInputName(index, 'id')" :value="variant.id">
+                <input
+                    type="hidden"
+                    :name="getInputName(index, 'id')"
+                    :value="variant.id"
+                >
                 <div class="input-group">
                     <input
                         type="text"

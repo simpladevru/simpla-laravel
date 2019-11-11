@@ -3,7 +3,7 @@
         <div v-for="(image, index) in images" class="col col-4 mb-0 p-1 d-inline-flex draggable-image">
             <div class="border text-center p-2" style="width: 100%">
                 <img :src="image.file" class="img-fluid d-inline-block" style="max-height: 100px;">
-                <input type="hidden" name="images[]" :value="image.id">
+                <input type="hidden" name="exist_image_ids[]" :value="image.id">
                 <button @click="remove(index)" type="button" class="btn btn-sm btn-danger mt-2">Remove</button>
             </div>
         </div>

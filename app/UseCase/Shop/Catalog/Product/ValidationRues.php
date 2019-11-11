@@ -38,10 +38,8 @@ class ValidationRues
             'attributes.*.*.feature_id' => 'nullable|integer',
             'attributes.*.*.value'      => 'nullable|string|max:255',
 
-            'images'   => 'array',
-            'images.*' => 'nullable|integer',
-
-            'upload_images.*' => 'required|image|mimes:jpg,jpeg,png',
+            'exist_image_ids.*' => 'nullable|integer',
+            'upload_images.*'   => 'required|image|mimes:jpg,jpeg,png',
         ];
     }
 

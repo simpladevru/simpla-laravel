@@ -33,8 +33,8 @@ class ProductRequest extends FormRequest
         $data['variants']     = $this->get('variants', []);
         $data['attributes']   = $this->get('attributes', []);
 
-        $data['images']        = array_filter($this->get('images', []));
-        $data['upload_images'] = $this->file('upload_images', []);
+        $data['exist_image_ids'] = array_filter($this->get('exist_image_ids', []));
+        $data['upload_images']   = $this->file('upload_images', []);
 
         return $data;
     }
