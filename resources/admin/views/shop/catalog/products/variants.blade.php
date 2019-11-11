@@ -91,7 +91,6 @@
     <button class="btn btn-secondary" @click="add" type="button">
         <i class="fa fa-plus-circle"></i> Add
     </button>
-    <button type="submit" class="btn btn-primary">{{ $product->id ? 'Save' : 'Add'}}</button>
 </div>
 
 @push('scripts-footer')
