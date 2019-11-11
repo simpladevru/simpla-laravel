@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin\Shop\Catalog;
 
-use App\Http\Requests\Admin\Shop\Catalog\Product\ProductGroupActionRequest;
 use Throwable;
 use Exception;
 use DomainException;
@@ -19,6 +18,7 @@ use App\Repositories\Shop\Catalog\ProductRepository;
 use App\Entity\Shop\Catalog\Products\Product\Product;
 use App\Repositories\Shop\Catalog\CategoryRepository;
 use App\Http\Requests\Admin\Shop\Catalog\Product\ProductRequest;
+use App\Http\Requests\Admin\Shop\Catalog\Product\ProductGroupActionRequest;
 
 class ProductController extends Controller
 {
