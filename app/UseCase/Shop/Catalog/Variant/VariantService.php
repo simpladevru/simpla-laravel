@@ -1,6 +1,6 @@
 <?php
 
-namespace App\UseCase\Admin;
+namespace App\UseCase\Shop\Catalog\Variant;
 
 use Exception;
 use App\Repositories\Shop\Catalog\VariantRepository;

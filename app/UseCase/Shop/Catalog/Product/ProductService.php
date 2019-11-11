@@ -1,13 +1,16 @@
 <?php
 
-namespace App\UseCase\Admin;
+namespace App\UseCase\Shop\Catalog\Product;
 
 use Throwable;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use App\Entity\Shop\Catalog\Products\Image\Image;
-use App\Entity\Shop\Catalog\Products\Product\Product;
 use App\Repositories\Shop\Catalog\ProductRepository;
+use App\UseCase\Shop\Catalog\Variant\VariantService;
+use App\Entity\Shop\Catalog\Products\Variant\Variant;
+use App\Entity\Shop\Catalog\Products\Product\Product;
+use App\Entity\Shop\Catalog\Products\Attribute\Attribute;
 
 class ProductService
 {

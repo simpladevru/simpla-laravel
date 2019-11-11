@@ -9,7 +9,7 @@ use Illuminate\View\View;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
-use App\UseCase\Admin\CategoryService;
+use App\UseCase\Shop\Catalog\Category\CategoryService;
 use App\Entity\Shop\Catalog\Category\Category;
 use App\Repositories\Shop\Catalog\CategoryRepository;
 use App\Http\Requests\Admin\Shop\Catalog\CategoryRequest;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\UseCase\Admin;
+namespace App\UseCase\Shop\Catalog\Category;
 
 use Exception;
 use App\Entity\Shop\Catalog\Category\Category;

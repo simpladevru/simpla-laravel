@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin\Shop\Catalog;
 
+use App\UseCase\Shop\Catalog\Feature\ValidationRules;
 use Illuminate\Foundation\Http\FormRequest;
 
 class FeatureRequest extends FormRequest
@@ -11,13 +12,7 @@ class FeatureRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name'      => 'required|string|max:255',
-            'is_active' => 'boolean',
-            'sort'      => 'required|integer',
-
-            'category_ids.*' => 'nullable|integer',
-        ];
+        return ValidationRules::adminRules();
     }
 
     /**

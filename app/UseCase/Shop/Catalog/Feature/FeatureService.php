@@ -1,6 +1,6 @@
 <?php
 
-namespace App\UseCase\Admin;
+namespace App\UseCase\Shop\Catalog\Feature;
 
 use Exception;
 use Throwable;

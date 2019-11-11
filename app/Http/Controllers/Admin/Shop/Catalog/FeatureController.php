@@ -10,7 +10,7 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Entity\Shop\Feature\Feature;
 use Illuminate\Http\RedirectResponse;
-use App\UseCase\Admin\FeatureService;
+use App\UseCase\Shop\Catalog\Feature\FeatureService;
 use App\Repositories\Shop\Catalog\FeatureRepository;
 use App\Repositories\Shop\Catalog\CategoryRepository;
 use App\Http\Requests\Admin\Shop\Catalog\FeatureRequest;

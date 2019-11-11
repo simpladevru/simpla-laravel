@@ -9,7 +9,7 @@ use Illuminate\Http\Response;
 use App\Entity\Shop\Catalog\Brand;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
-use App\UseCase\Admin\BrandService;
+use App\UseCase\Shop\Catalog\Brand\BrandService;
 use App\Repositories\Shop\Catalog\BrandRepository;
 use App\Http\Requests\Admin\Shop\Catalog\BrandRequest;
 
