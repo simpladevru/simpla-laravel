@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests\Admin\Shop\Catalog;
 
-use App\Helpers\Tables;
-use App\UseCase\Shop\Catalog\Category\ValidationRues;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Entity\Shop\Catalog\Category\Category;
+use App\UseCase\Shop\Catalog\Category\ValidationRues;
 
 /**
  * @property Category $category

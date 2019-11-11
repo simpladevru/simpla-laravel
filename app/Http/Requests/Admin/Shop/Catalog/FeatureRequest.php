@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Admin\Shop\Catalog;
 
-use App\UseCase\Shop\Catalog\Feature\ValidationRules;
 use Illuminate\Foundation\Http\FormRequest;
+use App\UseCase\Shop\Catalog\Feature\ValidationRules;
 
 class FeatureRequest extends FormRequest
 {
