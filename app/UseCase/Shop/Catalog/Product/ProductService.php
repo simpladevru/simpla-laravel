@@ -6,7 +6,7 @@ use Throwable;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use App\Entity\Shop\Catalog\Products\Image\Image;
-use App\Repositories\Shop\Catalog\ProductRepository;
+use App\Repositories\Shop\Catalog\Product\ProductRepository;
 use App\UseCase\Shop\Catalog\Variant\VariantService;
 use App\Entity\Shop\Catalog\Products\Variant\Variant;
 use App\Entity\Shop\Catalog\Products\Product\Product;
@@ -68,16 +68,20 @@ class ProductService
      */
     public function copy(int $id)
     {
-        $product = $this->repository->getOne($id)->load(['variants', 'images']);
+        $product = $this->repository->getOne($id)->load([
+            'categoryPivot',
+            'variants',
+            'attributes',
+            'images'
+        ]);
 
         DB::transaction(function () use ($product) {
             $clone = $product->replicate();
             $clone->save();
 
-            $clone->categoryPivot()->createMany($product->categoryPivot->toArray());
-            $clone->variants()->createMany($product->variants->toArray());
-            $clone->attributes()->createMany($product->attributes->toArray());
-            $clone->images()->createMany($product->images->toArray());
+            foreach ($product->getRelations() as $relationName => $relation) {
+                $clone->{$relationName}()->createMany($relation->toArray());
+            }
         });
     }
 

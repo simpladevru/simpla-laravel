@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Shop\Catalog;
+namespace App\Repositories\Shop\Catalog\Product;
 
 use Illuminate\Database\Eloquent\Builder;
 use App\Entity\Shop\Catalog\Products\Product\Product;
