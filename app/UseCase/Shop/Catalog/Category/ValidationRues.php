@@ -11,7 +11,7 @@ class ValidationRues
      * @param Category|null $category
      * @return array
      */
-    public static function adminRules(Category $category = null): array
+    public static function adminRequest(Category $category = null): array
     {
         return [
             'name'             => 'required|string|max:255',

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Shop\Catalog;
 
+use App\Http\Requests\Admin\Shop\Catalog\Product\ProductGroupActionRequest;
 use Throwable;
 use Exception;
 use DomainException;
@@ -17,7 +18,7 @@ use App\Repositories\Shop\Catalog\FeatureRepository;
 use App\Repositories\Shop\Catalog\ProductRepository;
 use App\Entity\Shop\Catalog\Products\Product\Product;
 use App\Repositories\Shop\Catalog\CategoryRepository;
-use App\Http\Requests\Admin\Shop\Catalog\ProductRequest;
+use App\Http\Requests\Admin\Shop\Catalog\Product\ProductRequest;
 
 class ProductController extends Controller
 {
@@ -117,12 +118,14 @@ class ProductController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param ProductGroupActionRequest $request
      * @return RedirectResponse
      */
-    public function groupAction(Request $request): RedirectResponse
+    public function groupAction(ProductGroupActionRequest $request): RedirectResponse
     {
-        $this->variantService->updateGroupedByPrimaryKey($request->get('variants'));
+        $validated = $request->validated();
+
+        $this->variantService->updateList($validated['variants']);
 
         return back()->with('success', 'updated');
     }

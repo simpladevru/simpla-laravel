@@ -17,7 +17,7 @@ class BrandRequest extends FormRequest
      */
     public function rules(): array
     {
-        return ValidationRues::adminRules($this->brand);
+        return ValidationRues::adminRequest($this->brand);
     }
 
     /**

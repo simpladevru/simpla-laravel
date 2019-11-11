@@ -7,7 +7,7 @@ class ValidationRules
     /**
      * @return array
      */
-    public static function adminRules(): array
+    public static function adminRequest(): array
     {
         return [
             'name'           => 'required|string|max:255',

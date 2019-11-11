@@ -121,6 +121,11 @@
                                         <div class="form-row">
                                             <div class="col-md-4">
                                                 <input
+                                                    type="hidden"
+                                                    name="variants[{{ $variant->id }}][id]"
+                                                    value="{{ $variant->id }}"
+                                                >
+                                                <input
                                                     type="text"
                                                     class="form-control form-control-sm mb-1"
                                                     placeholder="Name"

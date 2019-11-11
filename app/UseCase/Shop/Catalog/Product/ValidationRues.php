@@ -11,7 +11,7 @@ class ValidationRues
      * @param Product|null $product
      * @return array
      */
-    public static function adminRules(Product $product = null): array
+    public static function adminRequest(Product $product = null): array
     {
         return [
             'name'             => 'required|string|max:255',
@@ -42,6 +42,20 @@ class ValidationRues
             'images.*' => 'nullable|integer',
 
             'upload_images.*' => 'required|image|mimes:jpg,jpeg,png',
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public static function adminGroupActionRequest(): array
+    {
+        return [
+            'variants.*.id'    => 'nullable|integer',
+            'variants.*.name'  => 'nullable|string|max:255',
+            'variants.*.sku'   => 'nullable|string|max:255',
+            'variants.*.stock' => 'nullable|integer',
+            'variants.*.price' => "required|regex:/^\d*(\.\d{1,2})?$/",
         ];
     }
 }

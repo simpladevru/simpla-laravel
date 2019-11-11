@@ -17,7 +17,7 @@ class CategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-        return ValidationRues::adminRules($this->category);
+        return ValidationRues::adminRequest($this->category);
     }
 
     /**

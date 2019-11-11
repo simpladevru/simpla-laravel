@@ -11,7 +11,7 @@ class ValidationRues
      * @param Brand|null $brand
      * @return array
      */
-    public static function adminRules(Brand $brand = null): array
+    public static function adminRequest(Brand $brand = null): array
     {
         return [
             'name'             => 'required|string|max:255',

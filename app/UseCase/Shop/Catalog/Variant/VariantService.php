@@ -26,10 +26,10 @@ class VariantService
      *
      * @param array $variants
      */
-    public function updateGroupedByPrimaryKey(array $variants)
+    public function updateList(array $variants)
     {
-        foreach ($variants as $variantId => $variant) {
-            $this->update($variantId, $variant);
+        foreach ($variants as $variant) {
+            $this->update($variant['id'], $variant);
         }
     }
 

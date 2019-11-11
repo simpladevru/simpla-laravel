@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Admin\Shop\Catalog;
+namespace App\Http\Requests\Admin\Shop\Catalog\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\UseCase\Shop\Catalog\Product\ValidationRues;
@@ -16,7 +16,7 @@ class ProductRequest extends FormRequest
      */
     public function rules(): array
     {
-        return ValidationRues::adminRules($this->product);
+        return ValidationRues::adminRequest($this->product);
     }
 
     /**

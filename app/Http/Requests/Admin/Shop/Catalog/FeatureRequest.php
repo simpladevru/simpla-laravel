@@ -12,7 +12,7 @@ class FeatureRequest extends FormRequest
      */
     public function rules(): array
     {
-        return ValidationRules::adminRules();
+        return ValidationRules::adminRequest();
     }
 
     /**
