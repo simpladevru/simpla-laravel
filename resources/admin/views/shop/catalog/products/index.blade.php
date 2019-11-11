@@ -60,7 +60,7 @@
                                 @foreach($brands as $brand)
                                 <option
                                     value="{{ $brand->id }}"
-                                    {{ in_array($brand->id, request()->get('brand_id', [])) ? 'selected' : '' }}
+                                    {{ in_array($brand->id, (array) request()->get('brand_id', [])) ? 'selected' : '' }}
                                 >{{ $brand->name }}</option>
                                 @endforeach
                             </select>
