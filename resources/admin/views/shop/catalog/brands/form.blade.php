@@ -32,7 +32,7 @@
             </h4>
             <div class="card-body p-3">
                 <div class="row">
-                    <div class="col-md-9 offset-md-1">
+                    <div class="col-md-10 offset-md-1">
                         <div class="form-group row">
                             <label for="name" class="col-md-3 col-form-label">Name</label>
                             <div class="col-md-9">

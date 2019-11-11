@@ -1,10 +1,14 @@
 <div id="imagesBlock" class="mb-3">
     <draggable v-model="images" draggable=".draggable-image" class="row" style="margin: -4px;">
         <div v-for="(image, index) in images" class="col col-4 mb-0 p-1 d-inline-flex draggable-image">
-            <div class="border text-center p-2" style="width: 100%">
-                <img :src="image.file" class="img-fluid d-inline-block" style="max-height: 100px;">
+            <div class="border text-center p-1" style="width: 100%">
+                <div class="border-bottom">
+                    <img :src="image.file" class="img-fluid d-inline-block mb-2" style="max-height: 100px;">
+                </div>
                 <input type="hidden" name="exist_image_ids[]" :value="image.id">
-                <button @click="remove(index)" type="button" class="btn btn-sm btn-danger mt-2">Remove</button>
+                <button @click="remove(index)" type="button" class="btn p-0 float-right">
+                    <i class="fa fa-trash-o"></i>
+                </button>
             </div>
         </div>
     </draggable>
