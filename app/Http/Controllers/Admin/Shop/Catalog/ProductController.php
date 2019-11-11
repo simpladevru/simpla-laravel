@@ -10,13 +10,13 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
+use App\Repositories\Shop\Catalog\BrandRepository;
 use App\UseCase\Shop\Catalog\Product\ProductService;
 use App\UseCase\Shop\Catalog\Variant\VariantService;
-use App\Repositories\Shop\Catalog\BrandRepository;
 use App\Repositories\Shop\Catalog\FeatureRepository;
-use App\Repositories\Shop\Catalog\Product\ProductRepository;
 use App\Entity\Shop\Catalog\Products\Product\Product;
 use App\Repositories\Shop\Catalog\CategoryRepository;
+use App\Repositories\Shop\Catalog\Product\ProductRepository;
 use App\Http\Requests\Admin\Shop\Catalog\Product\ProductRequest;
 use App\Http\Requests\Admin\Shop\Catalog\Product\ProductGroupActionRequest;
 
