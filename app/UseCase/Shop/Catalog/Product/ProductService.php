@@ -6,11 +6,11 @@ use Throwable;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use App\Entity\Shop\Catalog\Products\Image\Image;
-use App\Repositories\Shop\Catalog\Product\ProductRepository;
 use App\UseCase\Shop\Catalog\Variant\VariantService;
 use App\Entity\Shop\Catalog\Products\Variant\Variant;
 use App\Entity\Shop\Catalog\Products\Product\Product;
 use App\Entity\Shop\Catalog\Products\Attribute\Attribute;
+use App\Repositories\Shop\Catalog\Product\ProductRepository;
 
 class ProductService
 {
