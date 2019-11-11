@@ -3,7 +3,7 @@
 namespace App\UseCase\Shop\Catalog\Brand;
 
 use Exception;
-use App\Entity\Shop\Catalog\Brand;
+use App\Entity\Shop\Catalog\Brand\Brand;
 use App\Repositories\Shop\Catalog\BrandRepository;
 
 class BrandService

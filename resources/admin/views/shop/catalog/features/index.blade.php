@@ -17,10 +17,54 @@
             <div class="p-2 float-left">
                 {{ $features->total() }}
             </div>
-
-            <a href="{{ route('admin.shop.catalog.features.create') }}" class="btn btn-primary float-right">
-                <i class="fa fa-plus-circle"></i> {{ __('actions.add') }}
-            </a>
+            <div class="float-right">
+                <div class="btn-group" role="group">
+                    <button class="btn btn-outline-secondary" data-toggle="collapse" href="#collapseFilter" role="button" aria-expanded="false" aria-controls="collapseFilter">
+                        <i class="fa fa-filter"></i> {{ trans('actions.filter') }}
+                    </button>
+                    @if( request()->has('keyword') )
+                        <a href="{{ request()->url() }}" class="btn btn-outline-secondary">
+                            <i class="fa fa-times"></i> {{ trans('actions.reset') }}
+                        </a>
+                    @endif
+                </div>
+                <a href="{{ route('admin.shop.catalog.features.create') }}" class="btn btn-primary">
+                    <i class="fa fa-plus-circle"></i> {{ trans('actions.add') }}
+                </a>
+            </div>
+        </div>
+        <div class="collapse p-3 @if( request()->has('keyword') ) show @endif bg-light" id="collapseFilter">
+            <form method="get">
+                <div class="row">
+                    @if($categories)
+                        <div class="col col-3 mb-3">
+                            <select multiple name='category_id[]' data-style="border" class="form-control selectpicker" data-live-search="true">
+                                <option></option>
+                                @foreach ($categories as $parent)
+                                    <option
+                                        value="{{ $parent->id }}"
+                                        {{ in_array($parent->id, (array) request()->get('category_id')) ? 'selected' : '' }}
+                                    >
+                                        @for ($i = 0; $i < $parent->depth; $i++) &mdash; @endfor
+                                        {{ $parent->name }}
+                                    </option>
+                                @endforeach;
+                            </select>
+                        </div>
+                    @endif
+                    <div class="col col-3 mb-3">
+                        <button class="btn btn-outline-primary" type="submit">Найти</button>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <input name="keyword" type="text" class="form-control" placeholder="{{ __('actions.searching') }}" value="{{ request()->get('keyword') }}">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
         <div class="card-body p-0">
             <form action="" method="post" class="list-form">

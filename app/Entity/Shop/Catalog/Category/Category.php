@@ -5,11 +5,12 @@ namespace App\Entity\Shop\Catalog\Category;
 use App\Helpers\Tables;
 use App\Helpers\ImageHelper;
 use Kalnoy\Nestedset\NodeTrait;
-use App\Entity\Shop\Feature\Feature;
 use Illuminate\Database\Eloquent\Model;
+use App\Entity\Shop\Catalog\Feature\Feature;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Entity\Shop\Catalog\Category\Pivot\ProductPivotNested;
 use App\Entity\Shop\Catalog\Products\Product\Pivot\ProductCategoryPivot;
 
 class Category extends Model

@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Entity\Shop\Brand;
+namespace App\Entity\Shop\Catalog\Brand;
 
 use Illuminate\Support\Str;
 use App\Helpers\ImageHelper;
 use Illuminate\Http\UploadedFile;
-use App\Entity\Shop\Catalog\Brand;
 
 class Observer
 {

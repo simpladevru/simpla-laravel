@@ -2,15 +2,20 @@
 
 namespace App\Providers;
 
-use App\Entity\Shop\Catalog\Brand;
 use Illuminate\Support\ServiceProvider;
-use App\Entity\Shop\Catalog\Category\Category;
+
 use App\Entity\Shop\Catalog\Products\Image\Image;
-use App\Entity\Shop\Catalog\Products\Product\Product;
-use App\Entity\Shop\Brand\Observer as BrandObserver;
-use App\Entity\Shop\Catalog\Category\Observer as CategoryObserver;
 use App\Entity\Shop\Catalog\Products\Image\Observer as ImageObserver;
+
+use App\Entity\Shop\Catalog\Products\Product\Product;
 use App\Entity\Shop\Catalog\Products\Product\Observer as ProductObserver;
+
+use App\Entity\Shop\Catalog\Brand\Brand;
+use App\Entity\Shop\Catalog\Brand\Observer as BrandObserver;
+
+use App\Entity\Shop\Catalog\Category\Category;
+use App\Entity\Shop\Catalog\Category\Observer as CategoryObserver;
+
 
 class AppServiceProvider extends ServiceProvider
 {

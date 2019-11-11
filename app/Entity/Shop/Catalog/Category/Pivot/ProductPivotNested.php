@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\Shop\Catalog\Category;
+namespace App\Entity\Shop\Catalog\Category\Pivot;
 
 use App\Helpers\Tables;
 use Illuminate\Database\Query\Expression;

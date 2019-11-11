@@ -5,7 +5,7 @@ namespace App\UseCase\Shop\Catalog\Feature;
 use Exception;
 use Throwable;
 use Illuminate\Support\Facades\DB;
-use App\Entity\Shop\Feature\Feature;
+use App\Entity\Shop\Catalog\Feature\Feature;
 use App\Repositories\Shop\Catalog\FeatureRepository;
 
 class FeatureService

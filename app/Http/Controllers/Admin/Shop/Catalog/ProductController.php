@@ -90,7 +90,7 @@ class ProductController extends Controller
         $query = $this->productRepository->query()->with(['brand', 'category', 'variants', 'image']);
 
         if ($brandIds = $request->get('brand_id')) {
-            $query->whereBrandIds([$brandIds]);
+            $query->whereBrandIds((array) $brandIds);
         }
 
         if ($categoryId = $request->get('category_id')) {

@@ -6,9 +6,10 @@ use Exception;
 use Throwable;
 use DomainException;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
-use App\Entity\Shop\Feature\Feature;
+use App\Entity\Shop\Catalog\Feature\Feature;
 use Illuminate\Http\RedirectResponse;
 use App\UseCase\Shop\Catalog\Feature\FeatureService;
 use App\Repositories\Shop\Catalog\FeatureRepository;
@@ -24,10 +25,12 @@ class FeatureController extends Controller
      * @var FeatureService
      */
     private $service;
+
     /**
      * @var CategoryRepository
      */
     private $categoryRepository;
+
     /**
      * @var FeatureRepository
      */
@@ -51,14 +54,24 @@ class FeatureController extends Controller
     }
 
     /**
+     * @param Request $request
      * @return View
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        $features = $this->featureRepository->query()->orderBy('name')->paginate(20);
+        $query = $this->featureRepository->query();
+
+        if ($keyword = $request->get('keyword')) {
+            $query = $query->whereNameLike($keyword);
+        }
+
+        $query->orderBy('id');
+
+        $categories = $this->categoryRepository->getAllWithDepth();
 
         return view(static::VIEW_PATH . 'index', [
-            'features' => $features,
+            'features'   => $query->paginate(20),
+            'categories' => $categories,
         ]);
     }
 

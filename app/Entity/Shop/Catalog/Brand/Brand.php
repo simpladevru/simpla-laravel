@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\Shop\Catalog;
+namespace App\Entity\Shop\Catalog\Brand;
 
 use App\Helpers\Tables;
 use App\Helpers\ImageHelper;

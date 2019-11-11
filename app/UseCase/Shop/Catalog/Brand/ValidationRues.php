@@ -3,7 +3,7 @@
 namespace App\UseCase\Shop\Catalog\Brand;
 
 use App\Helpers\Tables;
-use App\Entity\Shop\Catalog\Brand;
+use App\Entity\Shop\Catalog\Brand\Brand;
 
 class ValidationRues
 {

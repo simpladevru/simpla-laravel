@@ -6,7 +6,7 @@ use Exception;
 use DomainException;
 use Illuminate\View\View;
 use Illuminate\Http\Response;
-use App\Entity\Shop\Catalog\Brand;
+use App\Entity\Shop\Catalog\Brand\Brand;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use App\UseCase\Shop\Catalog\Brand\BrandService;

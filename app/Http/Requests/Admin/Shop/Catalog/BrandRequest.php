@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Admin\Shop\Catalog;
 
-use App\Entity\Shop\Catalog\Brand;
+use App\Entity\Shop\Catalog\Brand\Brand;
 use Illuminate\Foundation\Http\FormRequest;
 use App\UseCase\Shop\Catalog\Brand\ValidationRues;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\Shop\Feature;
+namespace App\Entity\Shop\Catalog\Feature;
 
 use App\Helpers\Tables;
 use Illuminate\Database\Eloquent\Model;
@@ -8,7 +8,7 @@ use App\Entity\Shop\Catalog\Category\Category;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
- * App\Entity\Shop\Feature\Feature
+ * App\Entity\Shop\Catalog\Feature\Feature
  *
  * @property int $id
  * @property string $name
@@ -18,19 +18,22 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Kalnoy\Nestedset\Collection|\App\Entity\Shop\Catalog\Category\Category[] $categories
  * @property-read int|null $categories_count
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Feature\Feature newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Feature\Feature newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Feature\Feature query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Feature\Feature whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Feature\Feature whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Feature\Feature whereInFilter($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Feature\Feature whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Feature\Feature whereSort($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Feature\Feature whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Feature\Feature newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Feature\Feature newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Feature\Feature query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Feature\Feature whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Feature\Feature whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Feature\Feature whereInFilter($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Feature\Feature whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Feature\Feature whereNameLike($name)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Feature\Feature whereSort($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Feature\Feature whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class Feature extends Model
 {
+    use Scopes;
+
     protected $table = Tables::SHOP_FEATURES;
 
     protected $guarded = ['id'];

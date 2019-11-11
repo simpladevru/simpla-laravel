@@ -3,7 +3,7 @@
 namespace App\Repositories\Shop\Catalog;
 
 use Illuminate\Support\Collection;
-use App\Entity\Shop\Feature\Feature;
+use App\Entity\Shop\Catalog\Feature\Feature;
 use Illuminate\Database\Eloquent\Builder;
 
 class FeatureRepository

@@ -3,8 +3,8 @@
 namespace App\Entity\Shop\Catalog\Products\Product;
 
 use App\Helpers\Tables;
-use App\Entity\Shop\Catalog\Brand;
 use Illuminate\Database\Eloquent\Model;
+use App\Entity\Shop\Catalog\Brand\Brand;
 use Illuminate\Database\Eloquent\Collection;
 use App\Entity\Shop\Catalog\Category\Category;
 use App\Entity\Shop\Catalog\Products\Image\Image;
@@ -34,7 +34,7 @@ use App\Entity\Shop\Catalog\Products\Product\Pivot\ProductCategoryPivot;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Shop\Catalog\Products\Attribute\Attribute[] $attributes
  * @property-read int|null $attributes_count
- * @property-read \App\Entity\Shop\Catalog\Brand $brand
+ * @property-read \App\Entity\Shop\Catalog\Brand\Brand $brand
  * @property-read \Kalnoy\Nestedset\Collection|\App\Entity\Shop\Catalog\Category\Category[] $categories
  * @property-read int|null $categories_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Shop\Catalog\Products\Product\Pivot\ProductCategoryPivot[] $categoryPivot

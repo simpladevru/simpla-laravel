@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Shop\Catalog;
 
-use App\Entity\Shop\Catalog\Brand;
+use App\Entity\Shop\Catalog\Brand\Brand;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 

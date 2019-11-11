@@ -36,19 +36,19 @@ namespace App\Entity\Shop\Catalog{
  * @property string|null $meta_description
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Brand newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Brand newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Brand query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Brand whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Brand whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Brand whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Brand whereImage($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Brand whereMetaDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Brand whereMetaKeywords($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Brand whereMetaTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Brand whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Brand whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Brand whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Brand\Brand newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Brand\Brand newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Brand\Brand query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Brand\Brand whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Brand\Brand whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Brand\Brand whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Brand\Brand whereImage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Brand\Brand whereMetaDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Brand\Brand whereMetaKeywords($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Brand\Brand whereMetaTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Brand\Brand whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Brand\Brand whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Brand\Brand whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 	class Brand extends \Eloquent {}
@@ -74,8 +74,8 @@ namespace App\Entity\Shop\Feature{
  * @property int $sort
  * @property-read \Kalnoy\Nestedset\Collection|\App\Entity\Shop\Catalog\Category\Category[] $categories
  * @property-read int|null $categories_count
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Feature\Feature whereInFilter($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Feature\Feature whereSort($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Feature\Feature whereInFilter($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Feature\Feature whereSort($value)
  */
 	class Feature extends \Eloquent {}
 }
