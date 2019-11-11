@@ -163,6 +163,12 @@
                                         data-original-title="Edit"
                                     ><i class="fa fa-pencil"></i></a>
                                     <a
+                                        href="{{ route('admin.shop.catalog.products.copy', $product) }}"
+                                        class="btn btn-outline-secondary btn-sm"
+                                        data-toggle="tooltip"
+                                        data-original-title="Copy"
+                                    ><i class="fa fa-clone"></i></a>
+                                    <a
                                         href="{{ route('admin.shop.catalog.products.destroy', $product) }}"
                                         data-method="DELETE"
                                         data-confirm="Confirm"

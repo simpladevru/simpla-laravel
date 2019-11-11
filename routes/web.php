@@ -29,6 +29,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::group(['prefix' => 'shop', 'as' => 'shop.', 'namespace' => 'Shop'], function () {
         Route::group(['prefix' => 'catalog', 'as' => 'catalog.', 'namespace' => 'Catalog'], function () {
             Route::resource('products', 'ProductController');
+            Route::get('products/{product}/copy', 'ProductController@copy')->name('products.copy');
             Route::post('products/group-action', 'ProductController@groupAction')->name('products.groupAction');
 
             Route::get('categories/ajax-all-with-depth', 'CategoryController@ajaxAllWithDepth')->name('categories.ajaxAllWithDepth');

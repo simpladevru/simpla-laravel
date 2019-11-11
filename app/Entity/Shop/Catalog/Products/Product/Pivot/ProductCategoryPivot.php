@@ -22,4 +22,8 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 class ProductCategoryPivot extends Pivot
 {
     protected $table = Tables::SHOP_PRODUCT_CATEGORIES;
+
+    protected $fillable = ['product_id', 'category_id', 'sort'];
+
+    public $timestamps = null;
 }

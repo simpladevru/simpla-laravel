@@ -226,4 +226,20 @@ class ProductController extends Controller
 
         return back()->with('success', 'deleted');
     }
+
+    /**
+     * @param Product $product
+     * @return RedirectResponse
+     * @throws Throwable
+     */
+    public function copy(Product $product): RedirectResponse
+    {
+        try {
+            $this->service->copy($product->id);
+        } catch (DomainException $e) {
+            return back()->with('error', $e->getMessage());
+        }
+
+        return back()->with('success', 'copied');
+    }
 }

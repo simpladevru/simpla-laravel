@@ -64,10 +64,21 @@ class ProductService
      * Копировать товар.
      *
      * @param int $id
+     * @throws Throwable
      */
     public function copy(int $id)
     {
-        $product = $this->repository->getOne($id);
+        $product = $this->repository->getOne($id)->load(['variants', 'images']);
+
+        DB::transaction(function () use ($product) {
+            $clone = $product->replicate();
+            $clone->save();
+
+            $clone->categoryPivot()->createMany($product->categoryPivot->toArray());
+            $clone->variants()->createMany($product->variants->toArray());
+            $clone->attributes()->createMany($product->attributes->toArray());
+            $clone->images()->createMany($product->images->toArray());
+        });
     }
 
     /**
@@ -204,8 +215,12 @@ class ProductService
      * @param array $uploads
      * @param array $downloads
      */
-    public function updateImages(Product $product, array $existImageIds = [], array $uploads = [], array $downloads = [])
-    {
+    public function updateImages(
+        Product $product,
+        array $existImageIds = [],
+        array $uploads = [],
+        array $downloads = []
+    ) {
         $imagesCollection = $product->images()->get()->keyBy('id');
 
         foreach (array_values($existImageIds) as $sort => $imageId) {
