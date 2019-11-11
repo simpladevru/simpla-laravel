@@ -35,6 +35,8 @@ use App\Entity\Shop\Catalog\Products\Product\Product;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Brand whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entity\Shop\Catalog\Brand whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entity\Shop\Catalog\Products\Product\Product[] $products
+ * @property-read int|null $products_count
  */
 class Brand extends Model
 {
