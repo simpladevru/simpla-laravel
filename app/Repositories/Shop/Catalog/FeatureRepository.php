@@ -14,7 +14,7 @@ class FeatureRepository
      */
     public function getOne(int $id): Feature
     {
-        return Feature::findOrFail($id);
+        return $this->query()->findOrFail($id);
     }
 
     /**
@@ -23,7 +23,7 @@ class FeatureRepository
      */
     public function findOne(int $id): ?Feature
     {
-        return Feature::find($id);
+        return $this->query()->find($id);
     }
 
     /**
@@ -31,7 +31,7 @@ class FeatureRepository
      */
     public function getAll(): ?Collection
     {
-        return Feature::get();
+        return $this->query()->get();
     }
 
     /**

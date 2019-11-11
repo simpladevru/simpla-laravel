@@ -13,7 +13,7 @@ class VariantRepository
      */
     public function getOne(int $id): Variant
     {
-        return Variant::findOrFail($id);
+        return $this->query()->findOrFail($id);
     }
 
     /**
@@ -22,7 +22,7 @@ class VariantRepository
      */
     public function findOne(int $id): ?Variant
     {
-        return Variant::find($id);
+        return $this->query()->find($id);
     }
 
     /**

@@ -16,7 +16,7 @@ class BrandRepository
      */
     public function getOne(int $id): Brand
     {
-        return Brand::findOrFail($id);
+        return $this->query()->findOrFail($id);
     }
 
     /**
@@ -27,7 +27,7 @@ class BrandRepository
      */
     public function findOne(int $id): ?Brand
     {
-        return Brand::find($id);
+        return $this->query()->find($id);
     }
 
     /**
@@ -37,7 +37,7 @@ class BrandRepository
      */
     public function getAll(): ?Collection
     {
-        return Brand::get();
+        return $this->query()->get();
     }
 
     /**

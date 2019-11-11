@@ -13,7 +13,7 @@ class ProductRepository
      */
     public function getOne(int $id): Product
     {
-        return Product::findOrFail($id);
+        return $this->query()->findOrFail($id);
     }
 
     /**
@@ -22,7 +22,7 @@ class ProductRepository
      */
     public function findOne(int $id): ?Product
     {
-        return Product::find($id);
+        return $this->query()->find($id);
     }
 
     /**

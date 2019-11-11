@@ -14,7 +14,7 @@ class CategoryRepository
      */
     public function getOne(int $id): Category
     {
-        return Category::findOrFail($id);
+        return $this->query()->findOrFail($id);
     }
 
     /**
@@ -23,7 +23,7 @@ class CategoryRepository
      */
     public function findOne(int $id): ?Category
     {
-        return Category::find($id);
+        return $this->query()->find($id);
     }
 
     /**
@@ -32,7 +32,7 @@ class CategoryRepository
      */
     public function getAllWithDepth(array $select = ['*']): ?Collection
     {
-        return Category::defaultOrder()->select($select)->withDepth()->get();
+        return $this->query()->defaultOrder()->select($select)->withDepth()->get();
     }
 
     /**
