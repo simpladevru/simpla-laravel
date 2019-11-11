@@ -15,7 +15,7 @@ class ValidationRues
     {
         return [
             'name'             => 'required|string|max:255',
-            'slug'             => 'nullable|string|max:500',
+            'slug'             => 'required|string|max:500|unique:' . Tables::SHOP_PRODUCTS . ',slug' . ($product ? ',' . $product->id : null),
             'brand_id'         => 'nullable|integer|exists:' . Tables::SHOP_BRANDS . ',id',
             'is_active'        => 'boolean',
             'is_featured'      => 'boolean',
