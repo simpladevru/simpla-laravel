@@ -26,6 +26,17 @@ trait Scopes
     public function scopeForCategory(Builder $query, Category $category)
     {
         $query->whereHas('categoryPivot', function (Builder $query) use ($category) {
+            $query->where('category_id', $category->id);
+        });
+    }
+
+    /**
+     * @param Builder $query
+     * @param Category $category
+     */
+    public function scopeForCategoryNested(Builder $query, Category $category)
+    {
+        $query->whereHas('categoryPivot', function (Builder $query) use ($category) {
             $query->whereIn('category_id', $category->getDescendantsAndSelf()->pluck('id')->toArray());
         });
     }
