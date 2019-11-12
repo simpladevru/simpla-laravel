@@ -2,10 +2,13 @@
 
 namespace App\Entity\Shop\Catalog\Feature;
 
+use App\Entity\Shop\Catalog\Category\Pivot\CategoryFeaturePivot;
+use App\Entity\Shop\Catalog\Products\Product\Pivot\ProductCategoryPivot;
 use App\Helpers\Tables;
 use Illuminate\Database\Eloquent\Model;
 use App\Entity\Shop\Catalog\Category\Category;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * App\Entity\Shop\Catalog\Feature\Feature
@@ -46,5 +49,13 @@ class Feature extends Model
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class, Tables::SHOP_CATEGORY_FEATURES, 'feature_id', 'category_id');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function categoryPivot(): HasMany
+    {
+        return $this->hasMany(CategoryFeaturePivot::class, 'feature_id', 'id');
     }
 }

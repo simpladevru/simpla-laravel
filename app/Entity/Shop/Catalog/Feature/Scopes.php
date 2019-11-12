@@ -2,10 +2,7 @@
 
 namespace App\Entity\Shop\Catalog\Feature;
 
-use App\Helpers\Tables;
-use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Query\Builder as QueryBuilder;
 
 trait Scopes
 {
@@ -15,12 +12,8 @@ trait Scopes
      */
     public function scopeWhereJoinedCategory(Builder $query, array $ids)
     {
-        $query->whereExists(function (QueryBuilder $query) use ($ids) {
-            $query
-                ->selectRaw('1')
-                ->from(Tables::SHOP_CATEGORY_FEATURES)
-                ->where('feature_id', new Expression(Tables::SHOP_FEATURES . '.id'))
-                ->whereIn('category_id', $ids);
+        $query->whereHas('categoryPivot', function (Builder $query) use ($ids) {
+            $query->whereIn('category_id', $ids);
         });
     }
 
