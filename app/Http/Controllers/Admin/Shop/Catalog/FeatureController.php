@@ -65,6 +65,10 @@ class FeatureController extends Controller
             $query = $query->whereNameLike($keyword);
         }
 
+        if ($categoryId = $request->get('category_id')) {
+            $query->whereJoinedCategory((array) $categoryId);
+        }
+
         $query->orderBy('id');
 
         $categories = $this->categoryRepository->getAllWithDepth();
