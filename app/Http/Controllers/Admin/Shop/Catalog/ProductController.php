@@ -98,8 +98,7 @@ class ProductController extends Controller
         }
 
         if ($categoryId = $request->get('category_nested_id')) {
-            $category = $this->categoryRepository->getOne($categoryId);
-            $query->forCategoryNested($category);
+            $query->whereJoinedCategoryNested([$categoryId]);
         }
 
         if ($keyword = $request->get('keyword')) {
