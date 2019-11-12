@@ -3,8 +3,10 @@
 namespace App\Entity\Shop\Catalog\Products\Product;
 
 use App\Helpers\Tables;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Query\JoinClause;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 
 trait Scopes
 {
@@ -23,13 +25,13 @@ trait Scopes
      */
     public function scopeWhereJoinedCategory(Builder $query, array $ids)
     {
-        $query->select(Tables::SHOP_PRODUCTS . '.*');
-
-        $query->join(Tables::SHOP_PRODUCT_CATEGORIES . ' as pc', function (JoinClause $join) use ($ids) {
-            $join->on('pc.product_id', 'id')->whereIn('pc.category_id', $ids);
+        $query->whereExists(function (QueryBuilder $query) use ($ids) {
+            $query
+                ->selectRaw('1')
+                ->from(Tables::SHOP_PRODUCT_CATEGORIES)
+                ->where('product_id', new Expression(Tables::SHOP_PRODUCTS . '.id'))
+                ->whereIn('category_id', $ids);
         });
-
-        $query->groupBy(Tables::SHOP_PRODUCTS . '.id');
     }
 
     /**
