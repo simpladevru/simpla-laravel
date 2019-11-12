@@ -2,13 +2,12 @@
 
 namespace App\Entity\Shop\Catalog\Feature;
 
-use App\Entity\Shop\Catalog\Category\Pivot\CategoryFeaturePivot;
-use App\Entity\Shop\Catalog\Products\Product\Pivot\ProductCategoryPivot;
 use App\Helpers\Tables;
 use Illuminate\Database\Eloquent\Model;
 use App\Entity\Shop\Catalog\Category\Category;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Entity\Shop\Catalog\Category\Pivot\CategoryFeaturePivot;
 
 /**
  * App\Entity\Shop\Catalog\Feature\Feature
