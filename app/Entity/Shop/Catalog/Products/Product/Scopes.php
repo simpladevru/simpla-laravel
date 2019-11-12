@@ -6,6 +6,7 @@ use App\Helpers\Tables;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Database\Eloquent\Builder;
 use App\Entity\Shop\Catalog\Category\Category;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 
 trait Scopes
 {
@@ -46,21 +47,15 @@ trait Scopes
      */
     public function scopeWhereJoinedCategoryNested(Builder $query, array $ids)
     {
-        $query->select(Tables::SHOP_PRODUCTS . '.*');
-
-        $nestedSet = function ($query) use ($ids) {
-            $query
-                ->fromRaw(Tables::SHOP_CATEGORIES . ' nested_set_0, ' . Tables::SHOP_CATEGORIES . ' nested_set_1')
-                ->selectRaw('distinct nested_set_0.id')
-                ->whereIn('nested_set_1.id', $ids)
-                ->whereRaw('nested_set_0._lft between nested_set_1._lft and nested_set_1._rgt');
-        };
-
-        $query->join(Tables::SHOP_PRODUCT_CATEGORIES . ' as pc', function (JoinClause $join) use ($nestedSet) {
-            $join->on('pc.product_id', 'id')->whereIn('pc.category_id', $nestedSet);
+        $query->whereHas('categoryPivot', function (Builder $query) use ($ids) {
+            $query->whereExists(function (QueryBuilder $query)  use ($ids) {
+                $query
+                    ->fromRaw(Tables::SHOP_CATEGORIES . ' nested_set_0, ' . Tables::SHOP_CATEGORIES . ' nested_set_1')
+                    ->whereIn('nested_set_1.id', $ids)
+                    ->whereRaw('shop_product_categories.category_id = nested_set_0.id')
+                    ->whereRaw('nested_set_0._lft between nested_set_1._lft and nested_set_1._rgt');
+            });
         });
-
-        $query->groupBy(Tables::SHOP_PRODUCTS . '.id');
     }
 
     /**
