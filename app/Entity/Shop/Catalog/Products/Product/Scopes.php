@@ -5,6 +5,7 @@ namespace App\Entity\Shop\Catalog\Products\Product;
 use App\Helpers\Tables;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Database\Eloquent\Builder;
+use App\Entity\Shop\Catalog\Category\Category;
 
 trait Scopes
 {
@@ -15,6 +16,17 @@ trait Scopes
     public function scopeWhereBrandIds(Builder $query, array $ids)
     {
         $query->whereIn('brand_id', $ids);
+    }
+
+    /**
+     * @param Builder $query
+     * @param Category $category
+     */
+    public function scopeForCategory(Builder $query, Category $category)
+    {
+        $query->whereHas('categoryPivot', function (Builder $query) use ($category) {
+            $query->whereIn('category_id', $category->getDescendantsAndSelf()->pluck('id')->toArray());
+        });
     }
 
     /**
