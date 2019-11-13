@@ -18,14 +18,20 @@ class ProductService
      * @var ProductRepository
      */
     private $products;
+    /**
+     * @var RelationService
+     */
+    private $relations;
 
     /**
      * ProductService constructor.
      * @param ProductRepository $products
+     * @param RelationService $relations
      */
-    public function __construct(ProductRepository $products)
+    public function __construct(ProductRepository $products, RelationService $relations)
     {
-        $this->products = $products;
+        $this->products  = $products;
+        $this->relations = $relations;
     }
 
     /**
@@ -122,10 +128,10 @@ class ProductService
     public function updateRelations(Product $product, array $data = []): void
     {
         DB::transaction(function () use ($product, $data) {
-            app(CategoriesHandler::class)->update($product, $data['category_ids']);
-            app(VariantsHandler::class)->update($product, $data['variants']);
-            app(AttributesHandler::class)->updateGroupedByFeatureId($product, $data['attributes']);
-            app(ImagesHandler::class)->update($product, $data['exist_image_ids'], $data['upload_images']);
+            $this->relations->categories->update($product, $data['category_ids']);
+            $this->relations->variants->update($product, $data['variants']);
+            $this->relations->attributes->updateGroupedByFeatureId($product, $data['attributes']);
+            $this->relations->images->update($product, $data['exist_image_ids'], $data['upload_images']);
         });
     }
 
