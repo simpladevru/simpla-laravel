@@ -7,10 +7,10 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\Shop\Catalog\ProductRepository;
 use App\Entity\Shop\Catalog\Products\Product\Product;
-use App\UseCase\Shop\Catalog\Product\Relations\Images;
-use App\UseCase\Shop\Catalog\Product\Relations\Variants;
-use App\UseCase\Shop\Catalog\Product\Relations\Attributes;
-use App\UseCase\Shop\Catalog\Product\Relations\Categories;
+use App\UseCase\Shop\Catalog\Product\Relations\ImagesHandler;
+use App\UseCase\Shop\Catalog\Product\Relations\VariantsHandler;
+use App\UseCase\Shop\Catalog\Product\Relations\AttributesHandler;
+use App\UseCase\Shop\Catalog\Product\Relations\CategoriesHandler;
 
 class ProductService
 {
@@ -122,10 +122,10 @@ class ProductService
     public function updateRelations(Product $product, array $data = []): void
     {
         DB::transaction(function () use ($product, $data) {
-            app(Categories::class)->update($product, $data['category_ids']);
-            app(Variants::class)->update($product, $data['variants']);
-            app(Attributes::class)->updateGroupedByFeatureId($product, $data['attributes']);
-            app(Images::class)->update($product, $data['exist_image_ids'], $data['upload_images']);
+            app(CategoriesHandler::class)->update($product, $data['category_ids']);
+            app(VariantsHandler::class)->update($product, $data['variants']);
+            app(AttributesHandler::class)->updateGroupedByFeatureId($product, $data['attributes']);
+            app(ImagesHandler::class)->update($product, $data['exist_image_ids'], $data['upload_images']);
         });
     }
 

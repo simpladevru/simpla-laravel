@@ -4,7 +4,7 @@ namespace App\UseCase\Shop\Catalog\Product\Relations;
 
 use App\Entity\Shop\Catalog\Products\Product\Product;
 
-class Categories
+class CategoriesHandler
 {
     /**
      * Обновить список категорий в которых присутствует товар.

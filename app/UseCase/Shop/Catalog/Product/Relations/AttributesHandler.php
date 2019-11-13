@@ -5,7 +5,7 @@ namespace App\UseCase\Shop\Catalog\Product\Relations;
 use App\Entity\Shop\Catalog\Products\Product\Product;
 use App\Entity\Shop\Catalog\Products\Attribute\Attribute;
 
-class Attributes
+class AttributesHandler
 {
     /**
      * Обновить характеристики.

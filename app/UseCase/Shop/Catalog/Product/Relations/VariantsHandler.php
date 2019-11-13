@@ -6,7 +6,7 @@ use Throwable;
 use App\Entity\Shop\Catalog\Products\Variant\Variant;
 use App\Entity\Shop\Catalog\Products\Product\Product;
 
-class Variants
+class VariantsHandler
 {
     /**
      * Обновить варианты.

@@ -5,7 +5,7 @@ namespace App\UseCase\Shop\Catalog\Product\Relations;
 use App\Entity\Shop\Catalog\Products\Image\Image;
 use App\Entity\Shop\Catalog\Products\Product\Product;
 
-class Images
+class ImagesHandler
 {
     /**
      * Обновить изображения.
@@ -15,12 +15,8 @@ class Images
      * @param array $uploads
      * @param array $downloads
      */
-    public function update(
-        Product $product,
-        array $existImageIds = [],
-        array $uploads = [],
-        array $downloads = []
-    ) {
+    public function update(Product $product, array $existImageIds = [], array $uploads = [], array $downloads = [])
+    {
         $imagesCollection = $product->images()->get()->keyBy('id');
 
         foreach (array_values($existImageIds) as $sort => $imageId) {
