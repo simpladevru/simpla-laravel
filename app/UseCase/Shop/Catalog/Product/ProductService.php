@@ -7,10 +7,6 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\Shop\Catalog\ProductRepository;
 use App\Entity\Shop\Catalog\Products\Product\Product;
-use App\UseCase\Shop\Catalog\Product\Relations\ImagesHandler;
-use App\UseCase\Shop\Catalog\Product\Relations\VariantsHandler;
-use App\UseCase\Shop\Catalog\Product\Relations\AttributesHandler;
-use App\UseCase\Shop\Catalog\Product\Relations\CategoriesHandler;
 
 class ProductService
 {
