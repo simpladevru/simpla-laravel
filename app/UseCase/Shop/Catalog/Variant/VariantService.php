@@ -13,14 +13,14 @@ class VariantService
     /**
      * @var VariantRepository
      */
-    private $repository;
+    private $variants;
 
     /**
-     * @param VariantRepository $repository
+     * @param VariantRepository $variants
      */
-    public function __construct(VariantRepository $repository)
+    public function __construct(VariantRepository $variants)
     {
-        $this->repository = $repository;
+        $this->variants = $variants;
     }
 
     /**
@@ -55,22 +55,10 @@ class VariantService
      */
     public function update(int $id, array $attributes): Variant
     {
-        $variant = $this->repository->getOne($id);
+        $variant = $this->variants->getOne($id);
         $variant->update($attributes);
 
         return $variant;
-    }
-
-    /**
-     * Заполнить вариант и сохранить.
-     *
-     * @param Variant $variant
-     * @param array $attributes
-     * @throws Throwable
-     */
-    public function fillAndSave(Variant $variant, array $attributes)
-    {
-        $variant->fill($attributes)->saveOrFail();
     }
 
     /**
@@ -81,6 +69,6 @@ class VariantService
      */
     public function remove(int $id)
     {
-        $this->repository->getOne($id)->delete();
+        $this->variants->getOne($id)->delete();
     }
 }

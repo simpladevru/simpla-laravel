@@ -25,18 +25,18 @@ class BrandController extends Controller
     /**
      * @var BrandRepository
      */
-    private $repository;
+    private $brands;
 
     /**
      * BrandController constructor.
      *
      * @param BrandService $service
-     * @param BrandRepository $repository
+     * @param BrandRepository $brands
      */
-    public function __construct(BrandService $service, BrandRepository $repository)
+    public function __construct(BrandService $service, BrandRepository $brands)
     {
-        $this->service    = $service;
-        $this->repository = $repository;
+        $this->service = $service;
+        $this->brands  = $brands;
     }
 
     /**
@@ -44,7 +44,7 @@ class BrandController extends Controller
      */
     public function index(): View
     {
-        $brands = $this->repository->query()
+        $brands = $this->brands->query()
             ->withCount('products')
             ->orderByDesc('name')
             ->paginate(20);

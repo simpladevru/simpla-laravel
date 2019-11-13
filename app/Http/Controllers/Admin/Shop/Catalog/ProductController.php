@@ -16,7 +16,7 @@ use App\UseCase\Shop\Catalog\Variant\VariantService;
 use App\Repositories\Shop\Catalog\FeatureRepository;
 use App\Entity\Shop\Catalog\Products\Product\Product;
 use App\Repositories\Shop\Catalog\CategoryRepository;
-use App\Repositories\Shop\Catalog\Product\ProductRepository;
+use App\Repositories\Shop\Catalog\ProductRepository;
 use App\Http\Requests\Admin\Shop\Catalog\Product\ProductRequest;
 use App\Http\Requests\Admin\Shop\Catalog\Product\ProductGroupActionRequest;
 
@@ -28,12 +28,12 @@ class ProductController extends Controller
     /**
      * @var ProductService
      */
-    private $service;
+    private $productService;
 
     /**
      * @var FeatureRepository
      */
-    private $featureRepository;
+    private $features;
 
     /**
      * @var VariantService
@@ -43,42 +43,41 @@ class ProductController extends Controller
     /**
      * @var BrandRepository
      */
-    private $brandRepository;
+    private $brands;
 
     /**
      * @var CategoryRepository
      */
-    private $categoryRepository;
+    private $categories;
 
     /**
      * @var ProductRepository
      */
-    private $productRepository;
+    private $products;
 
     /**
      * ProductController constructor.
-     *
-     * @param ProductService $service
-     * @param BrandRepository $brandRepository
-     * @param CategoryRepository $categoryRepository
-     * @param FeatureRepository $featureRepository
+     * @param ProductService $productService
      * @param VariantService $variantService
-     * @param ProductRepository $productRepository
+     * @param BrandRepository $brands
+     * @param CategoryRepository $categories
+     * @param FeatureRepository $features
+     * @param ProductRepository $products
      */
     public function __construct(
-        ProductService $service,
-        BrandRepository $brandRepository,
-        CategoryRepository $categoryRepository,
-        FeatureRepository $featureRepository,
+        ProductService $productService,
         VariantService $variantService,
-        ProductRepository $productRepository
+        BrandRepository $brands,
+        CategoryRepository $categories,
+        FeatureRepository $features,
+        ProductRepository $products
     ) {
-        $this->service            = $service;
-        $this->featureRepository  = $featureRepository;
-        $this->variantService     = $variantService;
-        $this->brandRepository    = $brandRepository;
-        $this->categoryRepository = $categoryRepository;
-        $this->productRepository  = $productRepository;
+        $this->productService = $productService;
+        $this->variantService = $variantService;
+        $this->features       = $features;
+        $this->brands         = $brands;
+        $this->categories     = $categories;
+        $this->products       = $products;
     }
 
     /**
@@ -87,7 +86,7 @@ class ProductController extends Controller
      */
     public function index(Request $request): View
     {
-        $query = $this->productRepository->query()->with(['brand', 'category', 'variants', 'image']);
+        $query = $this->products->query()->with(['brand', 'category', 'variants', 'image']);
 
         if ($brandIds = $request->get('brand_id')) {
             $query->whereBrandIds((array) $brandIds);
@@ -107,8 +106,8 @@ class ProductController extends Controller
 
         $query->orderByDesc('id');
 
-        $categories = $this->categoryRepository->getAllWithDepth();
-        $brands     = $this->brandRepository->getAll();
+        $categories = $this->categories->getAllWithDepth();
+        $brands     = $this->brands->getAll();
 
         return view(static::VIEW_PATH . 'index', [
             'products'   => $query->paginate(20),
@@ -144,7 +143,7 @@ class ProductController extends Controller
      */
     public function create(): View
     {
-        $brands = $this->brandRepository->getAll();
+        $brands = $this->brands->getAll();
 
         return view(static::VIEW_PATH . 'form', [
             'product'            => new Product(),
@@ -161,7 +160,7 @@ class ProductController extends Controller
     public function store(ProductRequest $request): RedirectResponse
     {
         try {
-            $product = $this->service->createWithRelations($request->validated());
+            $product = $this->productService->createWithRelations($request->validated());
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -180,7 +179,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product): View
     {
-        $brands             = $this->brandRepository->getAll();
+        $brands             = $this->brands->getAll();
         $productCategoryIds = $product->categoryPivotIds();
 
         return view(static::VIEW_PATH . 'form', [
@@ -199,7 +198,7 @@ class ProductController extends Controller
     public function update(ProductRequest $request, Product $product): RedirectResponse
     {
         try {
-            $this->service->updateWithRelations($product->id, $request->validated());
+            $this->productService->updateWithRelations($product->id, $request->validated());
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -219,7 +218,7 @@ class ProductController extends Controller
     public function destroy(Product $product): RedirectResponse
     {
         try {
-            $this->service->remove($product->id);
+            $this->productService->remove($product->id);
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -235,7 +234,7 @@ class ProductController extends Controller
     public function copy(Product $product): RedirectResponse
     {
         try {
-            $this->service->copy($product->id);
+            $this->productService->copy($product->id);
         } catch (DomainException $e) {
             return back()->with('error', $e->getMessage());
         }

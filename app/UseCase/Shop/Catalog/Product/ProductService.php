@@ -10,14 +10,14 @@ use App\UseCase\Shop\Catalog\Variant\VariantService;
 use App\Entity\Shop\Catalog\Products\Variant\Variant;
 use App\Entity\Shop\Catalog\Products\Product\Product;
 use App\Entity\Shop\Catalog\Products\Attribute\Attribute;
-use App\Repositories\Shop\Catalog\Product\ProductRepository;
+use App\Repositories\Shop\Catalog\ProductRepository;
 
 class ProductService
 {
     /**
      * @var ProductRepository
      */
-    private $repository;
+    private $products;
 
     /**
      * @var VariantService
@@ -30,7 +30,7 @@ class ProductService
      */
     public function __construct(ProductRepository $repository, VariantService $variantService)
     {
-        $this->repository     = $repository;
+        $this->products       = $repository;
         $this->variantService = $variantService;
     }
 
@@ -54,7 +54,7 @@ class ProductService
      */
     public function update(int $id, array $attributes): Product
     {
-        $product = $this->repository->getOne($id);
+        $product = $this->products->getOne($id);
         $product->update($attributes);
 
         return $product;
@@ -68,7 +68,7 @@ class ProductService
      */
     public function copy(int $id)
     {
-        $product = $this->repository->getOne($id)->load([
+        $product = $this->products->getOne($id)->load([
             'categoryPivot',
             'variants',
             'attributes',
@@ -166,7 +166,7 @@ class ProductService
 
         foreach (array_values($variants) as $sort => $data) {
             $variant = $variantsCollection->get($data['id'], $variantsRelation->make());
-            $this->variantService->fillAndSave($variant, array_merge($data, ['sort' => $sort]));
+            $variant->fill(array_merge($data, ['sort' => $sort]))->save();
 
             $existIds[] = $data['id'];
         }
@@ -260,6 +260,6 @@ class ProductService
      */
     public function remove(int $id)
     {
-        $this->repository->getOne($id)->delete();
+        $this->products->getOne($id)->delete();
     }
 }

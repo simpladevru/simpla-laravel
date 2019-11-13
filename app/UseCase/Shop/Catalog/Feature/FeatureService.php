@@ -13,7 +13,7 @@ class FeatureService
     /**
      * @var FeatureRepository
      */
-    private $repository;
+    private $features;
 
     /**
      * FeatureService constructor.
@@ -21,7 +21,7 @@ class FeatureService
      */
     public function __construct(FeatureRepository $repository)
     {
-        $this->repository = $repository;
+        $this->features = $repository;
     }
 
     /**
@@ -44,7 +44,7 @@ class FeatureService
      */
     public function update(int $id, array $attributes): Feature
     {
-        $feature = $this->repository->getOne($id);
+        $feature = $this->features->getOne($id);
         $feature->update($attributes);
 
         return $feature;
@@ -120,6 +120,6 @@ class FeatureService
      */
     public function remove(int $id)
     {
-        $this->repository->getOne($id)->delete();
+        $this->features->getOne($id)->delete();
     }
 }

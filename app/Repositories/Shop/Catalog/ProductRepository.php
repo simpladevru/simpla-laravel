@@ -1,12 +1,23 @@
 <?php
 
-namespace App\Repositories\Shop\Catalog\Product;
+namespace App\Repositories\Shop\Catalog;
 
 use Illuminate\Database\Eloquent\Builder;
 use App\Entity\Shop\Catalog\Products\Product\Product;
 
 class ProductRepository
 {
+    /**
+     * @param string $file
+     * @return bool
+     */
+    public function existsByImageFile(string $file): bool
+    {
+        return $this->query()->whereHas('images', function ($query) use ($file) {
+            $query->where('file', $file);
+        })->exists();
+    }
+
     /**
      * @param int $id
      * @return Product

@@ -27,18 +27,18 @@ class CategoryController extends Controller
     /**
      * @var CategoryRepository
      */
-    private $repository;
+    private $categories;
 
     /**
      * CategoryController constructor.
      *
      * @param CategoryService $service
-     * @param CategoryRepository $repository
+     * @param CategoryRepository $categories
      */
-    public function __construct(CategoryService $service, CategoryRepository $repository)
+    public function __construct(CategoryService $service, CategoryRepository $categories)
     {
         $this->service    = $service;
-        $this->repository = $repository;
+        $this->categories = $categories;
     }
 
     /**
@@ -51,7 +51,7 @@ class CategoryController extends Controller
             'keyword',
         ]);
 
-        $query = $this->repository->query()->withCount(['descendants', 'productsPivot', 'productsPivotNested']);
+        $query = $this->categories->query()->withCount(['descendants', 'productsPivot', 'productsPivotNested']);
 
         if ($category) {
             $query->whereParentId($category->id);
@@ -165,7 +165,7 @@ class CategoryController extends Controller
      */
     public function ajaxAllWithDepth(): array
     {
-        return $this->repository->getAllWithDepth(['id', 'name'])->toArray();
+        return $this->categories->getAllWithDepth(['id', 'name'])->toArray();
     }
 
     /**

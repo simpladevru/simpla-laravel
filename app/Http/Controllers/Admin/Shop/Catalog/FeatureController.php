@@ -29,28 +29,28 @@ class FeatureController extends Controller
     /**
      * @var CategoryRepository
      */
-    private $categoryRepository;
+    private $categories;
 
     /**
      * @var FeatureRepository
      */
-    private $featureRepository;
+    private $features;
 
     /**
      * FeatureController constructor.
      *
      * @param FeatureService $service
-     * @param CategoryRepository $categoryRepository
-     * @param FeatureRepository $featureRepository
+     * @param CategoryRepository $categories
+     * @param FeatureRepository $features
      */
     public function __construct(
         FeatureService $service,
-        CategoryRepository $categoryRepository,
-        FeatureRepository $featureRepository
+        CategoryRepository $categories,
+        FeatureRepository $features
     ) {
-        $this->service            = $service;
-        $this->categoryRepository = $categoryRepository;
-        $this->featureRepository  = $featureRepository;
+        $this->service    = $service;
+        $this->categories = $categories;
+        $this->features   = $features;
     }
 
     /**
@@ -59,7 +59,7 @@ class FeatureController extends Controller
      */
     public function index(Request $request): View
     {
-        $query = $this->featureRepository->query();
+        $query = $this->features->query();
 
         if ($keyword = $request->get('keyword')) {
             $query = $query->whereNameLike($keyword);
@@ -71,7 +71,7 @@ class FeatureController extends Controller
 
         $query->orderBy('id');
 
-        $categories = $this->categoryRepository->getAllWithDepth();
+        $categories = $this->categories->getAllWithDepth();
 
         return view(static::VIEW_PATH . 'index', [
             'features'   => $query->paginate(20),
@@ -93,7 +93,7 @@ class FeatureController extends Controller
      */
     public function create(): View
     {
-        $categories = $this->categoryRepository->getAllWithDepth();
+        $categories = $this->categories->getAllWithDepth();
 
         return view(static::VIEW_PATH . 'form', [
             'feature'       => new Feature(),
@@ -128,7 +128,7 @@ class FeatureController extends Controller
      */
     public function edit(Feature $feature): View
     {
-        $categories    = $this->categoryRepository->getAllWithDepth();
+        $categories    = $this->categories->getAllWithDepth();
         $categoriesIds = $feature->categories()->allRelatedIds()->toArray();
 
         return view(static::VIEW_PATH . 'form', [

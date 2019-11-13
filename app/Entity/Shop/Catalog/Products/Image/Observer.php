@@ -4,6 +4,7 @@ namespace App\Entity\Shop\Catalog\Products\Image;
 
 use App\Helpers\ImageHelper;
 use App\Repositories\Shop\Catalog\Product\ProductImageRepository;
+use App\Repositories\Shop\Catalog\ProductRepository;
 use Illuminate\Http\UploadedFile;
 
 class Observer
@@ -14,20 +15,19 @@ class Observer
     private $images;
 
     /**
-     * @var ProductImageRepository
+     * @var ProductRepository
      */
-    private $productImageRepository;
+    private $products;
 
     /**
-     * ImageObserver constructor.
-     *
+     * Observer constructor.
      * @param ImageHelper $imageHelper
-     * @param ProductImageRepository $productImageRepository
+     * @param ProductRepository $products
      */
-    public function __construct(ImageHelper $imageHelper, ProductImageRepository $productImageRepository)
+    public function __construct(ImageHelper $imageHelper, ProductRepository $products)
     {
-        $this->images                 = $imageHelper;
-        $this->productImageRepository = $productImageRepository;
+        $this->images   = $imageHelper;
+        $this->products = $products;
     }
 
     /**
@@ -62,7 +62,7 @@ class Observer
      */
     private function removeFile(string $file)
     {
-        if (!$this->productImageRepository->existsByFile($file)) {
+        if (!$this->products->existsByImageFile($file)) {
             $this->images->removeOriginal('local', 'products', $file);
             $this->images->removeResized('public', 'products', $file);
         }
