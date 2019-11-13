@@ -1,6 +1,6 @@
 <?php
 
-namespace App\UseCase\Shop\Catalog\Variant;
+namespace App\UseCase\Shop\Catalog\Product;
 
 use Throwable;
 use Exception;
