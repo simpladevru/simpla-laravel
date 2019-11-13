@@ -2,10 +2,10 @@
 
 namespace App\UseCase\Shop\Catalog\Product;
 
-use App\UseCase\Shop\Catalog\Product\Relations\AttributesHandler;
-use App\UseCase\Shop\Catalog\Product\Relations\CategoriesHandler;
 use App\UseCase\Shop\Catalog\Product\Relations\ImagesHandler;
 use App\UseCase\Shop\Catalog\Product\Relations\VariantsHandler;
+use App\UseCase\Shop\Catalog\Product\Relations\CategoriesHandler;
+use App\UseCase\Shop\Catalog\Product\Relations\AttributesHandler;
 
 class RelationService
 {
