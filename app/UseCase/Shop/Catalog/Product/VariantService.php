@@ -36,17 +36,6 @@ class VariantService
     }
 
     /**
-     * Создать вариант.
-     *
-     * @param array $attributes
-     * @return Variant
-     */
-    public function create(array $attributes): Variant
-    {
-        return Variant::create($attributes);
-    }
-
-    /**
      * Обновить вариант.
      *
      * @param int $id
@@ -59,16 +48,5 @@ class VariantService
         $variant->update($attributes);
 
         return $variant;
-    }
-
-    /**
-     * Удалить вариант.
-     *
-     * @param int $id
-     * @throws Exception
-     */
-    public function remove(int $id)
-    {
-        $this->variants->getOne($id)->delete();
     }
 }
