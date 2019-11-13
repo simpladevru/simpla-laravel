@@ -1,6 +1,6 @@
 <?php
 
-namespace App\UseCase\Shop\Catalog\Product\Relations;
+namespace App\UseCase\Shop\Catalog\Product\Handlers;
 
 use App\Entity\Shop\Catalog\Products\Image\Image;
 use App\Entity\Shop\Catalog\Products\Product\Product;

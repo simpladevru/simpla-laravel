@@ -15,16 +15,16 @@ class ProductService
      */
     private $products;
     /**
-     * @var RelationService
+     * @var RelationHandlers
      */
     private $relations;
 
     /**
      * ProductService constructor.
      * @param ProductRepository $products
-     * @param RelationService $relations
+     * @param RelationHandlers $relations
      */
-    public function __construct(ProductRepository $products, RelationService $relations)
+    public function __construct(ProductRepository $products, RelationHandlers $relations)
     {
         $this->products  = $products;
         $this->relations = $relations;

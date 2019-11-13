@@ -1,6 +1,6 @@
 <?php
 
-namespace App\UseCase\Shop\Catalog\Product\Relations;
+namespace App\UseCase\Shop\Catalog\Product\Handlers;
 
 use Throwable;
 use App\Entity\Shop\Catalog\Products\Variant\Variant;

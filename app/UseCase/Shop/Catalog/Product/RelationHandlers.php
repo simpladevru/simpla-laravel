@@ -2,12 +2,12 @@
 
 namespace App\UseCase\Shop\Catalog\Product;
 
-use App\UseCase\Shop\Catalog\Product\Relations\ImagesHandler;
-use App\UseCase\Shop\Catalog\Product\Relations\VariantsHandler;
-use App\UseCase\Shop\Catalog\Product\Relations\CategoriesHandler;
-use App\UseCase\Shop\Catalog\Product\Relations\AttributesHandler;
+use App\UseCase\Shop\Catalog\Product\Handlers\ImagesHandler;
+use App\UseCase\Shop\Catalog\Product\Handlers\VariantsHandler;
+use App\UseCase\Shop\Catalog\Product\Handlers\CategoriesHandler;
+use App\UseCase\Shop\Catalog\Product\Handlers\AttributesHandler;
 
-class RelationService
+class RelationHandlers
 {
     /**
      * @var VariantsHandler
