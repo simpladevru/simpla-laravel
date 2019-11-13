@@ -11,14 +11,14 @@ class CategoryService
     /**
      * @var CategoryRepository
      */
-    private $repository;
+    private $categories;
 
     /**
-     * @param CategoryRepository $repository
+     * @param CategoryRepository $categories
      */
-    public function __construct(CategoryRepository $repository)
+    public function __construct(CategoryRepository $categories)
     {
-        $this->repository = $repository;
+        $this->categories = $categories;
     }
 
     /**
@@ -41,7 +41,7 @@ class CategoryService
      */
     public function update(int $id, array $attributes): Category
     {
-        $category = $this->repository->getOne($id);
+        $category = $this->categories->getOne($id);
         $category->update($attributes);
 
         return $category;
@@ -55,6 +55,6 @@ class CategoryService
      */
     public function remove(int $id)
     {
-        $this->repository->getOne($id)->delete();
+        $this->categories->getOne($id)->delete();
     }
 }

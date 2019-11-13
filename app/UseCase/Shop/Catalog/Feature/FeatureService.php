@@ -17,11 +17,11 @@ class FeatureService
 
     /**
      * FeatureService constructor.
-     * @param FeatureRepository $repository
+     * @param FeatureRepository $features
      */
-    public function __construct(FeatureRepository $repository)
+    public function __construct(FeatureRepository $features)
     {
-        $this->features = $repository;
+        $this->features = $features;
     }
 
     /**

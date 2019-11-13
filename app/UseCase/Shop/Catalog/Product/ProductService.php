@@ -5,12 +5,12 @@ namespace App\UseCase\Shop\Catalog\Product;
 use Throwable;
 use Exception;
 use Illuminate\Support\Facades\DB;
-use App\Entity\Shop\Catalog\Products\Image\Image;
-use App\UseCase\Shop\Catalog\Variant\VariantService;
-use App\Entity\Shop\Catalog\Products\Variant\Variant;
-use App\Entity\Shop\Catalog\Products\Product\Product;
-use App\Entity\Shop\Catalog\Products\Attribute\Attribute;
 use App\Repositories\Shop\Catalog\ProductRepository;
+use App\Entity\Shop\Catalog\Products\Product\Product;
+use App\UseCase\Shop\Catalog\Product\Relations\Images;
+use App\UseCase\Shop\Catalog\Product\Relations\Variants;
+use App\UseCase\Shop\Catalog\Product\Relations\Attributes;
+use App\UseCase\Shop\Catalog\Product\Relations\Categories;
 
 class ProductService
 {
@@ -20,18 +20,12 @@ class ProductService
     private $products;
 
     /**
-     * @var VariantService
+     * ProductService constructor.
+     * @param ProductRepository $products
      */
-    private $variantService;
-
-    /**
-     * @param ProductRepository $repository
-     * @param VariantService $variantService
-     */
-    public function __construct(ProductRepository $repository, VariantService $variantService)
+    public function __construct(ProductRepository $products)
     {
-        $this->products       = $repository;
-        $this->variantService = $variantService;
+        $this->products = $products;
     }
 
     /**
@@ -94,11 +88,11 @@ class ProductService
      */
     public function createWithRelations(array $attributes): Product
     {
-        return DB::transaction(function () use ($attributes) {
-            $product = $this->create($attributes);
-            $this->updateRelations($product, $attributes);
-            return $product;
-        });
+        $product = $this->create($attributes);
+
+        $this->updateRelations($product, $attributes);
+
+        return $product;
     }
 
     /**
@@ -111,11 +105,11 @@ class ProductService
      */
     public function updateWithRelations(int $id, array $attributes): Product
     {
-        return DB::transaction(function () use ($id, $attributes) {
-            $product = $this->update($id, $attributes);
-            $this->updateRelations($product, $attributes);
-            return $product;
-        });
+        $product = $this->update($id, $attributes);
+
+        $this->updateRelations($product, $attributes);
+
+        return $product;
     }
 
     /**
@@ -128,128 +122,11 @@ class ProductService
     public function updateRelations(Product $product, array $data = []): void
     {
         DB::transaction(function () use ($product, $data) {
-            $this->updateCategories($product, $data['category_ids']);
-            $this->updateVariants($product, $data['variants']);
-            $this->updateAttributesGroupedByFeatureId($product, $data['attributes']);
-            $this->updateImages($product, $data['exist_image_ids'], $data['upload_images']);
+            app(Categories::class)->update($product, $data['category_ids']);
+            app(Variants::class)->update($product, $data['variants']);
+            app(Attributes::class)->updateGroupedByFeatureId($product, $data['attributes']);
+            app(Images::class)->update($product, $data['exist_image_ids'], $data['upload_images']);
         });
-    }
-
-    /**
-     * Обновить список категорий в которых присутствует товар.
-     *
-     * @param Product $product
-     * @param array $categoryIds
-     */
-    public function updateCategories(Product $product, array $categoryIds = []): void
-    {
-        $product->categories()->detach();
-
-        foreach ($categoryIds as $index => $categoryId) {
-            $product->categories()->attach($categoryId, ['sort' => $index]);
-        }
-    }
-
-    /**
-     * Обновить варианты.
-     *
-     * @param Product $product
-     * @param array $variants
-     * @throws Throwable
-     */
-    public function updateVariants(Product $product, array $variants = []): void
-    {
-        $variantsRelation   = $product->variants();
-        $variantsCollection = $variantsRelation->get()->keyBy('id');
-
-        $existIds = [];
-
-        foreach (array_values($variants) as $sort => $data) {
-            $variant = $variantsCollection->get($data['id'], $variantsRelation->make());
-            $variant->fill(array_merge($data, ['sort' => $sort]))->save();
-
-            $existIds[] = $data['id'];
-        }
-
-        $variantsCollection->whereNotIn('id', array_filter($existIds))->map(function (Variant $variant) {
-            $variant->delete();
-        });
-    }
-
-    /**
-     * Обновить характеристики.
-     *
-     * @param Product $product
-     * @param array $attributes
-     */
-    public function updateAttributesGroupedByFeatureId(Product $product, array $attributes = []): void
-    {
-        $attributesRelation   = $product->attributes();
-        $attributesCollection = $attributesRelation->get()->keyBy('id');
-
-        $existIds = [];
-
-        foreach ($attributes as $featureId => $values) {
-            foreach ($values as $value) {
-                if ($value['value']) {
-                    $attribute = $attributesCollection->get($value['id'], $attributesRelation->make());
-                    $attribute->fill(['feature_id' => $featureId, 'value' => $value['value'] ?? ''])->saveOrFail();
-
-                    $existIds[] = $value['id'];
-                }
-            }
-        }
-
-        $attributesCollection->whereNotIn('id', array_filter($existIds))->map(function (Attribute $attribute) {
-            $attribute->delete();
-        });
-    }
-
-    /**
-     * Обновить изображения.
-     *
-     * @param Product $product
-     * @param array $existImageIds
-     * @param array $uploads
-     * @param array $downloads
-     */
-    public function updateImages(
-        Product $product,
-        array $existImageIds = [],
-        array $uploads = [],
-        array $downloads = []
-    ) {
-        $imagesCollection = $product->images()->get()->keyBy('id');
-
-        foreach (array_values($existImageIds) as $sort => $imageId) {
-            $imagesCollection->get($imageId)->fill(['sort' => $sort])->saveOrFail();
-        }
-
-        $imagesCollection->whereNotIn('id', $existImageIds)->map(function (Image $image) {
-            $image->delete();
-        });
-
-        if (!empty($uploads)) {
-            $this->addImages($product, $uploads, $sort ?? 0);
-        }
-
-        if (!empty($downloads)) {
-            $this->addImages($product, $downloads, $sort ?? 0);
-        }
-    }
-
-    /**
-     * Добавить изображения.
-     *
-     * @param Product $product
-     * @param array $images
-     * @param int $sort
-     */
-    public function addImages(Product $product, array $images, $sort = 0)
-    {
-        foreach ($images as $index => $file) {
-            $product->images()->create(['file' => $file, 'sort' => $sort + $index]);
-        }
     }
 
     /**

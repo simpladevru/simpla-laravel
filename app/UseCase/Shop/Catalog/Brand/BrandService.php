@@ -14,11 +14,11 @@ class BrandService
     private $brands;
 
     /**
-     * @param BrandRepository $repository
+     * @param BrandRepository $brands
      */
-    public function __construct(BrandRepository $repository)
+    public function __construct(BrandRepository $brands)
     {
-        $this->brands = $repository;
+        $this->brands = $brands;
     }
 
     /**
