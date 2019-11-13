@@ -2,9 +2,6 @@
 
 namespace App\UseCase\Shop\Catalog\Product;
 
-use Throwable;
-use Exception;
-use DomainException;
 use App\Repositories\Shop\Catalog\VariantRepository;
 use App\Entity\Shop\Catalog\Products\Variant\Variant;
 
