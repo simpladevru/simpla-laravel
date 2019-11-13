@@ -14,14 +14,20 @@ class FeatureService
      * @var FeatureRepository
      */
     private $features;
+    /**
+     * @var RelationHandlers
+     */
+    private $relations;
 
     /**
      * FeatureService constructor.
      * @param FeatureRepository $features
+     * @param RelationHandlers $relations
      */
-    public function __construct(FeatureRepository $features)
+    public function __construct(FeatureRepository $features, RelationHandlers $relations)
     {
-        $this->features = $features;
+        $this->features  = $features;
+        $this->relations = $relations;
     }
 
     /**
@@ -59,11 +65,11 @@ class FeatureService
      */
     public function createWithRelations(array $attributes): Feature
     {
-        return DB::transaction(function () use ($attributes) {
-            $feature = $this->create($attributes);
-            $this->updateRelations($feature, $attributes);
-            return $feature;
-        });
+        $feature = $this->create($attributes);
+
+        $this->updateRelations($feature, $attributes);
+
+        return $feature;
     }
 
     /**
@@ -76,40 +82,21 @@ class FeatureService
      */
     public function updateWithRelations(int $id, array $attributes): Feature
     {
-        return DB::transaction(function () use ($id, $attributes) {
-            $feature = $this->update($id, $attributes);
-            $this->updateRelations($feature, $attributes);
-            return $feature;
-        });
+        $feature = $this->update($id, $attributes);
+
+        $this->updateRelations($feature, $attributes);
+
+        return $feature;
     }
 
     /**
-     * Обновить связи свойства.
-     *
      * @param Feature $feature
      * @param array $data
      * @throws Throwable
      */
     public function updateRelations(Feature $feature, array $data = []): void
     {
-        DB::transaction(function () use ($feature, $data) {
-            $this->updateCategories($feature, $data['category_ids']);
-        });
-    }
-
-    /**
-     * Обновить список категорий в которых используется свойство.
-     *
-     * @param Feature $feature
-     * @param array $categoryIds
-     */
-    public function updateCategories(Feature $feature, array $categoryIds = []): void
-    {
-        $feature->categories()->detach();
-
-        foreach ($categoryIds as $categoryId) {
-            $feature->categories()->attach($categoryId);
-        }
+        $this->relations->categories->update($feature, $data['category_ids']);
     }
 
     /**
